@@ -1,0 +1,116 @@
+<form nz-form
+      [formGroup]="bookingForm">
+	<h3>Enter Your Information</h3>
+
+	<nz-form-item>
+		<nz-form-label [nzSm]="6"
+		               [nzXs]="24"
+		               nzRequired>Full Name
+		</nz-form-label>
+		<nz-form-control [nzSm]="14"
+		                 [nzXs]="24"
+		                 nzErrorTip="Please enter your name (min 3 characters)">
+			<input nz-input
+			       formControlName="customerName"
+			       placeholder="Your full name"/>
+		</nz-form-control>
+	</nz-form-item>
+
+	<nz-form-item>
+		<nz-form-label [nzSm]="6"
+		               [nzXs]="24"
+		               nzRequired>Email
+		</nz-form-label>
+		<nz-form-control [nzSm]="14"
+		                 [nzXs]="24"
+		                 nzErrorTip="Please enter a valid email address">
+			<input nz-input
+			       formControlName="customerEmail"
+			       placeholder="Your email address"/>
+		</nz-form-control>
+	</nz-form-item>
+
+	<nz-form-item>
+		<nz-form-label [nzSm]="6"
+		               [nzXs]="24"
+		               nzRequired>Phone
+		</nz-form-label>
+		<nz-form-control [nzSm]="14"
+		                 [nzXs]="24"
+		                 nzErrorTip="Please enter a valid phone number">
+			<nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+				<ng-template #addOnBeforeTemplate>
+					<nz-select nzShowSearch
+					           formControlName="customerPhoneNumberPrefix"
+					           class="phone-code"
+					           [nzCustomTemplate]="defaultTemplate">
+						<ng-container *ngFor="let country of countries">
+							<nz-option nzCustomContent
+							           [nzLabel]="country.dialCode"
+							           [nzValue]="country.dialCode">
+								<span [title]="country.name">{{ country?.flag }} {{ country.dialCode }}</span>
+							</nz-option>
+						</ng-container>
+
+						<ng-template #defaultTemplate
+						             let-selected>
+							{{ selected.nzLabel }}
+						</ng-template>
+					</nz-select>
+				</ng-template>
+
+				<input nz-input
+				       formControlName="customerPhone"
+				       placeholder="Your phone number"/>
+			</nz-input-group>
+
+		</nz-form-control>
+	</nz-form-item>
+
+	<nz-form-item>
+		<nz-form-label [nzSm]="6"
+		               [nzXs]="24"
+		               nzRequired>Event Type
+		</nz-form-label>
+		<nz-form-control [nzSm]="14"
+		                 [nzXs]="24"
+		                 nzErrorTip="Please select an event type">
+			<nz-select formControlName="eventType"
+			           nzPlaceHolder="Select an event type">
+				<nz-option nzValue="Wedding"
+				           nzLabel="Wedding"></nz-option>
+				<nz-option nzValue="Birthday"
+				           nzLabel="Birthday"></nz-option>
+				<nz-option nzValue="Corporate"
+				           nzLabel="Corporate"></nz-option>
+				<nz-option nzValue="Conference"
+				           nzLabel="Conference"></nz-option>
+				<nz-option nzValue="Party"
+				           nzLabel="Party"></nz-option>
+				<nz-option nzValue="Other"
+				           nzLabel="Other"></nz-option>
+			</nz-select>
+		</nz-form-control>
+	</nz-form-item>
+
+	<nz-form-item>
+		<nz-form-label [nzSm]="6"
+		               [nzXs]="24"
+		               nzRequired>Attendees
+		</nz-form-label>
+		<nz-form-control [nzSm]="14"
+		                 [nzXs]="24"
+		                 [nzErrorTip]="attendeesErrorTpl">
+			<nz-input-number
+				formControlName="attendees"
+				[nzMin]="1"
+				[nzMax]="capacity || 1000"
+				[nzStep]="1">
+			</nz-input-number>
+			<ng-template #attendeesErrorTpl
+			             let-control>
+				<ng-container *ngIf="capacity">Maximum capacity is {{ capacity }} people</ng-container>
+			</ng-template>
+		</nz-form-control>
+	</nz-form-item>
+</form>

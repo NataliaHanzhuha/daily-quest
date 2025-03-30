@@ -1,0 +1,71 @@
+.venue-form-modal {
+  .capacity-label, .rate-label {
+    margin-left: 8px;
+    color: rgba(0, 0, 0, 0.65);
+  }
+  
+  .duration-container {
+    display: flex;
+    gap: 20px;
+    
+    .min-hours, .max-hours {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      
+      label {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.65);
+      }
+    }
+  }
+  
+  .amenities-container {
+    .amenities-input-group {
+      display: flex;
+      margin-bottom: 10px;
+      
+      input {
+        flex: 1;
+        margin-right: 10px;
+      }
+    }
+    
+    .amenities-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+  
+  .image-upload-container {
+    .upload-button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      
+      .upload-progress {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.65);
+      }
+    }
+    
+    .image-preview-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      
+      .image-preview {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 4px;
+      }
+      
+      button {
+        margin-top: 10px;
+      }
+    }
+  }
+}

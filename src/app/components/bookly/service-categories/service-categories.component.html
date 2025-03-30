@@ -1,0 +1,28 @@
+<div class="categories-container">
+	<h2>Venue Types</h2>
+
+	<div class="categories-grid">
+		<div class="category-card"
+		     *ngFor="let category of categories">
+			<div class="category-image">
+				<a [routerLink]="['/services', category.id]"
+				   class="view-services-btn">
+					<img [src]="category.imageUrl"
+					     [alt]="category.title">
+				</a>
+				<h3>{{ category.title }}</h3>
+			</div>
+			<div class="category-content">
+				<a [routerLink]="['/services', category.id]"
+				   class="view-services-btn">
+					<p>{{ category.description }}</p>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="categories.length === 0"
+	     class="no-categories">
+		<p>No venue types available.</p>
+	</div>
+</div>

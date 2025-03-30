@@ -1,0 +1,102 @@
+<nz-spin [nzSpinning]="isLoading">
+	<div class="filters">
+		<div class="filter-group">
+			<label>Filter by Venue:</label>
+			<nz-select [(ngModel)]="selectedVenue"
+			           (ngModelChange)="applyFilters()"
+			           nzPlaceHolder="All Venues"
+			           [nzAllowClear]="true"
+			           class="filter-select">
+				<nz-option [nzValue]="null"
+				           nzLabel="All Venues"></nz-option>
+				<!--				<nz-option *ngFor="let venue of [...venues.values()]"-->
+				<!--				           [nzValue]="venue.id"-->
+				<!--				           [nzLabel]="venue.title"></nz-option>-->
+			</nz-select>
+		</div>
+
+		<div class="filter-group">
+			<label>Filter by Status:</label>
+			<nz-select [(ngModel)]="selectedStatus"
+			           (ngModelChange)="applyFilters()"
+			           nzPlaceHolder="All Statuses"
+			           [nzAllowClear]="true"
+			           class="filter-select">
+				<nz-option *ngFor="let status of statuses"
+				           [nzValue]="status.value"
+				           [nzLabel]="status.label"></nz-option>
+			</nz-select>
+		</div>
+	</div>
+
+	<full-calendar [options]="calendarOptions">
+		<ng-template #eventContent
+		             let-arg>
+			<div class="calendar-cell"
+			     nz-tooltip
+			     nzTooltipColor="white"
+			     [nzTooltipTitle]="tooltip">
+				<div class="content"
+				     [ngStyle]="{
+			     'border-left': '2px solid ' + venues.get(arg.event.extendedProps?.venueId)?.color ?? '#000',
+			     'background': venues.get(arg.event.extendedProps?.venueId)?.color + '33' ?? '#fff',
+			     }">
+					<b>{{ arg.timeText }}</b>
+					<b>{{ arg.event.title }}</b>
+					<nz-tag [nzColor]="getStatusColor(arg.event.extendedProps?.paymentDetails?.paymentStatus)">{{ arg.event.extendedProps?.paymentDetails?.paymentStatus }}</nz-tag>
+
+				</div>
+
+				<ng-template #tooltip>
+					<div class="tooltip-content">
+						<b [ngStyle]="{
+						'border-left': '20px solid ' + venues.get(arg.event.extendedProps?.venueId)?.color, 'padding-left': '10px'
+						 }">{{ arg.event.title }}</b>
+						<b nz-typography nzType="secondary">{{ arg.event.extendedProps?.eventType }}</b>
+						<span>{{ arg.timeText }}
+							<nz-tag [nzColor]="getStatusColor(arg.event.extendedProps?.paymentDetails?.paymentStatus)">{{ arg.event.extendedProps?.paymentDetails?.paymentStatus }}</nz-tag>
+							</span>
+						<span>{{ arg.event.extendedProps?.customerName }}</span>
+						<span>{{ arg.event.extendedProps?.customerPhoneNumberPrefix }}{{ arg.event.extendedProps?.customerPhone }}</span>
+						<span>{{ arg.event.extendedProps?.customerEmail }}</span>
+					</div>
+				</ng-template>
+			</div>
+		</ng-template>
+	</full-calendar>
+	<!--	<nz-calendar (nzSelectChange)="onDateSelect($event)"-->
+	<!--	             [nzFullscreen]="false"-->
+	<!--	             [nzDateCell]="dateCellTpl">-->
+	<!--	</nz-calendar>-->
+
+	<!--	<ng-template #dateCellTpl-->
+	<!--	             let-date>-->
+	<!--		<div class="calendar-date-cell">-->
+	<!--							<div class="date-number">{{ date.getDate() }}</div>-->
+	<!--			<div class="bookings-container">-->
+	<!--				<ng-container *ngFor="let booking of getBookingsForDate(date); let i = index">-->
+	<!--					<div class="booking-item"-->
+	<!--					     [ngStyle]="{ 'background-color': getStatusColor(booking.status) }"-->
+	<!--					     (click)="showBookingDetails(booking)"-->
+	<!--					     nz-tooltip-->
+	<!--					     [nzTooltipTrigger]="'hover'"-->
+	<!--					     [nzTooltipTitle]="bookingTooltip">-->
+	<!--						<span class="booking-time">{{ formatTime(booking.startTime) }}</span>-->
+	<!--						<span class="booking-venue">{{ getVenueName(booking.venueId) }}</span>-->
+	<!--					</div>-->
+
+	<!--					<ng-template #bookingTooltip>-->
+	<!--						<div>{{ getVenueName(booking.venueId) }}</div>-->
+	<!--						<div>{{ formatTime(booking.startTime) }} - {{ formatTime(booking.endTime) }}</div>-->
+	<!--						<div>Status: {{ booking.status | titlecase }}</div>-->
+	<!--					</ng-template>-->
+	<!--				</ng-container>-->
+
+	<!--				<div class="more-indicator"-->
+	<!--				     *ngIf="getBookingsForDate(date).length > 3">-->
+	<!--					+{{ getBookingsForDate(date).length - 3 }} more-->
+	<!--				</div>-->
+	<!--			</div>-->
+	<!--		</div>-->
+	<!--	</ng-template>-->
+</nz-spin>

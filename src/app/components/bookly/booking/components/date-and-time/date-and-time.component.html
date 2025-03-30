@@ -1,0 +1,72 @@
+<h3>Select date and Time</h3>
+<div nz-row
+     [formGroup]="bookingForm"
+     nz-form
+     [nzGutter]="16">
+	<nz-calendar [nzFullscreen]="false"
+	             nz-col
+	             [nzFlex]="'1 1 300px'"
+	             formControlName="date"
+	             [nzDisabledDate]="disabledDate"
+	             (nzSelectChange)="onValueChange($event)"
+	></nz-calendar>
+
+	<div nz-col
+	     [nzFlex]="'2 1 400px'">
+		<div class="time-settings">
+			<nz-form-item>
+				<nz-form-label [nzSm]="14"
+				               [nzXs]="24"
+				               nzRequired>Duration (hours)
+				</nz-form-label>
+				<nz-form-control [nzSm]="8"
+				                 [nzXs]="24"
+				                 [nzErrorTip]="durationErrorTpl">
+					<nz-input-number formControlName="duration"
+					                 [nzMin]="venue.minHours || 1"
+					                 [nzMax]="venue.maxHours || 24"
+					                 [nzStep]="1">
+					</nz-input-number>
+					<ng-template #durationErrorTpl
+					             let-control>
+						<ng-container *ngIf="venue">
+							Please enter a duration between {{ venue.minHours }} and {{ venue.maxHours }} hours
+						</ng-container>
+					</ng-template>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item>
+				<nz-form-label [nzSm]="12"
+				               [nzXs]="24">Start Time
+				</nz-form-label>
+				<nz-form-control [nzSm]="12"
+				                 [nzXs]="24"
+				                 nzErrorTip="Please select an start time">
+					<nz-input-number [formControl]="startHour"
+					                 [nzMin]="startWorkingDayTime"
+					                 [nzMax]="endWorkingDayTime"
+					                 [nzStep]="1">
+					</nz-input-number>
+				</nz-form-control>
+			</nz-form-item>
+		</div>
+
+		<h3>Time Slots</h3>
+		<div *ngIf="availableTimeSlots?.length"
+		     class="time-slots">
+			<button nz-button
+			        nzSize="large"
+			        *ngFor="let times of availableTimeSlots"
+			        [nzType]="times[0] === startTime ? 'primary': 'default'"
+			        (click)="setHours(times)">{{ times[0] }}:00 - {{ times[1] }}:00
+			</button>
+		</div>
+		<nz-alert *ngIf="!availableTimeSlots?.length"
+		          nzType="warning"
+		          nzMessage="Time Slot Not Available"
+		          nzDescription="The selected time slot is already booked. Please choose a different time."
+		          class="availability-alert">
+		</nz-alert>
+	</div>
+</div>

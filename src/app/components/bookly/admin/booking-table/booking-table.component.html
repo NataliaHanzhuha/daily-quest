@@ -1,0 +1,68 @@
+<nz-table #bookingsTable
+          [nzData]="bookings"
+          [nzLoading]="loading"
+          [nzShowPagination]="bookings.length > 10"
+          [nzPageSize]="10">
+	<thead>
+	<tr>
+		<th>Venue</th>
+		<th>Date & Time</th>
+		<th>Event Type</th>
+		<th>Customer</th>
+		<th>Payment</th>
+		<th>Status</th>
+		<th>Actions</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr *ngFor="let booking of bookingsTable.data">
+		<td>
+			<nz-badge [nzColor]="venues.get(booking.venueId)?.color"></nz-badge>
+			{{ getVenueName(booking.venueId) }}
+		</td>
+		<td>
+			<div>{{ booking?.date | date }}</div>
+			<div class="time-slot">{{ booking.startTime }} - {{ booking.endTime }}</div>
+		</td>
+		<td>{{ booking.eventType }}</td>
+		<td>
+			<div>{{ booking.customerName }}</div>
+			<div class="contact-info">{{ booking.customerPhone }}</div>
+			<div class="contact-info">{{ booking.customerEmail }}</div>
+		</td>
+		<td>
+			<div>{{ currencySymbol }}{{ booking.totalAmount }}</div>
+			<nz-tag [nzColor]="getPaymentStatusBadge(booking?.paymentDetails?.paymentStatus)">
+				{{ booking?.paymentDetails?.paymentStatus }}
+			</nz-tag>
+			<div>{{ booking?.paymentDetails?.paymentType }}</div>
+		</td>
+		<td>
+			<nz-badge [nzStatus]="getStatusBadge(booking.status)"
+			          [nzText]="booking.status"></nz-badge>
+		</td>
+		<td>
+			<button *ngIf="booking.status === 'pending'"
+			        nz-button
+			        nzType="primary"
+			        nzSize="small"
+			        (click)="confirmBooking(booking.id)">
+								<span nz-icon
+								      nzType="check"></span> Confirm
+			</button>
+			<button *ngIf="booking.status !== 'cancelled'"
+			        nz-button
+			        nzType="default"
+			        nzDanger
+			        nzSize="small"
+			        nz-popconfirm
+			        nzPopconfirmTitle="Are you sure you want to cancel this booking?"
+			        nzPopconfirmPlacement="left"
+			        (nzOnConfirm)="cancelBooking(booking.id)">
+								<span nz-icon
+								      nzType="close"></span> Cancel
+			</button>
+		</td>
+	</tr>
+	</tbody>
+</nz-table>

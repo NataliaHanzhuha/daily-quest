@@ -1,0 +1,44 @@
+:host ::ng-deep {
+  .anticon-wallet {
+    font-size: 64px;
+  }
+
+  .ant-btn-primary {
+    margin-top: 10px;
+  }
+}
+
+:host {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.payment-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.payment-option {
+  display: flex;
+  border: 1px solid black;
+  padding: 20px;
+  width: 200px;
+  border-radius: 5px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+
+  &.selected {
+    border-color: #4285F4;
+  }
+
+  img {
+    width: 64px;
+  }
+
+  .description {
+    font-size: 20px;
+  }
+}

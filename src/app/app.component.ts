@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -6,14 +9,34 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.scss'],
     standalone: false
 })
-export class AppComponent {
-  firebaseConfig: any = {
-    apiKey: "AIzaSyBWXJPkOBtpHfdBI55ceUu_jPdqSSoXe2M",
-    authDomain: "daily-quest-3361f.firebaseapp.com",
-    projectId: "daily-quest-3361f",
-    storageBucket: "daily-quest-3361f.firebasestorage.app",
-    messagingSenderId: "566987286470",
-    appId: "1:566987286470:web:3075c3dd7b9569718974c7",
-    measurementId: "G-PS5161CLDQ"
-  };
+export class AppComponent implements OnInit {
+    loading = true;
+    user: any = null;
+    title: any;
+
+    constructor(
+        // private angularFireAuth: AngularFireAuth,
+        // private router: Router,
+        // private authService: AuthService
+    ) {}
+
+    ngOnInit(): void {
+        // this.angularFireAuth.user.subscribe((u) => {
+        //     this.user = u;
+        //     if (!this.router.url || this.router.url === '/') {
+        //         this.router.navigate([u?.displayName ? '/' : '/login']);
+        //     }
+        //     this.loading = false;
+        // });
+    }
+
+    // isLoggedIn(): boolean {
+    //     return !!this.user;
+    // }
+    //
+    // logout(): void {
+    //     this.authService.logout().then(() => {
+    //         this.router.navigate(['/login']);
+    //     });
+    // }
 }

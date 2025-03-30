@@ -1,0 +1,18 @@
+<nz-spin nzSimple *ngIf="isLoading; else time"></nz-spin>
+<ng-template #time>
+<div *ngIf="availableTimeSlots?.length"
+     class="time-slots">
+	<button nz-button
+	        nzSize="large"
+	        *ngFor="let times of availableTimeSlots"
+	        [nzType]="times[0] === startTime ? 'primary': 'default'"
+	        (click)="setHours(times)">{{ times[0] }}:00 - {{ times[1] }}:00
+	</button>
+</div>
+<nz-alert *ngIf="!availableTimeSlots?.length"
+          nzType="warning"
+          nzMessage="Time Slot Not Available"
+          nzDescription="The selected time slot is already booked. Please choose a different time."
+          class="availability-alert">
+</nz-alert>
+</ng-template>

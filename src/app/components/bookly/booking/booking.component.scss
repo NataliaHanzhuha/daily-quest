@@ -1,0 +1,280 @@
+:host {
+  display: block;
+  margin: 0 20px;
+}
+
+:host ::ng-deep {
+  .ant-steps-item {
+    width: 140px;
+  }
+
+  .ant-steps-item-title {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .time-wrapper .ant-form-item-control-input-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ant-steps-item-title {
+      display: none;
+    }
+
+    .booking-form {
+      border-left: none !important;
+      padding: 0 !important;
+    }
+
+    .booking-steps.large {
+      display: none;
+    }
+
+    .venue-details .detail-item {
+      flex-wrap: wrap !important;
+      align-items: baseline;
+      gap: 0;
+    }
+
+  }
+}
+
+.modal-title {
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.venue-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  //margin-bottom: 15px;
+
+  @media screen and (max-width: 530px) {
+    gap: 20px;
+  }
+
+  .detail-item {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: baseline;
+
+    .label {
+      font-weight: 400;
+    }
+
+    .value {
+      color: #8c8c8c;
+      font-weight: 400;
+    }
+  }
+}
+
+.selected {
+  color: #1890ff;
+}
+
+.venue-header {
+  display: flex;
+  //margin-bottom: 30px;
+  //background-color: #f8f8f8;
+  //border-radius: 8px;
+  overflow: hidden;
+  //box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .venue-image {
+    flex: 0 0 300px;
+    height: 250px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .venue-info {
+    flex: 1;
+    padding: 20px;
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #1890ff;
+    }
+
+    p {
+      margin-bottom: 15px;
+      color: #5a5a5a;
+    }
+
+
+    .amenities {
+      h4 {
+        margin-bottom: 8px;
+        color: #8c8c8c;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+          background-color: #f0f0f0;
+          padding: 4px 10px;
+          margin-right: 8px;
+          margin-bottom: 8px;
+          border-radius: 4px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+.booking-container {
+  //padding: 20px;
+  margin: 0;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+
+
+  .booking-steps {
+    margin: 4px 0 30px;
+    max-width: 140px;
+  }
+
+  .booking-form {
+    //background-color: #fff;
+    padding: 0 20px 20px;
+    border-left: 1px solid #f0f0f0;
+    width: 100%;
+    //border-radius: 8px;
+    //box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .step-content {
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: #1890ff;
+      }
+    }
+
+    .availability-alert {
+      margin-bottom: 20px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 30px;
+
+      button {
+        margin-left: 10px;
+      }
+    }
+
+    .summary-card {
+      margin-bottom: 20px;
+
+      h4 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #1890ff;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding: 5px 0;
+        border-bottom: 1px solid #f0f0f0;
+
+        &.total {
+          font-size: 18px;
+          font-weight: 500;
+          margin-top: 15px;
+          border-top: 2px solid #f0f0f0;
+          border-bottom: none;
+          padding-top: 15px;
+        }
+
+        .label {
+          color: #8c8c8c;
+        }
+
+        .value {
+          font-weight: 500;
+        }
+      }
+    }
+
+    .payment-section {
+      margin-bottom: 20px;
+
+      h4 {
+        margin-bottom: 15px;
+        color: #1890ff;
+      }
+
+      .payment-placeholder {
+        height: 100px;
+        background-color: #f9f9f9;
+        border: 1px dashed #d9d9d9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+
+        p {
+          color: #8c8c8c;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .venue-header {
+      flex-direction: column;
+
+      .venue-image {
+        flex: none;
+        height: 200px;
+      }
+    }
+
+    .venue-info .venue-details .detail-item {
+      flex: 0 0 100%;
+    }
+  }
+}
+
+.time-slots  {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+footer {
+  display: flex;
+  width: 100%;
+  column-gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}

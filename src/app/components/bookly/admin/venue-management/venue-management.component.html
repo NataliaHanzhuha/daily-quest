@@ -1,0 +1,54 @@
+<nz-table #venuesTable
+          [nzData]="venues"
+          [nzLoading]="loading"
+          nzTableLayout="fixed">
+	<thead>
+	<tr>
+		<th>Image</th>
+		<th>Title</th>
+		<th>Category</th>
+		<th>Capacity</th>
+		<th>Hourly Rate</th>
+		<th>Min/Max Hours</th>
+		<th>
+			<button nz-button
+			        nzType="primary"
+			        (click)="openModal()">Add
+			</button>
+		</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr *ngFor="let venue of venuesTable.data">
+		<td>
+			<div class="venue-image-container name"
+			     [ngStyle]="{borderColor: venue?.color}">
+				<img [src]="venue.imageUrl"
+				     alt="{{ venue.title }}"
+				     class="venue-thumbnail"/>
+			</div>
+		</td>
+		<td>{{ venue.title }}</td>
+		<td>{{ getCategoryName(venue?.categoryId) }}</td>
+		<td>{{ venue.capacity }} people</td>
+		<td>{{currencySymbol}}{{ venue.hourlyRate }}/hour</td>
+		<td>{{ venue.minHours }}-{{ venue.maxHours }} hours</td>
+		<td>
+			<button nz-button
+			        nzType="primary"
+			        (click)="openModal(venue)"
+			        nzSize="small">Edit
+			</button>
+			<button nz-button
+			        nzType="default"
+			        nzDanger
+			        nz-popconfirm
+			        nzPopconfirmTitle="Are you sure you want to delete this venue?"
+			        nzPopconfirmPlacement="left"
+			        (nzOnConfirm)="deleteVenue(venue.id!)"
+			        nzSize="small">Delete
+			</button>
+		</td>
+	</tr>
+	</tbody>
+</nz-table>

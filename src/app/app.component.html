@@ -1,1 +1,27 @@
-19
+<!--<div *ngIf="loading; else content">-->
+<!--    <p>loading</p>{{loading | json}}-->
+<!--</div>-->
+<!--<ng-template #content>-->
+<!--  <div class="app-container">-->
+<!--    <header class="app-header">-->
+<!--      <div class="logo">-->
+<!--        <a routerLink="/">Acropolis Park Venue Booking</a>-->
+<!--      </div>-->
+<!--      <nav class="main-nav">-->
+<!--        <ul>-->
+<!--          <li><a routerLink="/categories" routerLinkActive="active">Event Venues</a></li>-->
+<!--          <li *ngIf="isLoggedIn()"><a routerLink="/admin" routerLinkActive="active">Admin</a></li>-->
+<!--        </ul>-->
+<!--      </nav>-->
+<!--      <div class="auth-actions">-->
+<!--        <button *ngIf="isLoggedIn()" class="logout-btn" (click)="logout()">Logout</button>-->
+<!--        <a *ngIf="!isLoggedIn()" routerLink="/login" class="login-btn">Login</a>-->
+<!--      </div>-->
+<!--    </header>-->
+
+<!--    <main class="app-content">-->
+      <router-outlet></router-outlet>
+<!--    </main>-->
+<!--  </div>-->
+<!--</ng-template>-->
+

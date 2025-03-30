@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -51,7 +51,7 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { ResponsiveDirective } from './components/responsive.directive';
 import { provideNgxStripe } from 'ngx-stripe';
-import { AuthService, initAuth } from './services/auth.service';
+
 registerLocaleData(en);
 
 @NgModule({

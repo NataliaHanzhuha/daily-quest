@@ -1,0 +1,53 @@
+<div #imageContainer
+     class="image-placeholder"
+     [ngClass]="sizeClass"
+     [ngStyle]="styles">
+	<!-- Image with loading optimization -->
+	<div *ngIf="hasImage"
+	     class="image-container"
+	     [class.loaded]="imageLoaded">
+		<ng-container *ngIf="priority; else regularImage">
+			<img ngSrc="{{image}}"
+			     [width]="containerWidth"
+			     [height]="containerHeight"
+			     [alt]="imageAlt"
+			     [ngStyle]="{'object-fit': objectFit}"
+			     class="actual-image"
+			     priority
+			     (load)="onImageLoad()"
+			     (error)="onImageError()">
+		</ng-container>
+
+		<ng-template #regularImage>
+			<img [src]="image"
+			     [alt]="imageAlt"
+			     [ngStyle]="{'object-fit': objectFit}"
+			     class="actual-image"
+			     [loading]="loading"
+			     (load)="onImageLoad()"
+			     (error)="onImageError()">
+		</ng-template>
+	</div>
+
+	<!-- Placeholder (shown when image is loading, errored, or not provided) -->
+	<div [class.hide]="hasImage && imageLoaded"
+	     class="placeholder-content">
+		<ng-container *ngIf="hasIcon; else textFallback">
+			<img [src]="iconPath"
+			     [alt]="icon"
+			     class="placeholder-icon">
+		</ng-container>
+
+		<ng-template #textFallback>
+			<div class="placeholder-fallback"
+			     [ngStyle]="textStyles">
+				{{ fallbackLetter }}
+			</div>
+		</ng-template>
+	</div>
+
+	<!-- Optional caption/text -->
+	<span *ngIf="text"
+	      class="placeholder-text"
+	      [ngStyle]="textStyles">{{ text }}</span>
+</div>

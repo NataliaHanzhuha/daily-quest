@@ -1,0 +1,130 @@
+@import '../base-service/base-service.component.scss';
+
+// Additional custom styles specific to the Grill service
+.menu-section {
+  margin-bottom: 60px;
+  
+  .menu-tabs {
+    background-color: var(--color-background, #ffffff);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    
+    .tab-headers {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--color-border, #e2e8f0);
+      
+      .tab-header {
+        padding: 15px 20px;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--color-text-light, #4A5568);
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: var(--color-accent, #f76a0c);
+        }
+        
+        &.active {
+          color: var(--color-accent, #f76a0c);
+          border-bottom: 2px solid var(--color-accent, #f76a0c);
+        }
+      }
+    }
+    
+    .tab-content {
+      display: none;
+      padding: 30px;
+      
+      &.active {
+        display: block;
+      }
+      
+      .menu-items {
+        display: grid;
+        gap: 25px;
+        
+        @media (min-width: 768px) {
+          grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        }
+        
+        .menu-item {
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 1px dashed var(--color-border, #e2e8f0);
+          padding-bottom: 15px;
+          
+          .menu-item-info {
+            flex: 1;
+            padding-right: 15px;
+            
+            h3 {
+              font-size: 1.2rem;
+              margin-bottom: 8px;
+              color: var(--color-heading, #2D3748);
+            }
+            
+            p {
+              font-size: 0.95rem;
+              color: var(--color-text-light, #4A5568);
+              margin: 0;
+            }
+          }
+          
+          .menu-item-price {
+            font-weight: 600;
+            color: var(--color-accent, #f76a0c);
+            white-space: nowrap;
+            align-self: flex-start;
+          }
+        }
+      }
+    }
+  }
+}
+
+.reservation-section {
+  background-color: var(--color-background-alt, #f8f9fa);
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom: 60px;
+  text-align: center;
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  p {
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .reservation-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    
+    .reservation-option {
+      background-color: var(--color-background, #ffffff);
+      padding: 25px;
+      border-radius: 10px;
+      min-width: 250px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: var(--color-heading, #2D3748);
+      }
+      
+      p {
+        margin-bottom: 0;
+        color: var(--color-text, #4A5568);
+      }
+    }
+  }
+}

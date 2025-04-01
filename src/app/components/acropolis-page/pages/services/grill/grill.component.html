@@ -1,0 +1,132 @@
+<div class="service-detail-page">
+  <!-- Hero Section -->
+  <section class="service-hero" [style.background-image]="'url(' + service.image + ')'">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>{{ service.name }}</h1>
+      <p>{{ service.shortDescription }}</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="service-content">
+    <div class="container">
+      <div class="description-section">
+        <h2>About Our {{ service.name }}</h2>
+        <p>{{ service.fullDescription }}</p>
+      </div>
+
+      <!-- Custom Menu Section for Grill -->
+      <div class="menu-section">
+        <h2>Featured Menu</h2>
+        <div class="menu-tabs">
+          <div class="tab-headers">
+            <div class="tab-header active">Signature Dishes</div>
+            <div class="tab-header">Appetizers</div>
+            <div class="tab-header">Main Courses</div>
+            <div class="tab-header">Desserts</div>
+          </div>
+          <div class="tab-content active">
+            <div class="menu-items">
+              <div class="menu-item">
+                <div class="menu-item-info">
+                  <h3>Flame-Grilled Ribeye</h3>
+                  <p>Premium aged beef, grilled to perfection, served with herb butter and grilled vegetables</p>
+                </div>
+                <div class="menu-item-price">₦15,000</div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-info">
+                  <h3>Mediterranean Sea Bass</h3>
+                  <p>Fresh sea bass with lemon, herbs, and olive oil, grilled and served with roasted potatoes</p>
+                </div>
+                <div class="menu-item-price">₦12,500</div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-info">
+                  <h3>Spiced Lamb Skewers</h3>
+                  <p>Tender lamb marinated in Greek spices, grilled and served with tzatziki and flatbread</p>
+                </div>
+                <div class="menu-item-price">₦10,800</div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-info">
+                  <h3>Vegetable Platter Deluxe</h3>
+                  <p>Selection of seasonal vegetables, grilled and drizzled with balsamic glaze and feta cheese</p>
+                </div>
+                <div class="menu-item-price">₦8,500</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="features-section">
+        <h2>What We Offer</h2>
+        <ul class="features-list">
+          <li *ngFor="let feature of service.features">
+            <span class="feature-icon">✓</span>
+            <span class="feature-text">{{ feature }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Gallery Section -->
+      <div class="gallery-section">
+        <h2>Gallery</h2>
+        <app-carousel 
+          [perView]="1" 
+          [showIndicators]="true" 
+          [showControls]="true"
+          [autoplay]="true"
+          [autoplayDelay]="5000">
+          
+          <div *ngFor="let image of service.images" class="carousel-item" carouselItem>
+            <div class="gallery-image" [style.background-image]="'url(' + image + ')'"></div>
+          </div>
+          
+        </app-carousel>
+      </div>
+
+      <!-- Pricing or Additional Info Section -->
+      <div class="info-section">
+        <ng-container *ngIf="service.pricing">
+          <h2>Pricing Information</h2>
+          <p class="info-text">{{ service.pricing }}</p>
+        </ng-container>
+        
+        <ng-container *ngIf="service.additionalInfo">
+          <h2>Additional Information</h2>
+          <p class="info-text">{{ service.additionalInfo }}</p>
+        </ng-container>
+      </div>
+
+      <!-- Reservation Section -->
+      <div class="reservation-section">
+        <h2>Make a Reservation</h2>
+        <p>Reserve your table at our Grill to enjoy a delightful dining experience.</p>
+        <div class="reservation-options">
+          <div class="reservation-option">
+            <h3>Call for Reservations</h3>
+            <p>+2349030030888</p>
+          </div>
+          <div class="reservation-option">
+            <h3>Opening Hours</h3>
+            <p>Lunch: 12:00 PM - 3:00 PM<br>Dinner: 6:00 PM - 10:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="cta-section">
+        <h2>Ready to Experience Our {{ service.name }}?</h2>
+        <p>Contact us today to make a reservation or inquiry.</p>
+        <div class="cta-buttons">
+          <a routerLink="/acropolis/contact" class="cta-button primary">Contact Us</a>
+          <a routerLink="/acropolis/services" class="cta-button secondary">Explore Other Services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -35,11 +35,11 @@ const routes: Routes = [
   },
   {
     path: 'acropolis',
-    loadComponent: () => import('./components/acropolis-page/acropolis-page.component').then((c) => c.AcropolisPageComponent)
+    loadChildren: () => import('./components/acropolis-page/acropolis-routing.module').then(m => m.AcropolisRoutingModule)
   },
   {
     path: '',
-    redirectTo: 'categories',
+    redirectTo: 'acropolis',
     pathMatch: 'full'
   }
 ];

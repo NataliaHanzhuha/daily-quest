@@ -1,0 +1,105 @@
+<header class="acropolis-header"
+        [ngClass]="isScrolled ? 'scrolled' : ''">
+	<div class="header-container">
+		<div class="logo"
+		     [ngClass]="isMobileMenuOpen ? 'isMobileMenuOpen': ''">
+			<a routerLink="/acropolis">
+				<img src="/assets/images/logo.ico">
+				<h1>acropolis park</h1>
+			</a>
+		</div>
+
+		<!-- Desktop Navigation -->
+		<nav class="desktop-nav">
+			<ul>
+				<li><a routerLink="/acropolis"
+				       routerLinkActive="active"
+				       [routerLinkActiveOptions]="{exact: true}">home</a></li>
+				<li><a routerLink="/acropolis/about"
+				       routerLinkActive="active">about us</a></li>
+				<li class="dropdown">
+					<a (mouseenter)="isServicesDropdownOpen = true"
+					   (mouseleave)="isServicesDropdownOpen = false"
+					   routerLink="/acropolis/services"
+					   routerLinkActive="active">
+						services
+						<span nz-icon
+						      [nzType]="isServicesDropdownOpen ? 'up' :'down'"
+						      class="dropdown-icon"
+						      nzTheme="outline"></span>
+						<!--						<span class="dropdown-icon">▼</span>-->
+					</a>
+					<div class="dropdown-menu"
+					     [class.show]="isServicesDropdownOpen"
+					     (mouseenter)="isServicesDropdownOpen = true"
+					     (mouseleave)="isServicesDropdownOpen = false">
+						<a *ngFor="let service of services"
+						   [routerLink]="service.route"
+						   routerLinkActive="active">{{ service.name.toLowerCase() }}</a>
+					</div>
+				</li>
+				<li><a routerLink="/acropolis/contact"
+				       routerLinkActive="active">contact us</a></li>
+			</ul>
+		</nav>
+
+		<!-- Mobile Menu Toggle -->
+		<div class="mobile-toggle"
+		     (click)="toggleMobileMenu()">
+			<span [ngClass]="{'open': isMobileMenuOpen}"></span>
+			<span [ngClass]="{'open': isMobileMenuOpen}"></span>
+			<span [ngClass]="{'open': isMobileMenuOpen}"></span>
+		</div>
+
+		<!-- Mobile Navigation -->
+		<nav class="mobile-nav"
+		     [ngClass]="{'open': isMobileMenuOpen}">
+			<ul>
+				<li><a routerLink="/acropolis"
+				       routerLinkActive="active"
+				       [routerLinkActiveOptions]="{exact: true}"
+				       (click)="closeMenus()">home</a></li>
+				<li><a routerLink="/acropolis/about"
+				       routerLinkActive="active"
+				       (click)="closeMenus()">about us</a></li>
+				<li>
+					<div class="mobile-dropdown-header"
+					     (click)="toggleServicesDropdown()">
+						services
+						<span nz-icon
+						      [nzType]="isServicesDropdownOpen ? 'up' :'down'"
+						      class="dropdown-icon"
+						      nzTheme="outline"></span>
+<!--						<span class="dropdown-icon">{{ isServicesDropdownOpen ? '▲' : '▼' }}</span>-->
+					</div>
+					<div class="mobile-dropdown-content"
+					     [ngClass]="{'open': isServicesDropdownOpen}">
+						<a *ngFor="let service of services"
+						   [routerLink]="service.route"
+						   routerLinkActive="active"
+						   (click)="closeMenus()">{{ service.name.toLowerCase() }}</a>
+					</div>
+				</li>
+				<li><a routerLink="/acropolis/contact"
+				       routerLinkActive="active"
+				       (click)="closeMenus()">contact us</a></li>
+				<li>
+					<div class="social-media-wrapper">
+						<app-social-links 
+							displayMode="icons" 
+							size="large"
+							direction="horizontal"
+							color="var(--color-light)"
+							hoverColor="var(--color-accent)">
+						</app-social-links>
+					</div>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div class="mobile-menu-overlay"
+     [ngClass]="{'open': isMobileMenuOpen}"
+     (click)="closeMenus()"></div>

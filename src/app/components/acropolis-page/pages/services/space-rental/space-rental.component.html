@@ -1,0 +1,116 @@
+<div class="service-detail-page">
+  <!-- Hero Section -->
+  <section class="service-hero" [style.background-image]="'url(' + service.image + ')'">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>{{ service.name }}</h1>
+      <p>{{ service.shortDescription }}</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="service-content">
+    <div class="container">
+      <div class="description-section">
+        <h2>About Our {{ service.name }} Service</h2>
+        <p>{{ service.fullDescription }}</p>
+      </div>
+
+      <!-- Custom Section for Space Rental -->
+      <div class="venue-types-section">
+        <h2>Our Event Spaces</h2>
+        <div class="venue-grid">
+          <div class="venue-card">
+            <div class="venue-image" style="background-image: url('/assets/images/acropolis/grand-hall.jpg')"></div>
+            <div class="venue-details">
+              <h3>Grand Hall</h3>
+              <p>Our flagship venue with capacity for up to 500 guests, perfect for weddings, galas, and corporate events.</p>
+              <ul class="venue-specs">
+                <li><strong>Capacity:</strong> 500 seated</li>
+                <li><strong>Size:</strong> 10,000 sq ft</li>
+                <li><strong>Features:</strong> Stage, dance floor, bar area</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="venue-card">
+            <div class="venue-image" style="background-image: url('/assets/images/acropolis/garden-pavilion.jpg')"></div>
+            <div class="venue-details">
+              <h3>Garden Pavilion</h3>
+              <p>An elegant outdoor setting surrounded by lush gardens, ideal for ceremonies and cocktail receptions.</p>
+              <ul class="venue-specs">
+                <li><strong>Capacity:</strong> 200 standing, 150 seated</li>
+                <li><strong>Size:</strong> 5,000 sq ft</li>
+                <li><strong>Features:</strong> Covered pavilion, garden views, string lighting</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="venue-card">
+            <div class="venue-image" style="background-image: url('/assets/images/acropolis/executive-suite.jpg')"></div>
+            <div class="venue-details">
+              <h3>Executive Suite</h3>
+              <p>A sophisticated space for business meetings, training sessions, and small corporate gatherings.</p>
+              <ul class="venue-specs">
+                <li><strong>Capacity:</strong> 50 seated</li>
+                <li><strong>Size:</strong> 1,500 sq ft</li>
+                <li><strong>Features:</strong> AV equipment, boardroom setup, catering services</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="features-section">
+        <h2>What We Offer</h2>
+        <ul class="features-list">
+          <li *ngFor="let feature of service.features">
+            <span class="feature-icon">✓</span>
+            <span class="feature-text">{{ feature }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Gallery Section -->
+      <div class="gallery-section">
+        <h2>Gallery</h2>
+        <app-carousel 
+          [perView]="1" 
+          [showIndicators]="true" 
+          [showControls]="true"
+          [autoplay]="true"
+          [autoplayDelay]="5000">
+          
+          <div *ngFor="let image of service.images" class="carousel-item" carouselItem>
+            <div class="gallery-image" [style.background-image]="'url(' + image + ')'"></div>
+          </div>
+          
+        </app-carousel>
+      </div>
+
+      <!-- Pricing or Additional Info Section -->
+      <div class="info-section">
+        <ng-container *ngIf="service.pricing">
+          <h2>Pricing Information</h2>
+          <p class="info-text">{{ service.pricing }}</p>
+        </ng-container>
+        
+        <ng-container *ngIf="service.additionalInfo">
+          <h2>Additional Information</h2>
+          <p class="info-text">{{ service.additionalInfo }}</p>
+        </ng-container>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="cta-section">
+        <h2>Ready to Experience Our {{ service.name }} Service?</h2>
+        <p>Contact us today to make a reservation or inquiry.</p>
+        <div class="cta-buttons">
+          <a routerLink="/acropolis/contact" class="cta-button primary">Contact Us</a>
+          <a routerLink="/acropolis/services" class="cta-button secondary">Explore Other Services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

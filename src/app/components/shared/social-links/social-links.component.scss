@@ -1,0 +1,99 @@
+.social-links-container {
+  display: flex;
+  align-items: center;
+  
+  &.direction-horizontal {
+    flex-direction: row;
+    
+    .social-link {
+      margin-right: 15px;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  
+  &.direction-vertical {
+    flex-direction: column;
+    
+    .social-link {
+      margin-bottom: 15px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  /* Size variants */
+  &.size-small {
+    .social-icon {
+      font-size: 16px;
+      width: 30px;
+      height: 30px;
+    }
+    
+    .social-text {
+      font-size: 14px;
+    }
+  }
+  
+  &.size-medium {
+    .social-icon {
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+    }
+    
+    .social-text {
+      font-size: 16px;
+    }
+  }
+  
+  &.size-large {
+    .social-icon {
+      font-size: 24px;
+      width: 50px;
+      height: 50px;
+    }
+    
+    .social-text {
+      font-size: 18px;
+    }
+  }
+  
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    color: var(--color-text, #1A202C);
+    
+    &:hover {
+      color: var(--color-accent, #f76a0c);
+      transform: translateY(-2px);
+    }
+    
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .social-text {
+      font-family: var(--font-body, 'Manrope', sans-serif);
+      font-weight: 500;
+      margin-left: 8px;
+    }
+    
+    /* For text-only mode */
+    &:hover .social-text {
+      text-decoration: underline;
+    }
+  }
+}

@@ -14,6 +14,10 @@ import { RouterModule } from '@angular/router';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
+// Custom Components & Services
+import { LoadingIndicatorComponent } from './components/shared/loading-indicator/loading-indicator.component';
+import { LoadingService } from './services/loading.service';
+
 // Ng-Zorro
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -70,6 +74,7 @@ registerLocaleData(en);
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    LoadingIndicatorComponent,
 
     // Ng-Zorro modules
     NzLayoutModule,
@@ -113,7 +118,8 @@ registerLocaleData(en);
     // },
     provideHttpClient(withInterceptors([bearerTokenInterceptor])),
     FirebaseService,
-    StripeService
+    StripeService,
+    LoadingService
   ],
   bootstrap: [AppComponent]
 })

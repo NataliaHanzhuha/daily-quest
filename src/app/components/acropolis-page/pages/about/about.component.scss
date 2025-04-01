@@ -1,0 +1,375 @@
+.about-page {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  
+  section {
+    padding: 5rem 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h2 {
+      font-size: 2.5rem;
+      color: #1a3c5b;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  }
+
+  /* Hero Section */
+  .about-hero {
+    background-image: url("/assets/images/acropolis-home-hero.png");
+    background-size: cover;
+    background-position: center;
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    color: white;
+    padding: 0 3rem;
+    margin-top: -80px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 100px;
+      left: 0;
+      width: 100%;
+      height: 85%;
+      background: linear-gradient(
+                      to bottom,
+                      rgb(46 52 76 / 14%), rgb(4 5 6 / 80%));
+      z-index: 1;
+    }
+    .hero-content {
+      max-width: 570px;
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-weight: 600;
+        line-height: 1;
+        margin: 0;
+        font-family: var(--font-heading);
+        letter-spacing: 0.5px;
+        color: var(--color-accent);
+        position: relative;
+        display: inline-block;
+      }
+
+      p {
+        max-width: 100%;
+        text-align: start;
+        font-size: clamp(1.6rem, 2vw, 2.8rem);
+        /* font-style: normal; */
+        color: var(--color-background);
+        opacity: .8;
+        letter-spacing: 0.5px;
+        font-weight: 300;
+        margin: 0;
+      }
+    }
+  }
+
+  /* Our Story Section */
+  .our-story {
+    .story-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+
+      .story-image {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        
+        img {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+      }
+
+      .story-text {
+        p {
+          margin-bottom: 1.5rem;
+          line-height: 1.8;
+        }
+      }
+    }
+  }
+
+  /* Mission & Values Section */
+  .mission-values {
+    background-color: #f9f9f9;
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .value-item {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-10px);
+      }
+
+      .value-icon {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+      }
+
+      h3 {
+        color: #1a3c5b;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        color: #666;
+        line-height: 1.6;
+      }
+    }
+  }
+
+  /* Our Team Section */
+  .our-team {
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+
+    .team-member {
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-10px);
+      }
+
+      .member-image {
+        height: 300px;
+        overflow: hidden;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+      }
+
+      .member-info {
+        padding: 1.5rem;
+
+        h3 {
+          color: #1a3c5b;
+          margin-bottom: 0.5rem;
+        }
+
+        .position {
+          color: #e9b44c;
+          font-weight: 600;
+          margin-bottom: 1rem;
+        }
+
+        .bio {
+          color: #666;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+
+  /* Achievements Section */
+  .achievements {
+    background-color: #1a3c5b;
+    color: white;
+
+    .section-header h2 {
+      color: white;
+    }
+
+    .achievements-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 2rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 600;
+        color: #e9b44c;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 1.1rem;
+      }
+    }
+
+    .awards-list {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+
+      h3 {
+        color: #e9b44c;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        max-width: 700px;
+        margin: 0 auto;
+
+        li {
+          padding: 1rem;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          font-size: 1.1rem;
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+
+  /* Find Us Section */
+  .find-us {
+    background-color: #f9f9f9;
+    
+    .location-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      
+      @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .location-info {
+      .info-item {
+        margin-bottom: 2rem;
+        
+        h3 {
+          color: #1a3c5b;
+          margin-bottom: 0.8rem;
+          font-size: 1.3rem;
+          display: flex;
+          align-items: center;
+          
+          i {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            background-color: #e9b44c;
+            border-radius: 50%;
+          }
+        }
+        
+        p {
+          color: #666;
+          margin-bottom: 0.5rem;
+          padding-left: 30px;
+        }
+      }
+      
+      .directions-btn {
+        margin-top: 2rem;
+        
+        a {
+          display: inline-block;
+          background-color: #1a3c5b;
+          color: white;
+          padding: 0.8rem 2rem;
+          border-radius: 4px;
+          text-decoration: none;
+          font-weight: 500;
+          transition: background-color 0.3s ease;
+          
+          &:hover {
+            background-color: darken(#1a3c5b, 10%);
+          }
+        }
+      }
+    }
+    
+    .location-map {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      
+      iframe {
+        display: block;
+        border: none;
+      }
+    }
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .about-hero {
+      padding: 0 1rem;
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    .our-story .story-content {
+      grid-template-columns: 1fr;
+    }
+
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

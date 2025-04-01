@@ -1,0 +1,56 @@
+<div class="carousel">
+	<div class="carousel-container"
+	     #carouselContainer>
+		<div class="carousel-track">
+			<ng-content></ng-content>
+		</div>
+	</div>
+
+	<div *ngIf="showControls"
+	     class="carousel-controls">
+		<button
+			class="carousel-control carousel-control-prev"
+			[class.disabled]="currentIndex$.value === 0 && !loop"
+			(click)="prev()"
+			aria-label="Previous slide">
+			<svg xmlns="http://www.w3.org/2000/svg"
+			     width="24"
+			     height="24"
+			     viewBox="0 0 24 24"
+			     fill="none"
+			     stroke="currentColor"
+			     stroke-width="2"
+			     stroke-linecap="round"
+			     stroke-linejoin="round">
+				<polyline points="15 18 9 12 15 6"></polyline>
+			</svg>
+		</button>
+		<button
+			class="carousel-control carousel-control-next"
+			[class.disabled]="currentIndex$.value === numSlides - 1 && !loop"
+			(click)="next()"
+			aria-label="Next slide">
+			<svg xmlns="http://www.w3.org/2000/svg"
+			     width="24"
+			     height="24"
+			     viewBox="0 0 24 24"
+			     fill="none"
+			     stroke="currentColor"
+			     stroke-width="2"
+			     stroke-linecap="round"
+			     stroke-linejoin="round">
+				<polyline points="9 18 15 12 9 6"></polyline>
+			</svg>
+		</button>
+	</div>
+
+	<div *ngIf="showIndicators && numSlides > 1"
+	     class="carousel-indicators">
+		<button
+			*ngFor="let item of items; let i = index"
+			class="carousel-indicator"
+			[class.active]="currentIndex$.value === i"
+			(click)="onIndicatorClick(i)">
+		</button>
+	</div>
+</div>

@@ -1,0 +1,65 @@
+@import '../base-service/base-service.component.scss';
+
+// Additional custom styles specific to the Space Rental service
+.venue-types-section {
+  margin-bottom: 60px;
+  
+  .venue-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    }
+    
+    .venue-card {
+      background-color: var(--color-background, #ffffff);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      }
+      
+      .venue-image {
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+      }
+      
+      .venue-details {
+        padding: 25px;
+        
+        h3 {
+          font-size: 1.5rem;
+          margin-bottom: 10px;
+          color: var(--color-heading, #2D3748);
+        }
+        
+        p {
+          margin-bottom: 15px;
+          color: var(--color-text, #4A5568);
+        }
+        
+        .venue-specs {
+          list-style: none;
+          padding: 0;
+          
+          li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            
+            strong {
+              color: var(--color-heading, #2D3748);
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}

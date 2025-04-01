@@ -1,0 +1,158 @@
+<div class="acropolis-home">
+	<!-- Hero Section -->
+	<section class="hero">
+		<div class="hero-content" [@slideIn]>
+			<h1>Explore Acropolis Park</h1>
+			<h5>A Modern Revival of Greek Grandeur — Your One-Stop Destination for Events, Recreation, and Community
+			    Living</h5>
+			<button class="primary-btn"
+			        (click)="bookNow()">Book Now
+			</button>
+		</div>
+	</section>
+
+	<!-- Our Story Section -->
+	<section class="our-story">
+		<div class="container">
+			<div class="section-header">
+				<h2>Our Story</h2>
+			</div>
+			<div class="story-content">
+				<div class="story-image">
+					<img ngSrc="/assets/images/acropolis-home-hero.png"
+					     alt="Acropolis Park Story"
+					     height="932"
+					     width="1649">
+				</div>
+				<div class="story-text">
+					<p>Our Acropolis is a recreational destination located in the heart of Nigeria’s capital city, and a re-
+					   enactment of the Greek architectural masterpiece offering a variety of services for individuals,
+					   families and communities. We were founded on a vision to provide convenience, through a one-
+					   stop-shop facility, that offers wide-ranging services for all of your recreational and event needs.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Our Story Section -->
+	<section class="our-story">
+		<div class="container">
+			<div class="section-header">
+				<h2>Our Services</h2>
+			</div>
+			<div class="story-content">
+				<div class="story-text">
+					<p>Our environment is a serene and picturesque oasis made up of lush greenery, meticulously
+					   landscaped gardens, and vibrant floral display envisioned to mimic the Hanging Gardens of Babylon.
+					   These rich landscape is surrounds a historically strong Classical-style Architecture, which radiates a
+					   peaceful and scenic escape from the hustle and bustle of life.</p>
+					<p>As a family-friendly facility, our amenities are evolving daily for everyone to enjoy and they include
+					   playgrounds, picnic areas, recreational spaces, restaurants, shopping areas, finger food outlets,
+					   event venues, gym amongst others.</p>
+				</div>
+				<!--				<div class="story-image">-->
+				<!--					<img ngSrc="/assets/images/acropolis-home-hero.png"-->
+				<!--					     alt="Acropolis Park Story"-->
+				<!--					     height="932"-->
+				<!--					     width="1649">-->
+				<!--				</div>-->
+				<!--			</div>-->
+
+				<div class="service-content">
+					<ul>
+						<li>Acropolis Grills</li>
+						<li>Acropolis Shopping</li>
+						<li nz-tooltip
+						    [nzTooltipTitle]="food">Acropolis Foods
+						</li>
+						<li>Acropolis Pastries</li>
+						<li nz-tooltip
+						    [nzTooltipTitle]="space">Acropolis Space Rental
+						</li>
+						<li>Acropolis Gym</li>
+
+					</ul>
+
+					<ul>
+						<li>Acropolis Banking</li>
+						<li>Acropolis Games</li>
+						<li>Acropolis Lodge</li>
+						<li>Acropolis e-connect</li>
+						<li>Acropolis Cultural corner</li>
+						<li>Acropolis Green</li>
+					</ul>
+
+					<ng-template #food>
+						<p> - Indoor restaurant</p>
+						<p> - Outdoor restaurant</p>
+					</ng-template>
+
+					<ng-template #space>
+						<p> - Indoor restaurant</p>
+						<p> - Outdoor restaurant</p>
+					</ng-template>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Our Perks Section -->
+	<section class="perks">
+		<div class="section-header">
+			<h2>Our Uniqueness</h2>
+		</div>
+		<div class="perks-container">
+			<div class="perk-item">
+				<app-image-placeholder icon="architecture"
+				                       size="large"
+				                       iconColor="#f76a0c"></app-image-placeholder>
+				<h3>Architectural Charm</h3>
+				<p>Experience our Greek-inspired architecture and beautiful surroundings.</p>
+			</div>
+			<div class="perk-item">
+				<app-image-placeholder icon="events"
+				                       size="large"
+				                       iconColor="#f76a0c"></app-image-placeholder>
+				<h3>Events & Gatherings</h3>
+				<p>Host memorable events in our versatile and elegant spaces.</p>
+			</div>
+			<div class="perk-item">
+				<app-image-placeholder icon="dining"
+				                       size="large"
+				                       iconColor="#f76a0c"></app-image-placeholder>
+				<h3>Dining & Relaxation</h3>
+				<p>Enjoy our café, grill, and relaxation areas for the perfect experience.</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- FAQ Section -->
+	<section class="faq">
+		<div class="section-header">
+			<h2>Frequently Asked Questions</h2>
+		</div>
+		<div class="faq-container">
+			<div class="faq-item"
+			     *ngFor="let faq of faqs; let i = index">
+				<div class="faq-question"
+				     (click)="toggleFaq(i)">
+					<h3>{{ faq.question }}</h3>
+					<span nz-icon
+					      class="toggle-icon"
+					      [nzType]="faq.isOpen ? 'minus' : 'plus'"
+					      nzTheme="outline"></span>
+				</div>
+				<div class="faq-answer"
+				     [style.display]="faq.isOpen ? 'block' : 'none'">
+					<p>{{ faq.answer }}</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Testimonials Section -->
+	<app-testimonials></app-testimonials>
+
+</div>

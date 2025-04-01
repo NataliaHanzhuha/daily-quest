@@ -1,0 +1,59 @@
+<div class="review-card" [ngClass]="cardStyle">
+  <div *ngIf="showQuotes" class="quote-mark top-left">
+    <app-image-placeholder 
+      icon="quote" 
+      bgColor="transparent"
+      iconColor="var(--color-accent, #f76a0c)" 
+      size="small">
+    </app-image-placeholder>
+  </div>
+  
+  <div class="review-content">
+    <p class="review-text">{{ review.content }}</p>
+  </div>
+  
+  <div class="review-footer">
+    <div class="reviewer-info">
+      <div *ngIf="showAvatar" class="reviewer-avatar">
+        <app-image-placeholder 
+          [image]="review.avatar ?? ''"
+          [text]="avatarInitial"
+          icon="user"
+          size="small"
+          bgColor="var(--color-accent-light, #fef0e6)"
+          iconColor="var(--color-accent, #f76a0c)"
+          borderRadius="50%"
+          objectFit="cover"
+          [alt]="review.name">
+        </app-image-placeholder>
+      </div>
+      <div class="reviewer-details">
+        <h4 class="reviewer-name">{{ review.name }}</h4>
+        <p *ngIf="review.service" class="reviewer-service">{{ review.service }}</p>
+      </div>
+    </div>
+    
+    <div class="review-rating">
+      <div class="stars">
+        <span *ngFor="let star of ratingArray" class="star">
+          <app-image-placeholder 
+            icon="star" 
+            [bgColor]="star ? 'transparent' : 'transparent'"
+            [iconColor]="star ? 'var(--color-accent, #f76a0c)' : 'var(--color-muted, #e2e8f0)'" 
+            size="small">
+          </app-image-placeholder>
+        </span>
+      </div>
+      <span *ngIf="review.date" class="review-date">{{ review.date }}</span>
+    </div>
+  </div>
+  
+  <div *ngIf="showQuotes" class="quote-mark bottom-right">
+    <app-image-placeholder 
+      icon="quote" 
+      bgColor="transparent"
+      iconColor="var(--color-accent, #f76a0c)" 
+      size="small">
+    </app-image-placeholder>
+  </div>
+</div>

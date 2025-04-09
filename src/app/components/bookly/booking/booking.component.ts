@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { filter, Observable, of, switchMap } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, takeUntil } from 'rxjs/operators';
 
 // Ng-Zorro Modules
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -21,7 +21,11 @@ import { DateAndTimeComponent } from './components/date-and-time/date-and-time.c
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { set } from '@angular/fire/database';
+import { VenueService } from '../../../services/venue.service';
+import { CategoryService } from '../../../services/category.service';
+import { EventBookingService } from '../../../services/event-booking.service';
+import { UnsubscribeHook } from '../../unsubscribe.hook';
+import { EmailService } from '../../../services/email.service';
 
 
 @Component({
@@ -41,7 +45,7 @@ import { set } from '@angular/fire/database';
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.scss']
 })
-export class BookingComponent {
+export class BookingComponent extends UnsubscribeHook implements OnInit {
   currentStep = 0;
   venue!: Venue;
   bookingForm!: FormGroup;
@@ -49,25 +53,24 @@ export class BookingComponent {
   readonly today = new Date();
   customer?: Customer;
   payment?: PaymentDetails;
-  private venueId: string = '';
+  @Output() bookingId = new EventEmitter<null | string>();
+  @Input() venueId: string = '';
+  @Output() venueIdChanged = new EventEmitter<null>();
 
   constructor(
-    private router: Router,
     private fb: FormBuilder,
     private message: NzMessageService,
     private firebaseService: FirebaseService,
     private timeService: TimeService,
     private authService: AuthService,
-    private route: ActivatedRoute,
+    private venueService: VenueService,
+    private categoryService: CategoryService,
+    private eventBookingService: EventBookingService,
+    private emailService: EmailService
   ) {
+    super();
     this.createForm();
     this.setRulesForForm();
-    this.route.paramMap.subscribe(params => {
-      this.venueId = params.get('id')!;
-      if (this.venueId) {
-        this.loadVenue();
-      }
-    });
   }
 
   get totalCost(): number {
@@ -111,6 +114,12 @@ export class BookingComponent {
     return this.bookingForm.get('duration')?.value;
   }
 
+  ngOnInit() {
+    if (this.venueId) {
+      this.loadVenue();
+    }
+  }
+
   setPayment(payment: PaymentDetails): void {
     this.payment = payment;
 
@@ -146,6 +155,7 @@ export class BookingComponent {
             fullName: this.bookingForm.get('customerName')?.value,
             email: this.bookingForm.get('customerEmail')?.value,
             phone: this.bookingForm.get('customerPhoneNumberPrefix')?.value + this.bookingForm.get('customerPhone')?.value,
+            price: this.totalCost
           };
         }
         break;
@@ -155,6 +165,8 @@ export class BookingComponent {
       default:
         valid = true;
     }
+
+    console.log(this.bookingForm.value);
 
     return valid;
   }
@@ -193,7 +205,7 @@ export class BookingComponent {
     };
 
     // Process booking with Square payment ID
-    this.firebaseService.createBooking(booking, this.venue.title)
+    this.eventBookingService.createBooking(booking)
       .pipe(
         catchError((err) => {
           console.error('Error creating booking:', err);
@@ -202,27 +214,22 @@ export class BookingComponent {
           return of(null);
         }),
         filter(Boolean),
-        // takeUntil(this.destroy$),
+        switchMap((newBooking: EventBooking) => {
+          return this.emailService.sendEmailAfterAppointmentCreated(newBooking, this.venue?.title)
+            .pipe(map(() => newBooking));
+        }),
+        takeUntil(this.unsubscribe$)
       )
       .subscribe((result: EventBooking) => {
         this.isLoading = false;
 
         this.message.success('Booking created successfully!');
-
-        // Add to Google Calendar if requested
-        // if (formValue.addToGoogleCalendar && result) {
-        //   this.booklyService.addToGoogleCalendar(result).subscribe();
-        // }
-
-        // Navigate to a confirmation page
-        this.router.navigate(['/booking-confirmation'], {
-          queryParams: {bookingId: result?.id}
-        });
+        this.bookingId.emit(result.id);
       });
   }
 
   private loadVenue(): void {
-    this.firebaseService.getVenueById(this.venueId)
+    this.venueService.getVenueById(this.venueId)
       // @ts-ignore
       .pipe(switchMap((venue: Venue | undefined) => {
         if (!venue) {
@@ -239,7 +246,7 @@ export class BookingComponent {
   }
 
   private loadCategoryDetails(categoryId: string): Observable<Venue> {
-    return this.firebaseService.getCategoryById(categoryId)
+    return this.categoryService.getCategoryById(categoryId)
       .pipe(map(category => {
         this.venue.categoryName = category?.title ?? 'Uncategorized';
 
@@ -313,6 +320,4 @@ export class BookingComponent {
 
     return valid;
   }
-
-  protected readonly set = set;
 }

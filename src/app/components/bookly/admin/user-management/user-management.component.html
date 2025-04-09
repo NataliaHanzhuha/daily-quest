@@ -1,29 +1,29 @@
-<nz-table #basicTable
-          [nzBordered]="true"
-          [nzData]="users"
-          [nzSize]="'middle'">
-	<thead>
-	<tr>
-		<th nzWidth="25%">Name</th>
-		<th nzWidth="25%">Email</th>
-		<th nzWidth="25%">Role</th>
-		<th nzWidth="25%">Actions</th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr *ngFor="let user of users">
-		<td>{{ user.displayName }}</td>
-		<td>{{ user.email }}</td>
-		<td>{{ user.role }}</td>
-		<td>
-			<ng-container *ngIf="(isAdmin$ | async)">
-				<button nz-button
-				        nzType="link"
-				        nzDanger
-				        (click)="deleteUser(user.uid)">Delete
-				</button>
-			</ng-container>
-		</td>
-	</tr>
-	</tbody>
-</nz-table>
+<!--<nz-table #basicTable-->
+<!--          [nzBordered]="true"-->
+<!--          [nzData]="users"-->
+<!--          [nzSize]="'middle'">-->
+<!--	<thead>-->
+<!--	<tr>-->
+<!--		<th nzWidth="25%">Name</th>-->
+<!--		<th nzWidth="25%">Email</th>-->
+<!--		<th nzWidth="25%">Role</th>-->
+<!--		<th nzWidth="25%">Actions</th>-->
+<!--	</tr>-->
+<!--	</thead>-->
+<!--	<tbody>-->
+<!--	<tr *ngFor="let user of users">-->
+<!--		<td>{{ user.displayName }}</td>-->
+<!--		<td>{{ user.email }}</td>-->
+<!--		<td>{{ user.role }}</td>-->
+<!--		<td>-->
+<!--			<ng-container *ngIf="(isAdmin$ | async)">-->
+<!--				<button nz-button-->
+<!--				        nzType="link"-->
+<!--				        nzDanger-->
+<!--				        (click)="deleteUser(user.uid)">Delete-->
+<!--				</button>-->
+<!--			</ng-container>-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	</tbody>-->
+<!--</nz-table>-->

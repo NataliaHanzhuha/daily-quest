@@ -12,14 +12,14 @@ import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
-import { FirebaseService } from '../../../../../services/firebase.service';
 import { finalize, Subscription } from 'rxjs';
 import { VenueCategory } from '../../../../../models/task';
+import { UploadImageService } from '../../../../../services/upload-image.service';
 
 @Component({
   selector: 'app-category-management-modal',
   standalone: true,
-  imports: [   CommonModule,
+  imports: [CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NzTableModule,
@@ -48,9 +48,9 @@ export class CategoryManagementModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private firebaseService: FirebaseService,
     private message: NzMessageService,
     private ref: NzModalRef,
+    private uploadImageService: UploadImageService
   ) {
     this.innerCategory = ref.getConfig().nzData?.category ?? null;
 
@@ -90,7 +90,7 @@ export class CategoryManagementModalComponent implements OnInit {
       description: this.categoryForm?.get('description')?.value ?? this.innerCategory?.description ?? null,
       id: this.innerCategory?.id || null,
       imageUrl: this.imageUrl
-    })
+    });
   }
 
 
@@ -99,7 +99,7 @@ export class CategoryManagementModalComponent implements OnInit {
     const file = item.file as File;
     this.isUploading = true;
 
-    return this.firebaseService.uploadCategoryImage(file).pipe(
+    return this.uploadImageService.uploadImage(file as any, 'category').pipe(
       finalize(() => {
         this.isUploading = false;
         this.uploadProgress = 0;
@@ -114,7 +114,7 @@ export class CategoryManagementModalComponent implements OnInit {
         item.onError(err);
       }
     });
-  }
+  };
 
   // Handle file change for nz-upload
   handleFileChange(info: any): void {

@@ -1,7 +1,7 @@
 <div class="modal-title">
-	<a routerLink="/services/{{venue?.categoryId}}"
+	<a (click)="venueIdChanged.emit(null)"
 	   class="back-btn">← Back to Venues </a>
-	<h2>{{ venue?.categoryName }}: {{ venue?.title }}</h2>
+	<h3>{{ venue?.categoryName }}: {{ venue?.title }}</h3>
 	<div class="venue-details">
 		<div class="detail-item">
 			<span class="label"
@@ -91,11 +91,11 @@
 	        (click)="nextStep()">Next
 	</button>
 
-	<button nz-button
-	        nzType="primary"
-	        [disabled]="!validateCurrentStep(false)"
-	        *ngIf="currentStep === 2"
-	        (click)="processBookingWithPayment()">
-		Confirm Booking
-	</button>
+<!--	<button nz-button-->
+<!--	        nzType="primary"-->
+<!--	        [disabled]="!validateCurrentStep(false)"-->
+<!--	        *ngIf="currentStep === 2"-->
+<!--	        (click)="processBookingWithPayment()">-->
+<!--		Confirm Booking-->
+<!--	</button>-->
 </footer>

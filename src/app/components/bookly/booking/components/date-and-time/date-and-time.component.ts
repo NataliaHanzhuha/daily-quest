@@ -17,6 +17,8 @@ import { tap } from 'rxjs';
 import { FirebaseService } from '../../../../../services/firebase.service';
 import { UnsubscribeHook } from '../../../../unsubscribe.hook';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { WorkScheduleService } from '../../../../../services/work-schedule.service';
+import { EventBookingService } from '../../../../../services/event-booking.service';
 
 @Component({
   selector: 'app-date-and-time',
@@ -82,9 +84,10 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
   constructor(
     private timeService: TimeService,
     private fb: FormBuilder,
-    private firebaseService: FirebaseService,
     private cd: ChangeDetectorRef,
     private message: NzMessageService,
+    private workScheduleService: WorkScheduleService,
+    private eventBookingService: EventBookingService
   ) {
     super();
     this.createForm();
@@ -101,7 +104,7 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
           startTime: null,
           endTime: null,
         });
-        this.calculateTimeSlots();
+        this.checkAvailability();
         this.cd.detectChanges();
       });
 
@@ -119,7 +122,7 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
     this.startHour?.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
-        this.calculateTimeSlots();
+        this.checkAvailability();
         this.cd.detectChanges();
       });
 
@@ -136,17 +139,21 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
     }
 
     this.isLoading = true;
-    // const date = this.bookingForm.get('date')?.value;
-    // const startTime = this.formatTime(this.bookingForm.get('startTime')?.value);
-    // const endTime = this.formatTime(this.bookingForm.get('endTime')?.value);
+    const workStartHour = this.selectedStartTime
+      ? this.selectedStartTime
+      : this.startWorkingDayTime;
+    const dateString = this.selectedDate.toISOString();
+    const {paddingBeforeMinutes, paddingAfterMinutes} = this.venue;
 
-    this.firebaseService.checkVenueAvailability(this.venue?.id, this.selectedDate)
+    this.eventBookingService.checkVenueAvailability(
+      this.venue?.id, dateString.slice(0, dateString.indexOf('T')), workStartHour,
+      this.endWorkingDayTime, this.selectedDuration * 60,
+      paddingBeforeMinutes, paddingAfterMinutes)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
-        next: (isAvailable: EventBooking[]) => {
+        next: (slots: number[][]) => {
           this.isLoading = false;
-          this.existingBookings = isAvailable;
-          this.calculateTimeSlots();
+          this.availableTimeSlots = slots;
         },
         error: (err) => {
           console.error('Error checking availability:', err);
@@ -154,20 +161,6 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
           this.isLoading = false;
         }
       });
-  }
-
-  private calculateTimeSlots(): void {
-    const workStartHour = this.selectedStartTime
-      ? this.selectedStartTime
-      : this.startWorkingDayTime;
-
-    const {paddingBeforeMinutes, paddingAfterMinutes} = this.venue;
-
-    this.availableTimeSlots = this.timeService.findAvailableSlots(
-      this.existingBookings, this.venue.id!, this.selectedDate!.toDateString(), workStartHour,
-      this.endWorkingDayTime, this.selectedDuration * 60, paddingBeforeMinutes, paddingAfterMinutes);
-
-    console.log(this.availableTimeSlots);
   }
 
   disabledDate = (current: Date): boolean =>
@@ -194,7 +187,7 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
   }
 
   private getWorkingSchedule(): void {
-    this.firebaseService.getSchedules()
+    this.workScheduleService.getSchedules()
       .pipe(takeUntil(this.unsubscribe$),
         tap((data) => {
           data.forEach((item) => {

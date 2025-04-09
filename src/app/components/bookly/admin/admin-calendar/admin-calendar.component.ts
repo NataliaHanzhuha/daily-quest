@@ -20,7 +20,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 // Services and Models
-import { FirebaseService } from '../../../../services/firebase.service';
 import { EventBooking, Venue, WorkSchedule } from '../../../../models/task';
 
 // Import the booking details modal component
@@ -33,6 +32,9 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { TimeService } from '../../../../services/time.service';
+import { EventBookingService } from '../../../../services/event-booking.service';
+import { VenueService } from '../../../../services/venue.service';
+import { WorkScheduleService } from '../../../../services/work-schedule.service';
 
 @Component({
   selector: 'app-admin-calendar',
@@ -80,36 +82,38 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
   private schedules: { [key: number]: WorkSchedule } = {};
 
   constructor(
-    private firebaseService: FirebaseService,
     private message: NzMessageService,
     private modalService: NzModalService,
-    private timeService: TimeService
+    private timeService: TimeService,
+    private eventBookingService: EventBookingService,
+    private venueService: VenueService,
+    private workScheduleService: WorkScheduleService
   ) {
     this.initCalendarOptions();
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const startTime= this.timeService.getHour(selectInfo.startStr);
+    const startTime = this.timeService.getHour(selectInfo.startStr);
     const endTime = this.timeService.getHour(selectInfo.end);
 
     const booking = {
-        venueId: 'null',
-        date: this.timeService.getDate(selectInfo.start),
-        startTime,
-        endTime,
-        duration: endTime - startTime,
-        customerName: null,
-        customerEmail: null,
-        customerPhone: null,
-        customerPhoneNumberPrefix: null,
-        eventType: null,
-        attendees: 0,
-        status: 'pending',
-        totalAmount: 0,
-        userId: null,
-        createdAt: new Date(),
-        paymentDetails: null
-      } as unknown;
+      venueId: 'null',
+      date: this.timeService.getDate(selectInfo.start),
+      startTime,
+      endTime,
+      duration: endTime - startTime,
+      customerName: null,
+      customerEmail: null,
+      customerPhone: null,
+      customerPhoneNumberPrefix: null,
+      eventType: null,
+      attendees: 0,
+      status: 'pending',
+      totalAmount: 0,
+      userId: null,
+      createdAt: new Date(),
+      paymentDetails: null
+    } as unknown;
     this.showBookingDetails(booking as EventBooking);
     // const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
@@ -166,7 +170,8 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getWorkingSchedule();
     this.loadVenues();
-    this.loadBookings();
+    let {from, to} = this.timeService.getCurrentWeekRange();
+    this.loadBookings(from, to);
   }
 
   ngOnDestroy(): void {
@@ -219,23 +224,6 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
     }
   }
 
-  private showBookingDetails(booking: EventBooking): void {
-    const venueName = booking?.id ? this.getVenueName(booking!.venueId) : 'Unknown Venue';
-
-    const modalRef = this.modalService.create({
-      nzTitle: 'Booking Details',
-      nzContent: BookingDetailsModalComponent,
-      nzWidth: 750,
-      nzData: {booking, venueName, color: this.venues.get(booking!.venueId)?.color ?? '#000'},
-      nzFooter: null
-    });
-
-    modalRef.afterClose.pipe(take(1), filter(Boolean))
-      .subscribe(result => {
-        this.loadBookings();
-      });
-  }
-
   onDateSelect(date: Date): void {
     this.selectedDate = date;
   }
@@ -254,8 +242,6 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Methods for confirming and cancelling bookings moved to BookingDetailsModalComponent
-
   formatTime(hour: string): string {
     // Convert 24-hour format to 12-hour format
     const ampm = +hour >= 12 ? 'PM' : 'AM';
@@ -263,8 +249,29 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
     return `${hour12}:00 ${ampm}`;
   }
 
+  // Methods for confirming and cancelling bookings moved to BookingDetailsModalComponent
+
+  private showBookingDetails(booking: EventBooking): void {
+    const venueName = booking?.id ? this.getVenueName(booking!.venueId) : 'Unknown Venue';
+
+    const modalRef = this.modalService.create({
+      nzTitle: 'Booking Details',
+      nzContent: BookingDetailsModalComponent,
+      nzWidth: 750,
+      nzData: {booking, venueName, color: this.venues.get(booking!.venueId)?.color ?? '#000'},
+      nzFooter: null
+    });
+
+    modalRef.afterClose.pipe(take(1), filter(Boolean))
+      .subscribe(result => {
+        let {from, to} = this.timeService.getCurrentWeekRange();
+
+        this.loadBookings(from, to);
+      });
+  }
+
   private getWorkingSchedule(): void {
-    this.firebaseService.getSchedules()
+    this.workScheduleService.getSchedules()
       .pipe(
         takeUntil(this.destroy$),
         tap((data) => {
@@ -304,14 +311,19 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
       dayMaxEvents: true,
       select: this.handleDateSelect.bind(this),
       eventClick: this.handleEventClick.bind(this),
-      // eventsSet: this.handleEvents.bind(this),
+      eventsSet: this.handleEvents.bind(this),
       slotMinTime: '08:00:00',
       slotMaxTime: '22:00:00',
+      datesSet: (arg) => {
+        console.log('Calendar navigated to new view');
+        console.log('Start:', arg.startStr, 'End:', arg.endStr);
+        this.loadBookings(this.timeService.getDate(arg.startStr), this.timeService.getDate(arg.endStr),);
+      }
     };
   }
 
   private loadVenues(): void {
-    this.firebaseService.getVenues()
+    this.venueService.getVenues()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: venues => {
@@ -324,13 +336,13 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
       });
   }
 
-  private loadBookings(): void {
+  private loadBookings(from: any, to: any): void {
     this.isLoading = true;
-    this.firebaseService.getBookings()
+    this.eventBookingService.filteredBookingForCalendar(from, to)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: bookings => {
-          this.bookings = bookings.filter(booking => {
+          this.bookings = bookings.filter((booking: EventBooking) => {
             return booking.status !== 'cancelled';
           });
           this.calendarOptions.events = this.bookings.map((booking) => {
@@ -340,7 +352,7 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
 
             return {
               id: booking.id,
-              title: this.venues.get(booking.venueId)?.title,
+              title: this.venues.get(booking.venueId)?.title ?? booking?.venueId,
               start, end,
               color: '#fefefe',
               textColor: '#222',
@@ -348,6 +360,7 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
             };
           });
 
+          console.log(this.bookings, this.calendarOptions.events);
           this.applyFilters();
           this.isLoading = false;
         },

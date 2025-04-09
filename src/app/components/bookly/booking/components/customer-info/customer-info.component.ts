@@ -21,12 +21,6 @@ import { countries, CountryInterface } from 'country-codes-flags-phone-codes';
     ReactiveFormsModule],
   templateUrl: './customer-info.component.html',
   styleUrls: ['./customer-info.component.scss'],
-  // providers: [
-  //   {
-  //     provide: NG_VALUE_ACCESSOR,
-  //     useExisting: forwardRef(() => CustomerInfoComponent),
-  //     multi: true,
-  //   }],
 })
 export class CustomerInfoComponent implements OnInit {
   bookingForm!: FormGroup;

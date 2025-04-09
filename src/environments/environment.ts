@@ -1,15 +1,7 @@
 export const environment = {
     production: true,
-    backendUrl: "http://127.0.0.1:4200",
-    firebase: {
-        apiKey: "AIzaSyDizEz7mCnAJucPd5aXeyV1Uwmp69Q7O2s",
-        authDomain: "podcast-therapy-api.firebaseapp.com",
-        projectId: "podcast-therapy-api",
-        storageBucket: "podcast-therapy-api.appspot.com",
-        messagingSenderId: "1033825996310",
-        appId: "1:1033825996310:web:272d385ea371f7e8ed6f37",
-        measurementId: "G-4LX67WGT46"
-    },
+    // backendUrl: "http://localhost:4242/api/",
+    backendUrl: "https://acropolispark-server-7355351ddd0f.herokuapp.com/api/",
 
     // Keeping Stripe keys for reference or fallback
     stripe: {

@@ -1,5 +1,6 @@
 <!-- App Container -->
-<div class="app-container">
+
+<div class="app-container" [@routeAnimations]="prepareRoute(outlet)">
   <!-- Global Loading Indicator -->
 <!--  <app-loading-indicator -->
 <!--    [isLoading]="isLoading"-->
@@ -8,5 +9,5 @@
 <!--  </app-loading-indicator>-->
   
   <!-- Main Content -->
-  <router-outlet></router-outlet>
+  <router-outlet #outlet="outlet"></router-outlet>
 </div>

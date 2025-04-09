@@ -18,6 +18,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 // Services and Models
 import { FirebaseService } from '../../../../../services/firebase.service';
 import { Dropdown, Venue, VenueCategory } from '../../../../../models/task';
+import { VenueService } from '../../../../../services/venue.service';
+import { CategoryService } from '../../../../../services/category.service';
+import { UploadImageService } from '../../../../../services/upload-image.service';
 
 @Component({
   selector: 'app-venue-form-modal',
@@ -35,7 +38,6 @@ import { Dropdown, Venue, VenueCategory } from '../../../../../models/task';
     NzTagModule,
     NzUploadModule,
     NzIconModule,
-    // NzColorPickerModule,
   ],
   templateUrl: './venue-form-modal.component.html',
   styleUrls: ['./venue-form-modal.component.scss']
@@ -57,7 +59,9 @@ export class VenueFormModalComponent implements OnInit {
     private fb: FormBuilder,
     private firebaseService: FirebaseService,
     private message: NzMessageService,
-    private modalRef: NzModalRef
+    private modalRef: NzModalRef,
+    private venueService: VenueService,
+    private uploadImage: UploadImageService
   ) {
     this.innerVenue = this.modalRef.getConfig().nzData?.venue;
     this.categories = this.modalRef.getConfig().nzData?.categories
@@ -99,7 +103,7 @@ export class VenueFormModalComponent implements OnInit {
 
     this.isUploading = true;
 
-    return this.firebaseService.uploadVenueImage(file as any).pipe(
+    return this.uploadImage.uploadImage(file as any, 'venue').pipe(
       map(url => {
         this.imageUrl = url;
         this.venueForm.patchValue({imageUrl: url});
@@ -138,14 +142,14 @@ export class VenueFormModalComponent implements OnInit {
 
     if (this.innerVenue?.id) {
       // Update existing venue
-      this.firebaseService.updateVenue({...venueData, id: this.innerVenue?.id})
+      this.venueService.updateVenue({...venueData, id: this.innerVenue?.id})
         .subscribe((venue: Venue) => {
           this.message.success('Venue updated successfully');
           this.modalRef.close(venue);
         });
     } else {
       // Add new venue
-      this.firebaseService.addVenue(venueData)
+      this.venueService.createVenue(venueData)
         .subscribe((venue: Venue) => {
           this.message.success('Venue added successfully');
           this.modalRef.close(venue);

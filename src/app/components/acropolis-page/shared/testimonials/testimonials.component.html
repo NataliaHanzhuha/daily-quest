@@ -6,16 +6,17 @@
     </div>
     
     <app-carousel 
-      [perView]="carouselItemsPerView" 
+      [perView]="carouselItemsPerView(1,2,3)"
       [spacing]="20"
       [showIndicators]="true" 
-      [showControls]="true" 
-      [autoplay]="true" 
+      [showControls]="false"
+      [autoplay]="true"
       [autoplayDelay]="5000"
       [loop]="true">
       
       <div *ngFor="let review of reviews" class="carousel-item" carouselItem>
-        <app-review-card 
+        <app-review-card
+	        [ngStyle]="{'max-width': carouselItemsPerView('85vw', '45vw', '400px')}"
           [review]="review" 
           cardStyle="default"
           [showAvatar]="true"

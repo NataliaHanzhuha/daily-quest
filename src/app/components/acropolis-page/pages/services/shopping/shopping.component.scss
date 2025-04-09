@@ -1,0 +1,5 @@
+@import "src/app/mixins";
+
+@include aboutSection();
+@include heroSection('https://images.unsplash.com/photo-1739193942268-d0206b76cc78?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTh8fGdyb2NlcnklMjBuaWdlcmlhfGVufDB8fDB8fHww');
+@include contacts();

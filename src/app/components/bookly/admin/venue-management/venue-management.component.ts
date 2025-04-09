@@ -19,6 +19,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { BaseSDKHook } from '../../../base.hook';
 import { VenueFormModalComponent } from './venue-form-modal/venue-form-modal.component';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { VenueService } from '../../../../services/venue.service';
+import { CategoryService } from '../../../../services/category.service';
 
 @Component({
   selector: 'app-venue-management',
@@ -60,6 +62,8 @@ export class VenueManagementComponent extends BaseSDKHook implements OnInit, OnD
     private message: NzMessageService,
     private modal: NzModalService,
     protected override cd: ChangeDetectorRef,
+    private venueService: VenueService,
+    private categoryService: CategoryService
   ) {
     super();
   }
@@ -85,7 +89,7 @@ export class VenueManagementComponent extends BaseSDKHook implements OnInit, OnD
   deleteVenue(id: string): void {
     // this.isLoading = true;
     this.loadStart();
-    this.firebaseService.deleteVenue(id)
+    this.venueService.deleteVenue(id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((success) => {
 
@@ -108,7 +112,7 @@ export class VenueManagementComponent extends BaseSDKHook implements OnInit, OnD
   }
 
   protected getData = (): Observable<any> => {
-    return this.firebaseService.getVenues()
+    return this.venueService.getVenues()
       .pipe(takeUntil(this.destroy$),
         tap((venues) => {
           this.venues = venues;
@@ -117,7 +121,7 @@ export class VenueManagementComponent extends BaseSDKHook implements OnInit, OnD
   };
 
   private loadCategories(): void {
-    this.firebaseService.getCategories()
+    this.categoryService.getCategories()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (categories) => {

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FirebaseService } from '../../../../services/firebase.service';
 import { VenueCategory } from '../../../../models/task';
 import { filter, Observable, tap } from 'rxjs';
 
@@ -20,6 +19,7 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { CategoryManagementModalComponent } from './category-management-modal/category-management-modal.component';
 import { takeUntil } from 'rxjs/operators';
 import { BaseSDKHook } from '../../../base.hook';
+import { CategoryService } from '../../../../services/category.service';
 
 @Component({
   selector: 'app-category-management',
@@ -48,14 +48,13 @@ export class CategoryManagementComponent extends BaseSDKHook implements OnInit {
   categories: VenueCategory[] = [];
   isEditing = false;
   currentCategoryId: string | null = null;
-
   fileList: NzUploadFile[] = [];
 
   constructor(
-    private firebaseService: FirebaseService,
     private message: NzMessageService,
     private modal: NzModalService,
     protected override cd: ChangeDetectorRef,
+    private categoryService: CategoryService
   ) {
     super();
   }
@@ -80,7 +79,7 @@ export class CategoryManagementComponent extends BaseSDKHook implements OnInit {
 
   deleteCategory(id: string): void {
     this.loadStart();
-    this.firebaseService.deleteCategory(id)
+    this.categoryService.deleteCategory(id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((success: boolean) => {
           if (success) {
@@ -96,7 +95,7 @@ export class CategoryManagementComponent extends BaseSDKHook implements OnInit {
 
   protected getData = (): Observable<VenueCategory[]> => {
     this.loadStart();
-    return this.firebaseService.getCategories()
+    return this.categoryService.getCategories()
       .pipe(
         takeUntil(this.unsubscribe$),
         tap((categories: VenueCategory[]) => {
@@ -119,7 +118,7 @@ export class CategoryManagementComponent extends BaseSDKHook implements OnInit {
   };
 
   private updateCategory(category: VenueCategory): void {
-    this.firebaseService.updateCategory(category)
+    this.categoryService.updateCategory(category)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((newCategory: VenueCategory | null) => {
           if (!newCategory) {
@@ -132,7 +131,7 @@ export class CategoryManagementComponent extends BaseSDKHook implements OnInit {
   }
 
   private addCategory(categoryData: Omit<VenueCategory, 'id'>): void {
-    this.firebaseService.addCategory(categoryData)
+    this.categoryService.createCategory(categoryData)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((newCategory: VenueCategory | null) => {
         if (!newCategory) {

@@ -8,7 +8,7 @@
     align-items: center;
     margin-bottom: 10px;
     
-    h2 {
+    h3 {
       margin: 0px;
       color: #333;
     }
@@ -62,7 +62,7 @@
         }
       }
 
-      h3 {
+      h4 {
         margin-top: 0;
         margin-bottom: 10px;
         color: #333;
@@ -89,10 +89,10 @@
       }
       
       .venue-details {
-        background-color: #f9f9f9;
+        //background-color: #f9f9f9;
         border-radius: 6px;
-        padding: 15px;
-        margin-bottom: 20px;
+        padding: 15px 0;
+        //margin-bottom: 20px;
         display: flex;
         flex-wrap: wrap;
         column-gap: 20px;

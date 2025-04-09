@@ -8,8 +8,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class StripeService {
-  private url: string = 'http://localhost:4242/api/';
-  // private url: string = 'https://acropolispark-server.vercel.app/api/';
+  // private url: string = 'http://localhost:4242/api/';
+  private readonly url: string = environment.backendUrl;
+
   stripe;
 
   constructor(private http: HttpClient,

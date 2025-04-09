@@ -1,24 +1,19 @@
-import { CanActivateFn, Router } from "@angular/router";
-import { inject } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { CanActivateFn } from '@angular/router';
+import { inject } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+
 
 export const authGuard: CanActivateFn = async (route, state) => {
-  const angularFireAuth = inject(AngularFireAuth);
-  const user = await angularFireAuth.currentUser;
- // coerce to boolean
+  const cookieService = inject(CookieService);
+  const token = cookieService.get('token');
 
- const isLoggedIn = !!user;
+  return !token;
 
- return isLoggedIn;
 };
 
 export const loginGuard: CanActivateFn = async (route, state) => {
-    const angularFireAuth = inject(AngularFireAuth);
-    const user = await angularFireAuth.currentUser;
- 
-   // coerce to boolean
-   const isLoggedIn = !user;
-   console.log(isLoggedIn, user);
+  const cookieService = inject(CookieService);
+  const token = cookieService.get('token');
 
-   return isLoggedIn;
-  };
+  return !!token;
+};

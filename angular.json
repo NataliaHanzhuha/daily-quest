@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/daily-quest",
+            "outputPath": "dist/daily-quest/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -50,8 +50,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "8kb",
+                  "maximumError": "12kb"
                 }
               ],
               "outputHashing": "all"
@@ -83,7 +83,6 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "proxyConfig": "proxy.conf.json"
           }
         },
         "extract-i18n": {
@@ -115,9 +114,64 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/daily-quest/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "tsconfig.server.json"
-          }
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "inlineStyleLanguage": "scss",
+            "externalDependencies": [
+              "ngx-stripe",
+              "@stripe/stripe-js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ],
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "daily-quest:build:development",
+              "serverTarget": "daily-quest:server:development"
+            },
+            "production": {
+              "browserTarget": "daily-quest:build:production",
+              "serverTarget": "daily-quest:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "daily-quest:build:production",
+              "serverTarget": "daily-quest:server:production"
+            },
+            "development": {
+              "browserTarget": "daily-quest:build:development",
+              "serverTarget": "daily-quest:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

@@ -41,14 +41,6 @@ export class TimeService {
     return true; // No conflicts
   }
 
-  private isToday(selectedDate: Date): boolean {
-    const today = new Date();
-
-    return selectedDate.getDate() === today.getDate() &&
-      selectedDate.getMonth() === today.getMonth() &&
-      selectedDate.getFullYear() === today.getFullYear();
-  }
-
   resetToMidnight(date: Date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
@@ -86,7 +78,7 @@ export class TimeService {
       };
 
       const isSlotAvailable = this.isSlotAvailable(existingBookings, newBooking, paddingBeforeMinutes, paddingAfterMinutes);
-      console.log(isSlotAvailable, slotStart, slotEnd);
+      // console.log(isSlotAvailable, slotStart, slotEnd);
       if (isSlotAvailable) {
         availableSlots.push([+(slotStart.slice(0, -3)), +(slotEnd.slice(0, -3))]);
       }
@@ -95,23 +87,65 @@ export class TimeService {
     return availableSlots;
   }
 
-  getDate(datetime: Date | string): string {
+  getCurrentWeekRange(): { from: string, to: string } {
+    const curr = new Date();
+
+    // Get first day of week (Sunday = 0)
+    const first = new Date(curr);
+    first.setDate(curr.getDate() - curr.getDay());
+
+    // Get last day (first + 6 days)
+    const last = new Date(first);
+    last.setDate(first.getDate() + 6);
+
+    // Format to YYYY-MM-DD
+    const format = (d: Date): string => {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    return {
+      from: format(first),
+      to: format(last)
+    };
+  }
+
+  getDate(datetime: Date | string | any): string {
     if (typeof datetime === 'string') {
       return datetime?.split('T')[0];
     }
-    const day = (datetime as unknown as Date).getDate();
-    const month = (datetime as unknown as Date).getMonth();
-    const year = (datetime as unknown as Date).getFullYear();
 
-    return `${year}-${month}-${day}`;
+    if (Object.prototype.toString.call(datetime) === '[object Date]') {
+      const day = (datetime as unknown as Date).getDate();
+      const month = (datetime as unknown as Date).getMonth();
+      const year = (datetime as unknown as Date).getFullYear();
+
+      return `${year}-${month}-${day}`;
+
+    }
+
+
+    const {seconds, nanoseconds} = datetime;
+    const milliseconds = seconds * 1000 + nanoseconds / 1e6; // Convert to ms
+    return new Date(milliseconds)?.toISOString()?.split('T')[0]; // Convert to ISO format
   }
 
   getHour(datetime: Date | string): number {
-    console.log(datetime, );
+    console.log(datetime,);
     if (typeof datetime === 'string') {
       return new Date(datetime).getHours();
     }
     return (datetime as unknown as Date).getHours();
+  }
+
+  private isToday(selectedDate: Date): boolean {
+    const today = new Date();
+
+    return selectedDate.getDate() === today.getDate() &&
+      selectedDate.getMonth() === today.getMonth() &&
+      selectedDate.getFullYear() === today.getFullYear();
   }
 
 }

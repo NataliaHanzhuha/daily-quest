@@ -46,7 +46,7 @@
 			        nz-button
 			        nzType="primary"
 			        nzSize="small"
-			        (click)="confirmBooking(booking.id)">
+			        (click)="confirmBooking(booking)">
 								<span nz-icon
 								      nzType="check"></span> Confirm
 			</button>
@@ -58,7 +58,7 @@
 			        nz-popconfirm
 			        nzPopconfirmTitle="Are you sure you want to cancel this booking?"
 			        nzPopconfirmPlacement="left"
-			        (nzOnConfirm)="cancelBooking(booking.id)">
+			        (nzOnConfirm)="cancelBooking(booking)">
 								<span nz-icon
 								      nzType="close"></span> Cancel
 			</button>

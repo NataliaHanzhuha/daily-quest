@@ -321,3 +321,9 @@
     }
   }
 }
+
+:host ::ng-deep {
+  .mobile-dropdown-content .ant-ribbon.ant-ribbon-placement-end {
+    right: 10px;
+  }
+}

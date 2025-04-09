@@ -4,15 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { bearerTokenInterceptor } from './services/token.interseptor';
 import { RouterModule } from '@angular/router';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 // Custom Components & Services
 import { LoadingIndicatorComponent } from './components/shared/loading-indicator/loading-indicator.component';
@@ -65,10 +61,6 @@ registerLocaleData(en);
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    AngularFireStorageModule,
     RouterModule,
     BrowserAnimationsModule,
     FormsModule,

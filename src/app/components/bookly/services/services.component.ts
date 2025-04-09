@@ -1,82 +1,70 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Venue, VenueCategory } from '../../../models/task';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { FirebaseService } from '../../../services/firebase.service';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { BookingComponent } from '../booking/booking.component';
+import { CategoryService } from '../../../services/category.service';
+import { UnsubscribeHook } from '../../unsubscribe.hook';
+import { takeUntil } from 'rxjs/operators';
+import { VenueService } from '../../../services/venue.service';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, NzTypographyModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, NzTypographyModule, BookingComponent],
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.scss']
 })
-export class ServicesComponent implements OnInit {
+export class ServicesComponent extends UnsubscribeHook implements OnInit {
   venues: Venue[] = [];
   category: VenueCategory | null = null;
-  categoryId: string | null = null;
+  @Input() categoryId: string | null = null;
+  @Output() categoryIdChanged = new EventEmitter<null>();
+  @Input() selectedService: string | null = null;
+  @Output() selectedServiceChanged = new EventEmitter<string | null>();
+
+  constructor(private firebaseService: FirebaseService,
+              private venueService: VenueService,
+              private categoryService: CategoryService) {
+    super();
+  }
 
   get currencySymbol(): string {
     return this.firebaseService.currencySymbol;
   }
 
-  constructor(
-    private firebaseService: FirebaseService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private modalService: NzModalService,
-  ) { }
-
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.categoryId = params.get('id');
-      if (this.categoryId) {
-        this.loadCategoryDetails(this.categoryId);
-        this.loadVenues(this.categoryId);
-      } else {
-        // If no category ID is provided, load all venues
-        this.loadAllVenues();
-      }
-    });
+    if (this.categoryId) {
+      this.loadCategoryDetails(this.categoryId);
+      this.loadVenues(this.categoryId);
+    }
   }
 
   redirectToBooking(id: string): void {
-    // const selectedVenue = this.venues.find((venue) => venue.id === id);
-    // this.modalService.create({
-    //   nzContent: BookingComponent,
-    //   nzData: {id, venue: {...selectedVenue, categoryName: this.category?.title}},
-    //   nzWidth: '100%',
-    //   nzMaskClosable: false,
-    //   nzClosable: false
-    // });
-
-    this.router.navigate([`/booking/${id}`]).then();
+    this.selectedService = id;
+    this.selectedServiceChanged.emit(id);
   }
 
-  loadCategoryDetails(categoryId: string): void {
-    this.firebaseService.getCategoryById(categoryId).subscribe(category => {
+  formatAmenities(amenities: string[]): string {
+    return amenities.join(', ');
+  }
+
+  private loadCategoryDetails(categoryId: string): void {
+    this.categoryService.getCategoryById(categoryId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(category => {
       this.category = category || null;
     });
   }
 
-  loadVenues(categoryId: string): void {
-    this.firebaseService.getVenuesByCategory(categoryId).subscribe(venues => {
+  private loadVenues(categoryId: string): void {
+    this.venueService.getVenueByFilter(categoryId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(venues => {
       this.venues = venues;
     });
-  }
-
-  loadAllVenues(): void {
-    this.firebaseService.getVenues().subscribe(venues => {
-      this.venues = venues;
-    });
-  }
-  
-  // Format amenities list as comma-separated
-  formatAmenities(amenities: string[]): string {
-    return amenities.join(', ');
   }
 }

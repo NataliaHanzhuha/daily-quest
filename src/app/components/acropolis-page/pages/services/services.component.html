@@ -1,106 +1,116 @@
 <div class="services-page">
-  <!-- Hero Section -->
-  <section class="services-hero">
-    <div class="hero-content">
-      <h1>Our Services</h1>
-      <p>Discover the diverse experiences waiting for you at Acropolis Park</p>
-    </div>
-  </section>
+	<!-- Hero Section -->
+	<section class="services-hero">
+		<div class="hero-content">
+			<h1>Our Services</h1>
+			<p>Discover the diverse experiences waiting for you at Acropolis Park</p>
+		</div>
+	</section>
 
-  <!-- Services Overview Section -->
-  <section class="services-overview">
-    <div class="container">
-      <div class="section-header">
-        <h2>What We Offer</h2>
-        <p>At Acropolis Park, we provide a wide range of services designed to create memorable experiences for all our guests.</p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card" *ngFor="let service of services">
-          <div class="service-image" [style.background-image]="'url(' + service.image + ')'">
-            <div class="service-icon">
-              <app-image-placeholder 
-                [icon]="service.id" 
-                size="small"
-                bgColor="rgba(255, 255, 255, 0.9)"
-                iconColor="var(--color-accent, #f76a0c)">
-              </app-image-placeholder>
-            </div>
-          </div>
-          <div class="service-info">
-            <h3>{{ service.name }}</h3>
-            <p>{{ service.shortDescription }}</p>
-            <a [routerLink]="['/acropolis/services', service.id]" class="service-link">
-              Learn More <span class="arrow">→</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+	<!-- Services Overview Section -->
+	<section class="services-overview">
+		<div class="container">
+			<div class="section-header">
+				<h2>What We Offer</h2>
+				<p>At Acropolis Park, we provide a wide range of services designed to create memorable experiences for all our
+				   guests.</p>
+			</div>
+			<div class="services-grid">
+				<div class="service-card"
+				     *ngFor="let service of services">
+					<div class="service-image"
+					     [style.background-image]="'url(' + service.image + ')'">
+						<div class="service-icon">
+							<app-image-placeholder [icon]="service.id"
+							                       size="small"
+							                       bgColor="rgba(255, 255, 255, 0.9)"
+							                       iconColor="var(--color-accent, #f76a0c)">
+							</app-image-placeholder>
+						</div>
+					</div>
+					<div class="service-info">
+						<h3>{{ service.name }}</h3>
+						<p>{{ service.shortDescription }}</p>
+						<a [routerLink]="['/acropolis/services', service.id]"
+						   class="service-link">
+							Learn More <span class="arrow">→</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-<!--  &lt;!&ndash; Booking Information Section &ndash;&gt;-->
-<!--  <section class="booking-info">-->
-<!--    <div class="container">-->
-<!--      <div class="booking-content">-->
-<!--        <div class="booking-text">-->
-<!--          <h2>Ready to Experience Acropolis Park?</h2>-->
-<!--          <p>Whether you're planning an event or simply want to enjoy our facilities, we're here to make your experience exceptional.</p>-->
-<!--          <ul class="booking-options">-->
-<!--            <li>-->
-<!--              <div class="option-icon">📞</div>-->
-<!--              <div class="option-text">-->
-<!--                <h4>Call Us</h4>-->
-<!--                <p>Speak directly with our team: +2349030030888</p>-->
-<!--              </div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <div class="option-icon">📅</div>-->
-<!--              <div class="option-text">-->
-<!--                <h4>Book Online</h4>-->
-<!--                <p>Use our convenient online booking system</p>-->
-<!--              </div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <div class="option-icon">📍</div>-->
-<!--              <div class="option-text">-->
-<!--                <h4>Visit Us</h4>-->
-<!--                <p>Stop by and see our spaces in person</p>-->
-<!--              </div>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--          <a routerLink="/acropolis/contact" class="booking-btn">Contact Us Now</a>-->
-<!--        </div>-->
-<!--        <div class="booking-image">-->
-<!--          <img src="/assets/images/acropolis/booking-image.jpg" alt="Acropolis Park Booking">-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </section>-->
+	<!--  &lt;!&ndash; Booking Information Section &ndash;&gt;-->
+	<!--  <section class="booking-info">-->
+	<!--    <div class="container">-->
+	<!--      <div class="booking-content">-->
+	<!--        <div class="booking-text">-->
+	<!--          <h2>Ready to Experience Acropolis Park?</h2>-->
+	<!--          <p>Whether you're planning an event or simply want to enjoy our facilities, we're here to make your experience exceptional.</p>-->
+	<!--          <ul class="booking-options">-->
+	<!--            <li>-->
+	<!--              <div class="option-icon">📞</div>-->
+	<!--              <div class="option-text">-->
+	<!--                <h4>Call Us</h4>-->
+	<!--                <p>Speak directly with our team: +2349030030888</p>-->
+	<!--              </div>-->
+	<!--            </li>-->
+	<!--            <li>-->
+	<!--              <div class="option-icon">📅</div>-->
+	<!--              <div class="option-text">-->
+	<!--                <h4>Book Online</h4>-->
+	<!--                <p>Use our convenient online booking system</p>-->
+	<!--              </div>-->
+	<!--            </li>-->
+	<!--            <li>-->
+	<!--              <div class="option-icon">📍</div>-->
+	<!--              <div class="option-text">-->
+	<!--                <h4>Visit Us</h4>-->
+	<!--                <p>Stop by and see our spaces in person</p>-->
+	<!--              </div>-->
+	<!--            </li>-->
+	<!--          </ul>-->
+	<!--          <a routerLink="/acropolis/contact" class="booking-btn">Contact Us Now</a>-->
+	<!--        </div>-->
+	<!--        <div class="booking-image">-->
+	<!--          <img src="/assets/images/acropolis/booking-image.jpg" alt="Acropolis Park Booking">-->
+	<!--        </div>-->
+	<!--      </div>-->
+	<!--    </div>-->
+	<!--  </section>-->
 
-  <!-- FAQ Section -->
-  <section class="service-faq">
-    <div class="container">
-      <div class="section-header">
-        <h2>Frequently Asked Questions</h2>
-      </div>
-      <div class="faq-grid">
-        <div class="faq-item">
-          <h3>What hours are your facilities open?</h3>
-          <p>Acropolis Park is open daily from 9:00 AM to 10:00 PM. Some services like the café and gym may have different operating hours, so please check specific service pages for details.</p>
-        </div>
-        <div class="faq-item">
-          <h3>Do I need to make a reservation for the café or grill?</h3>
-          <p>Reservations are recommended for the grill, especially during peak hours and weekends. The café generally operates on a first-come, first-served basis, but groups of 6 or more should consider reserving in advance.</p>
-        </div>
-        <div class="faq-item">
-          <h3>Can I book multiple services for an event?</h3>
-          <p>Absolutely! Many of our clients combine services for a comprehensive experience. Our events team can help you bundle services for weddings, corporate events, and other special occasions.</p>
-        </div>
-        <div class="faq-item">
-          <h3>Are there any age restrictions for your facilities?</h3>
-          <p>Most areas of Acropolis Park are family-friendly. The gym has an age requirement of 16+ unless accompanied by an adult. The kids' area is designed for children aged 3-12 and requires adult supervision.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+	<!-- FAQ Section -->
+	<section class="service-faq">
+		<div class="container">
+			<div class="section-header">
+				<h2>Frequently Asked Questions</h2>
+			</div>
+			<div class="faq-grid">
+				<div class="faq-item">
+					<h3>What hours are your facilities open?</h3>
+					<p>Acropolis Park is open daily from 9:00 AM to 10:00 PM. Some services like the café and gym may have
+					   different operating hours, so please check specific service pages for details.</p>
+				</div>
+				<div class="faq-item">
+					<h3>Do I need to make a reservation for the café or grill?</h3>
+					<p>Reservations are recommended for the grill, especially during peak hours and weekends. The café generally
+					   operates on a first-come, first-served basis, but groups of 6 or more should consider reserving in
+					   advance.</p>
+				</div>
+				<div class="faq-item">
+					<h3>Can I book multiple services for an event?</h3>
+					<p>Absolutely! Many of our clients combine services for a comprehensive experience. Our events team can help
+					   you bundle services for weddings, corporate events, and other special occasions.</p>
+				</div>
+				<div class="faq-item">
+					<h3>Are there any age restrictions for your facilities?</h3>
+					<p>Most areas of Acropolis Park are family-friendly. The gym has an age requirement of 16+ unless accompanied
+					   by an adult. The kids' area is designed for children aged 3-12 and requires adult supervision.</p>
+				</div>
+			</div>
+		</div>
+	</section>
 </div>
+
+<router-outlet></router-outlet>

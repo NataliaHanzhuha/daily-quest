@@ -1,7 +1,14 @@
+@import "src/app/mixins";
+
+@include cardsWithInfo();
+
 .about-page {
-  font-family: 'Roboto', sans-serif;
-  color: #333;
-  
+  p, div, span {
+   font-family: var(--font-body);
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-family: var(--font-heading);
+  }
   section {
     padding: 5rem 0;
   }

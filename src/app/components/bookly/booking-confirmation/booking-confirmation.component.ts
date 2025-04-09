@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Subject } from 'rxjs';
+import { finalize, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 // Ng-Zorro Modules
@@ -17,6 +17,8 @@ import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 // Services and Models
 import { EventBooking, Venue } from '../../../models/task';
 import { FirebaseService } from '../../../services/firebase.service';
+import { UnsubscribeHook } from '../../unsubscribe.hook';
+import { EventBookingService } from '../../../services/event-booking.service';
 
 @Component({
   selector: 'app-booking-confirmation',
@@ -36,53 +38,48 @@ import { FirebaseService } from '../../../services/firebase.service';
   templateUrl: './booking-confirmation.component.html',
   styleUrls: ['./booking-confirmation.component.scss']
 })
-export class BookingConfirmationComponent implements OnInit, OnDestroy {
-  bookingId: string = '';
-  booking: EventBooking | undefined;
+export class BookingConfirmationComponent extends UnsubscribeHook implements OnInit, OnDestroy {
+  @Input() bookingId: string | null = null;
+  booking = false;
   venue: Venue | undefined;
   isLoading = false;
   error = false;
 
-  private destroy$ = new Subject<void>();
-
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private firebaseService: FirebaseService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private eventBookingService: EventBookingService
   ) {
-    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe(params => {
-      this.bookingId = params['bookingId'];
-      if (this.bookingId) {
-        this.loadBooking();
-      } else {
-        this.error = true;
-      }
-    });
+    super();
   }
 
   ngOnInit(): void {
-
+    this.loadBooking();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+ private loadBooking(): void {
+    if (!this.bookingId) {
+      this.error = true;
+      this.isLoading = false;
+      return;
+    }
 
-  loadBooking(): void {
     this.isLoading = true;
-    this.firebaseService.getBookingById(this.bookingId)
-      .pipe(takeUntil(this.destroy$))
+    this.eventBookingService.checkBookingById(this.bookingId)
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        finalize(() => {
+        this.isLoading = false;
+      }))
       .subscribe({
         next: (booking) => {
           this.booking = booking;
-          if (booking) {
-            this.loadVenue(booking.venueId);
-          } else {
+
+          if (!booking) {
             this.error = true;
-            this.isLoading = false;
           }
+
+          this.isLoading = false;
         },
         error: (err) => {
           console.error('Error loading booking:', err);
@@ -93,60 +90,7 @@ export class BookingConfirmationComponent implements OnInit, OnDestroy {
       });
   }
 
-  loadVenue(venueId: string): void {
-    this.firebaseService.getVenueById(venueId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (venue) => {
-          this.venue = venue;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error('Error loading venue:', err);
-          this.message.error('Failed to load venue details');
-          this.isLoading = false;
-        }
-      });
-  }
-
-  formatDate(date: Date | string | undefined): string {
-    if (!date) {
-      return 'N/A';
-    }
-
-    const parsedDate = typeof date === 'string' ? new Date(date) : date;
-    return parsedDate.toDateString();
-  }
-
-  // addToGoogleCalendar(): void {
-  //   if (!this.bookingId) {
-  //     return;
-  //   }
-  //
-  //   this.isLoading = true;
-  //   this.firebaseService.addToGoogleCalendar(this.bookingId)
-  //     .pipe(takeUntil(this.destroy$))
-  //     .subscribe({
-  //       next: (success) => {
-  //         this.isLoading = false;
-  //         if (success) {
-  //           this.message.success('Event added to Google Calendar');
-  //           if (this.booking) {
-  //             this.booking.addToGoogleCalendar = true;
-  //           }
-  //         } else {
-  //           this.message.error('Failed to add event to Google Calendar');
-  //         }
-  //       },
-  //       error: (err) => {
-  //         console.error('Error adding to Google Calendar:', err);
-  //         this.message.error('Failed to add event to Google Calendar');
-  //         this.isLoading = false;
-  //       }
-  //     });
-  // }
-
   browseVenues(): void {
-    this.router.navigate(['/services']);
+    this.router.navigate(['/acropolis']);
   }
 }

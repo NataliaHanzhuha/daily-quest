@@ -2,64 +2,62 @@
 	<div class="footer-content">
 		<div class="logo-section">
 			<a routerLink="/acropolis">
-				<img src="/assets/images/logo.ico">
+				<img src="/assets/images/logo.ico"
+				     alt="">
 				<h3>acropolis park</h3>
 			</a>
-			<!--      <p>where memories are made</p>-->
-			<a class="location" href="https://g.co/kgs/RDVcWYK">
+			<a class="location"
+			   href="https://g.co/kgs/RDVcWYK">
 				Plot No. 3872, E27, Apo District, Abuja, FCT 900110
 			</a>
 			<p>&copy; {{ currentYear }} Acropolis Park. All rights reserved.</p>
-<!--			<div class="contact-info">-->
-<!--&lt;!&ndash;				<p><i class="location-icon"></i> Plot No. 3872, E27, Apo District, Abuja, FCT 900110</p>&ndash;&gt;-->
-<!--				<p><i class="phone-icon"></i> +2349030030888</p>-->
-<!--				<p><i class="email-icon"></i> contact@acropolispark.ltd</p>-->
-<!--			</div>-->
 		</div>
 
 		<div class="footer-social">
 			<h4>Contacts</h4>
 			<a href="tel:+2349030030888">+2349030030888</a>
 			<a href="mailto:info@acropolispark.ltd">info@acropolispark.ltd</a>
-<!--			<h4>Follow Us</h4>-->
 			<div class="social-icons">
-				<app-social-links 
-					displayMode="icons" 
+				<app-social-links
+					displayMode="icons"
 					size="large"
 					direction="horizontal"
 					color="var(--color-text, #1A202C)"
 					hoverColor="var(--color-accent, #f76a0c)">
 				</app-social-links>
 			</div>
-<!--			<div class="newsletter">-->
-<!--				<h4>Subscribe to our newsletter</h4>-->
-<!--				<div class="newsletter-form">-->
-<!--					<input type="email"-->
-<!--					       placeholder="Your email address">-->
-<!--					<button type="submit">Subscribe</button>-->
-<!--				</div>-->
-<!--			</div>-->
+
 		</div>
 		<div class="footer-links">
 			<h4>Pages</h4>
 			<ul>
 				<li><a routerLink="/acropolis">Home</a></li>
 				<li><a routerLink="/acropolis/about">About Us</a></li>
-				<li><a routerLink="/acropolis/services">Services</a></li>
+				<li><a nz-dropdown
+				       nzTrigger="click"
+				       [nzDropdownMenu]="menu">Services
+					<span nz-icon
+					      nzType="down"></span></a></li>
 				<li><a routerLink="/acropolis/contact">Contact</a></li>
 				<li><a routerLink="/acropolis/privacy-policy">Privacy Policy</a></li>
-<!--				<li><a routerLink="/acropolis/terms">Terms of Service</a></li>-->
 			</ul>
+
+			<nz-dropdown-menu #menu="nzDropdownMenu">
+				<ul nz-menu
+				    nzSelectable>
+					<li nz-menu-item
+					    [routerLink]="service.route"
+					    routerLinkActive="active"
+					    *ngFor="let service of services">
+							{{ service.name }}
+							<span *ngIf="notReadyServices.includes(service.name)"
+							      nz-typography
+							      nzType="secondary">(soon)</span>
+					</li>
+
+				</ul>
+			</nz-dropdown-menu>
 		</div>
 	</div>
 
-
-
-<!--	<div class="footer-bottom">-->
-<!--		<p>&copy; {{ currentYear }} Acropolis Park. All rights reserved.</p>-->
-<!--		<div class="footer-policies">-->
-<!--			<a routerLink="/acropolis/privacy-policy">Privacy Policy</a>-->
-<!--			<a routerLink="/acropolis/terms">Terms of Service</a>-->
-<!--		</div>-->
-<!--	</div>-->
 </footer>

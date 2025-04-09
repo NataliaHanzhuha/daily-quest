@@ -9,11 +9,11 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { EventBooking, PaymentStatus, Venue } from '../../../../models/task';
 import { FirebaseService } from '../../../../services/firebase.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../../services/auth.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, takeUntil } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { EventBookingService } from '../../../../services/event-booking.service';
+import { VenueService } from '../../../../services/venue.service';
+import { UnsubscribeHook } from '../../../unsubscribe.hook';
 
 @Component({
   selector: 'app-booking-table',
@@ -22,7 +22,7 @@ import { of } from 'rxjs';
   templateUrl: './booking-table.component.html',
   styleUrls: ['./booking-table.component.scss']
 })
-export class BookingTableComponent {
+export class BookingTableComponent extends UnsubscribeHook {
   bookings: EventBooking[] = [];
   venues: Map<string, Venue> = new Map();
   loading = true;
@@ -34,8 +34,10 @@ export class BookingTableComponent {
   constructor(
     private firebaseService: FirebaseService,
     private message: NzMessageService,
-    private router: Router,
+    private eventBookingService: EventBookingService,
+    private venueService: VenueService
   ) {
+    super();
   }
 
   ngOnInit(): void {
@@ -45,14 +47,14 @@ export class BookingTableComponent {
 
   loadBookings(): void {
     this.loading = true;
-    this.firebaseService.getBookings()
+    this.eventBookingService.getBookings()
       .pipe(catchError((error) => {
         console.error('Error loading bookings:', error);
         this.message.error('Failed to load bookings');
         this.loading = false;
 
         return of([]);
-      }))
+      }), takeUntil(this.unsubscribe$))
       .subscribe((bookings) => {
         this.bookings = bookings;
         this.loading = false;
@@ -60,7 +62,9 @@ export class BookingTableComponent {
   }
 
   loadVenues(): void {
-    this.firebaseService.getVenues().subscribe(
+    this.venueService.getVenues()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
       venues => {
         venues.forEach(venue => this.venues.set(venue.id!, venue));
       },
@@ -107,9 +111,11 @@ export class BookingTableComponent {
     }
   }
 
-  confirmBooking(id: string): void {
+  confirmBooking(booking: EventBooking): void {
     this.loading = true;
-    this.firebaseService.updateBookingStatus(id, 'confirmed').subscribe(
+    this.eventBookingService.updateBooking({...booking, status: 'confirmed'})
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
       success => {
         if (success) {
           this.message.success('Booking confirmed successfully');
@@ -127,9 +133,11 @@ export class BookingTableComponent {
     );
   }
 
-  cancelBooking(id: string): void {
+  cancelBooking(booking: EventBooking): void {
     this.loading = true;
-    this.firebaseService.updateBookingStatus(id, 'cancelled').subscribe(
+    this.eventBookingService.updateBooking({...booking, status: 'cancelled'})
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
       success => {
         if (success) {
           this.message.success('Booking cancelled successfully');

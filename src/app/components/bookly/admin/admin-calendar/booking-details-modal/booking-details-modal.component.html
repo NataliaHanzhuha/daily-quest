@@ -26,7 +26,7 @@
 					Duration ({{venues.get(booking.venueId)?.minHours || 1}} - {{venues.get(booking.venueId)?.maxHours || 24}} hours):
 				</span>
 				<nz-input-number [(ngModel)]="booking.duration"
-				                 (ngModelChange)="calculateTimeSlots()"
+				                 (ngModelChange)="checkAvailability()"
 				                 [nzDisabled]="booking.venueId === 'null'"
 				                 [nzMin]="venues.get(booking.venueId)?.minHours || 1"
 				                 [nzMax]="venues.get(booking.venueId)?.maxHours || 24"
@@ -54,7 +54,7 @@
 
 					<span>Start Time</span>
 					<nz-input-number [(ngModel)]="startHour"
-					                 (ngModelChange)="calculateTimeSlots()"
+					                 (ngModelChange)="checkAvailability()"
 					                 [nzMin]="startWorkingDayTime"
 					                 [nzMax]="endWorkingDayTime"
 					                 [nzStep]="1">
@@ -177,7 +177,7 @@
 			nz-button
 			nzType="primary"
 			[nzLoading]="isLoading"
-			(click)="confirmBooking(booking.id)">
+			(click)="confirmBooking(booking)">
 			Confirm Booking
 		</button>
 		<button
@@ -185,7 +185,7 @@
 			nz-button
 			nzDanger
 			[nzLoading]="isLoading"
-			(click)="cancelBooking(booking.id)">
+			(click)="cancelBooking(booking)">
 			Cancel Booking
 		</button>
 		<button nz-button

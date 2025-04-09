@@ -30,15 +30,17 @@
     margin-bottom: 50px;
     
     .section-title {
-      font-family: var(--font-heading, 'Roboto Slab', serif);
-      font-size: 2.5rem;
-      color: var(--color-heading, #2D3748);
-      margin: 0 0 16px;
-      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-xs);
+      font-family: var(--font-heading);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
     
     .section-subtitle {
-      font-family: var(--font-body, 'Manrope', sans-serif);
+      font-family: var(--font-body);
       font-size: 1.1rem;
       color: var(--color-text, #4A5568);
       max-width: 800px;
@@ -85,6 +87,7 @@
       app-review-card {
         display: block;
         height: 100%;
+        max-width: 40vw;
       }
     }
     
@@ -134,12 +137,17 @@
       
       .section-title {
         font-size: 1.8rem;
+        font-family: var(--font-heading);
       }
     }
     
     .testimonials-cta {
       margin-top: 30px;
     }
+  }
+
+  app-review-card {
+    max-width: 90vw !important;
   }
 }
 
@@ -160,6 +168,10 @@
     .testimonials-cta .btn {
       padding: 10px 20px;
       font-size: 0.9rem;
+    }
+
+    app-review-card {
+      max-width: 80vw !important;
     }
   }
 }

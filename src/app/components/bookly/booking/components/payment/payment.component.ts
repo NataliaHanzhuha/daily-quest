@@ -9,9 +9,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { StripeElementsDirective, StripeFactoryService, StripePaymentElementComponent } from 'ngx-stripe';
-import { PaymentIntentResult, StripeElementsOptions } from '@stripe/stripe-js';
 import { environment } from '../../../../../../environments/environment';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -36,38 +34,29 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzButtonModule
   ],
   templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss']
+  styleUrls: ['./payment.component.scss'],
+  providers: [StripeService, StripeFactoryService]
 })
 export class PaymentComponent implements OnInit {
   @ViewChild(StripePaymentElementComponent) paymentElement!: StripePaymentElementComponent;
   @Input() customer!: Customer;
   @Output() payment = new EventEmitter<PaymentDetails>();
 
-  selectedPaymentMethod = new FormControl<Payment | null>(null);
+  selectedPaymentMethod = new FormControl<Payment | null>('online');
   localPaymentForm: FormGroup;
 
   stripe = this.factoryService.create(environment.stripe.publicKey);
-  elementsOptions: StripeElementsOptions = {
+  elementsOptions: any = {
     locale: 'en',
-    // passing the client secret obtained from the server
     clientSecret: undefined
   };
 
   paymentId?: string;
 
-  get isLocal(): boolean {
-    return this.selectedPaymentMethod.value === 'local'
-  }
-
-  get isOnline(): boolean {
-    return this.selectedPaymentMethod.value === 'online'
-  }
-
   constructor(
     private stripeService: StripeService,
     private fb: FormBuilder,
     private factoryService: StripeFactoryService,
-    private modalService: NzModalService,
   ) {
     this.localPaymentForm = this.fb.group({
       localPaymentType: ['cash', Validators.required],
@@ -75,15 +64,20 @@ export class PaymentComponent implements OnInit {
     });
   }
 
+  get isOnline(): boolean {
+    return this.selectedPaymentMethod.value === 'online';
+  }
+
   ngOnInit() {
-    this.selectedPaymentMethod.valueChanges.subscribe(async (value: Payment | null) => {
-      console.log(value);
-      if (value === 'online') {
-        this.stripeService.getClientSecret(50000).subscribe(({clientSecret}) => {
-          this.elementsOptions.clientSecret = clientSecret;
-        });
-      }
-    });
+    // this.selectedPaymentMethod.valueChanges.subscribe(async (value: Payment | null) => {
+    //   console.log(value);
+    //   if (value === 'online') {
+    this.stripeService.getClientSecret(this.customer.price * 1000)
+      .subscribe(({clientSecret}) => {
+        this.elementsOptions.clientSecret = clientSecret;
+      });
+    //   }
+    // });
   }
 
   selectPaymentType(payment: Payment) {
@@ -112,7 +106,7 @@ export class PaymentComponent implements OnInit {
       },
       redirect: 'if_required',
     }).subscribe({
-      next: (result: PaymentIntentResult) => {
+      next: (result: any) => {
         if (result.error) {
           console.error(result.error.message);
 
@@ -124,7 +118,7 @@ export class PaymentComponent implements OnInit {
             paymentDate: new Date(result.paymentIntent.created).toISOString(),
             paymentStatus: PaymentStatus['paid'],
             paymentType: this.selectedPaymentMethod.value!
-          })
+          });
         }
       },
       error: (err) => {

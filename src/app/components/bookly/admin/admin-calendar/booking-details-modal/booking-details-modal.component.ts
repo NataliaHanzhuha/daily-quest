@@ -17,11 +17,13 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { tap } from 'rxjs';
-import { TimeService } from '../../../../../services/time.service';
 import { differenceInCalendarDays } from 'date-fns';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { countries, CountryInterface } from 'country-codes-flags-phone-codes';
 import { EmailService } from '../../../../../services/email.service';
+import { EventBookingService } from '../../../../../services/event-booking.service';
+import { VenueService } from '../../../../../services/venue.service';
+import { WorkScheduleService } from '../../../../../services/work-schedule.service';
 
 @Component({
   selector: 'app-booking-details-modal',
@@ -58,15 +60,16 @@ export class BookingDetailsModalComponent implements OnInit {
   countries: CountryInterface[] = [];
   venueOptions: Dropdown[] = [];
   private schedules: { [key: number]: WorkSchedule } = {};
-  private existingBookings: EventBooking[] = [];
 
   constructor(
     private modalRef: NzModalRef,
     private firebaseService: FirebaseService,
     private message: NzMessageService,
-    private timeService: TimeService,
     private cd: ChangeDetectorRef,
     private emailService: EmailService,
+    private eventBookingService: EventBookingService,
+    private venueService: VenueService,
+    private workScheduleService: WorkScheduleService
   ) {
     const favorites: string[] = ['Nigeria', 'United States', 'Canada'];
     this.countries = [...countries].sort((a, b) => {
@@ -114,10 +117,7 @@ export class BookingDetailsModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.booking = {...this.booking};
-    this.cd.detectChanges();
     this.getWorkingSchedule();
-    // Any initialization logic if needed
     this.loadVenues();
     this.checkAvailability();
   }
@@ -128,9 +128,11 @@ export class BookingDetailsModalComponent implements OnInit {
   }
 
   setSelectedTime(time: number[]): void {
+    console.log(time);
     this.booking.startTime = time[0].toString();
     this.booking.endTime = time[1].toString();
     this.setTotal();
+    this.cd.detectChanges();
   }
 
   closeModal(): void {
@@ -140,9 +142,10 @@ export class BookingDetailsModalComponent implements OnInit {
   save(): void {
     this.isLoading = true;
     const request = this.booking.id
-      ? this.firebaseService.updateBooking(this.booking)
-      : this.firebaseService.createBooking(this.booking, this.venues.get(this.booking.venueId)!.title);
+      ? this.eventBookingService.updateBooking(this.booking)
+      : this.eventBookingService.createBooking(this.booking);
 
+    // TODO: add email send
     request.subscribe({
       next: success => {
         this.isLoading = false;
@@ -161,9 +164,9 @@ export class BookingDetailsModalComponent implements OnInit {
     });
   }
 
-  confirmBooking(id: string): void {
+  confirmBooking(booking: EventBooking): void {
     this.isLoading = true;
-    this.firebaseService.updateBookingStatus(id, 'confirmed').subscribe({
+    this.eventBookingService.updateBooking({...booking, status: 'confirmed'}).subscribe({
       next: success => {
         this.isLoading = false;
         if (success) {
@@ -181,9 +184,9 @@ export class BookingDetailsModalComponent implements OnInit {
     });
   }
 
-  cancelBooking(id: string): void {
+  cancelBooking(booking: EventBooking): void {
     this.isLoading = true;
-    this.firebaseService.updateBookingStatus(id, 'cancelled').subscribe({
+    this.eventBookingService.updateBooking({...booking, status: 'cancelled'}).subscribe({
       next: success => {
         this.isLoading = false;
         if (success) {
@@ -199,19 +202,6 @@ export class BookingDetailsModalComponent implements OnInit {
         this.isLoading = false;
       }
     });
-  }
-
-  getStatusColor(status?: string): string {
-    switch (status) {
-      case 'confirmed':
-        return '#52c41a';
-      case 'paid':
-        return '#1890ff';
-      case 'cancelled':
-        return '#f5222d';
-      default:
-        return '#faad14'; // pending
-    }
   }
 
   disabledDate = (current: Date | string): boolean =>
@@ -240,6 +230,8 @@ export class BookingDetailsModalComponent implements OnInit {
     }
 
     if (this.booking.id && this.disabledDate(this.booking?.date)) {
+      console.log('eee');
+
       const timeOption = [+this.booking.startTime, +this.booking.endTime];
       this.availableTimeSlots = [timeOption];
       this.selectedTime = timeOption;
@@ -249,39 +241,49 @@ export class BookingDetailsModalComponent implements OnInit {
     }
 
     this.isLoading = true;
-
-    this.firebaseService.checkVenueAvailability(this.booking?.venueId, this.selectedDate)
-      // .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (isAvailable: EventBooking[]) => {
-          this.isLoading = false;
-          this.existingBookings = isAvailable;
-          this.calculateTimeSlots();
-        },
-        error: (err) => {
-          console.error('Error checking availability:', err);
-          this.message.error('Failed to check availability. Please try again.');
-          this.isLoading = false;
-        }
-      });
-  }
-
-  calculateTimeSlots(): void {
-    this.booking.startTime = '';
-    this.booking.endTime = '';
-    this.selectedTime = [];
-    this.setTotal();
     const workStartHour = this.startHour
       ? this.startHour
       : this.startWorkingDayTime;
+    const dateString = this.selectedDate.toISOString();
+    const {paddingBeforeMinutes, paddingAfterMinutes} = this.venues.get(this.booking.venueId) as Venue;
 
-    const {paddingBeforeMinutes, paddingAfterMinutes} = this.venues.get(this.booking.venueId)!;
+    this.eventBookingService.checkVenueAvailability(
+      this.booking.venueId, dateString.slice(0, dateString.indexOf('T')), workStartHour,
+      this.endWorkingDayTime, this.selectedDuration * 60,
+      paddingBeforeMinutes, paddingAfterMinutes)
+      // .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((isAvailable: number[][]) => {
+          this.isLoading = false;
+          this.availableTimeSlots = isAvailable;
 
-    this.availableTimeSlots = this.timeService.findAvailableSlots(
-      this.existingBookings, this.booking.venueId!, this.selectedDate!.toDateString(), workStartHour,
-      this.endWorkingDayTime, this.selectedDuration * 60, paddingBeforeMinutes, paddingAfterMinutes);
-
+          if (this.booking.startTime && this.booking.endTime) {
+            this.selectedTime = [+this.booking.startTime, +this.booking.endTime];
+            this.cd.detectChanges();
+          }
+        },
+        // error: (err) => {
+        //   console.error('Error checking availability:', err);
+        //   this.message.error('Failed to check availability. Please try again.');
+        //   this.isLoading = false;
+        // }
+      );
   }
+
+  // calculateTimeSlots(): void {
+  //   // this.booking.startTime = '';
+  //   // this.booking.endTime = '';
+  //   this.selectedTime = [];
+  //   this.setTotal();
+  //   const workStartHour = this.startHour
+  //     ? this.startHour
+  //     : this.startWorkingDayTime;
+  //
+  //   const {paddingBeforeMinutes, paddingAfterMinutes} = this.venues.get(this.booking.venueId)!;
+  //
+  //   this.availableTimeSlots = this.timeService.findAvailableSlots(
+  //     this.existingBookings, this.booking.venueId!, this.selectedDate!.toDateString(), workStartHour,
+  //     this.endWorkingDayTime, this.selectedDuration * 60, paddingBeforeMinutes, paddingAfterMinutes);
+  // }
 
   private setTotal(): void {
     const venuePrice = this.venues.get(this.booking.venueId)?.hourlyRate ?? 0;
@@ -289,12 +291,12 @@ export class BookingDetailsModalComponent implements OnInit {
   }
 
   private loadVenues(): void {
-    this.firebaseService.getVenues()
+    this.venueService.getVenues()
       // .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: venues => {
           venues.forEach(venue => this.venues.set(venue.id!, venue));
-          const opt = [...this.venues.values()].map((venue: Venue) => {
+          const opt = Array.from(this.venues.values()).map((venue: Venue) => {
             return {
               label: venue.title,
               value: venue.id
@@ -311,7 +313,7 @@ export class BookingDetailsModalComponent implements OnInit {
   }
 
   private getWorkingSchedule(): void {
-    this.firebaseService.getSchedules()
+    this.workScheduleService.getSchedules()
       .pipe(
         // takeUntil(this.unsubscribe$),
         tap((data) => {

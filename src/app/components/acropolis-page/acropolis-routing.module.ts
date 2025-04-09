@@ -13,60 +13,70 @@ const routes: Routes = [
       },
       {
         path: 'about',
-        loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent)
+        loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent),
+        data: { title: 'About | Acropolis' }
       },
       {
         path: 'services',
-        loadComponent: () => import('./pages/services/services.component').then(m => m.ServicesComponent)
-      },
-      {
-        path: 'services/space-rental',
-        loadComponent: () => import('./pages/services/space-rental/space-rental.component').then(m => m.SpaceRentalComponent)
-      },
-      {
-        path: 'services/grill',
-        loadComponent: () => import('./pages/services/grill/grill.component').then(m => m.GrillComponent)
-      },
-      {
-        path: 'services/cafe',
-        loadComponent: () => import('./pages/services/cafe/cafe.component').then(m => m.CafeComponent)
-      },
-      {
-        path: 'services/connect',
-        loadComponent: () => import('./pages/services/connect/connect.component').then(m => m.ConnectComponent)
-      },
-      {
-        path: 'services/kids',
-        loadComponent: () => import('./pages/services/kids/kids.component').then(m => m.KidsComponent)
-      },
-      {
-        path: 'services/gym',
-        loadComponent: () => import('./pages/services/gym/gym.component').then(m => m.GymComponent)
-      },
-      {
-        path: 'services/shopping',
-        loadComponent: () => import('./pages/services/shopping/shopping.component').then(m => m.ShoppingComponent)
-      },
-      // Keep this as a fallback for any other service routes
-      {
-        path: 'services/:service',
-        loadComponent: () => import('./pages/services/service-detail/service-detail.component').then(m => m.ServiceDetailComponent)
+        // loadComponent: () => import('./pages/services/services.component').then(m => m.ServicesComponent),
+        children: [
+          {
+            path: 'space-rental',
+            loadComponent: () => import('./pages/services/space-rental/space-rental.component').then(c => c.SpaceRentalComponent),
+            data: { title: 'Space Rental | Acropolis' }
+          },
+          {
+            path: 'cancel-appointment/:id',
+            loadComponent: () => import('./pages/services/space-rental/components/cancel-appointment/cancel-appointment.component')
+              .then(c => c.CancelAppointmentComponent),
+            data: { title: 'Cancel Appointment | Acropolis' }
+          },
+          {
+            path: 'grill',
+            loadComponent: () => import('./pages/services/grill/grill.component').then(m => m.GrillComponent),
+            data: { title: 'Grill | Acropolis' }
+          },
+          {
+            path: 'cafe',
+            loadComponent: () => import('./pages/services/cafe/cafe.component').then(m => m.CafeComponent),
+            data: { title: 'Cafe | Acropolis' }
+          },
+          {
+            path: 'connect',
+            loadComponent: () => import('./pages/services/connect/connect.component').then(m => m.ConnectComponent),
+            data: { title: 'Connect | Acropolis' }
+          },
+          {
+            path: 'kids',
+            loadComponent: () => import('./pages/services/kids/kids.component').then(m => m.KidsComponent),
+            data: { title: 'Kids | Acropolis' }
+          },
+          {
+            path: 'gym',
+            loadComponent: () => import('./pages/services/gym/gym.component').then(m => m.GymComponent),
+            data: { title: 'Gym | Acropolis' }
+          },
+          {
+            path: 'shopping',
+            loadComponent: () => import('./pages/services/shopping/shopping.component').then(m => m.ShoppingComponent),
+            data: { title: 'Shopping | Acropolis' }
+          },
+        ]
       },
       {
         path: 'contact',
-        loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent)
+        loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent),
+        data: { title: 'Contact | Acropolis' }
       },
       {
         path: 'privacy-policy',
-        loadComponent: () => import('./pages/privacy-policy/privacy-policy.component').then(m => m.PrivacyPolicyComponent)
+        loadComponent: () => import('./pages/privacy-policy/privacy-policy.component').then(m => m.PrivacyPolicyComponent),
+        data: { title: 'Privacy Policy | Acropolis' }
       },
       {
         path: 'terms',
-        loadComponent: () => import('./pages/terms/terms.component').then(m => m.TermsComponent)
-      },
-      {
-        path: 'components-demo',
-        loadComponent: () => import('./pages/components-demo/components-demo.component').then(m => m.ComponentsDemoComponent)
+        loadComponent: () => import('./pages/terms/terms.component').then(m => m.TermsComponent),
+        data: { title: 'Terms | Acropolis' }
       },
       {
         path: '**',

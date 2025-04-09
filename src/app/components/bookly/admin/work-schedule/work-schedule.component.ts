@@ -2,8 +2,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { WorkSchedule, WeekDay } from '../../../../models/task';
-import { FirebaseService } from '../../../../services/firebase.service';
+import { WeekDay, WorkSchedule } from '../../../../models/task';
 import { CommonModule } from '@angular/common';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -15,6 +14,7 @@ import { filter, Observable, takeUntil, tap } from 'rxjs';
 import { BaseSDKHook } from '../../../base.hook';
 import { WorkScheduleModalComponent } from './work-schedule-modal/work-schedule-modal.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { WorkScheduleService } from '../../../../services/work-schedule.service';
 
 @Component({
   selector: 'app-work-schedule',
@@ -35,13 +35,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 })
 export class WorkScheduleComponent extends BaseSDKHook implements OnInit {
   schedules: WorkSchedule[] = [];
-  weekDay = WeekDay
+  weekDay = WeekDay;
 
   constructor(
-    private firebaseService: FirebaseService,
     private message: NzMessageService,
     private modal: NzModalService,
     protected override cd: ChangeDetectorRef,
+    private scheduleService: WorkScheduleService
   ) {
     super();
   }
@@ -63,7 +63,7 @@ export class WorkScheduleComponent extends BaseSDKHook implements OnInit {
   }
 
   deleteSchedule(id: string): void {
-    this.firebaseService.deleteSchedule(id)
+    this.scheduleService.deleteSchedule(id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
         this.message.success('Schedule deleted successfully');
@@ -72,7 +72,7 @@ export class WorkScheduleComponent extends BaseSDKHook implements OnInit {
   }
 
   protected getData = (): Observable<WorkSchedule[]> => {
-    return this.firebaseService.getSchedules()
+    return this.scheduleService.getSchedules()
       .pipe(takeUntil(this.unsubscribe$),
         tap((data) => {
           this.schedules = data.sort((a, b) => a.date - b.date);

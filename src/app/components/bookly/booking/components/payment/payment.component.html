@@ -1,26 +1,26 @@
 <!--<div nz-col-->
 <!--     nzFlex="1 1 350px">-->
 <!--<div class="payment-selection">-->
-<div class="payment-wrapper">
-	<div class="payment-option"
-	     [ngClass]="isLocal ? 'selected' : ''"
-	     (click)="selectPaymentType('local')">
-		<span nz-icon
-		      nzType="wallet"
-		      nzTheme="outline"></span>
-		<nz-divider nzType="horizontal"></nz-divider>
-		<span class="description">I will pay locally</span>
-	</div>
+<!--<div class="payment-wrapper">-->
+<!--	<div class="payment-option"-->
+<!--	     [ngClass]="isLocal ? 'selected' : ''"-->
+<!--	     (click)="selectPaymentType('local')">-->
+<!--		<span nz-icon-->
+<!--		      nzType="wallet"-->
+<!--		      nzTheme="outline"></span>-->
+<!--		<nz-divider nzType="horizontal"></nz-divider>-->
+<!--		<span class="description">I will pay locally</span>-->
+<!--	</div>-->
 
-	<div class="payment-option"
-	     [ngClass]="isOnline ? 'selected' : ''"
-	     (click)="selectPaymentType('online')">
-		<img src="/assets/images/stripe.png"
-		     alt="stripe logo">
-		<nz-divider nzType="horizontal"></nz-divider>
-		<span class="description">I will pay now with Stripe</span>
-	</div>
-</div>
+<!--	<div class="payment-option"-->
+<!--	     [ngClass]="isOnline ? 'selected' : ''"-->
+<!--	     (click)="selectPaymentType('online')">-->
+<!--		<img src="/assets/images/stripe.png"-->
+<!--		     alt="stripe logo">-->
+<!--		<nz-divider nzType="horizontal"></nz-divider>-->
+<!--		<span class="description">I will pay now with Stripe</span>-->
+<!--	</div>-->
+<!--</div>-->
 
 <div class="payment-method-container">
 	<ng-container *ngIf="isOnline && !!elementsOptions.clientSecret && !paymentId">

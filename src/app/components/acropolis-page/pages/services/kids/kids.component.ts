@@ -1,33 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { BaseServiceComponent } from '../base-service/base-service.component';
-import { ServiceDetail, servicesData } from '../service.model';
-import { ImagePlaceholderComponent } from '../../../../../components/shared/image-placeholder/image-placeholder.component';
-import { CarouselComponent } from '../../../../../components/shared/carousel/carousel.component';
-import { CarouselItemDirective } from '../../../../../components/shared/carousel/carousel-item.directive';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-kids',
-  templateUrl: '../base-service/base-service.component.html',
-  styleUrls: ['../base-service/base-service.component.scss'],
+  templateUrl: './kids.component.html',
+  styleUrls: ['./kids.component.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterModule,
-    ImagePlaceholderComponent,
-    CarouselComponent,
-    CarouselItemDirective
+    NzIconModule
+  ],
+  animations: [
+    trigger('slideIn', [
+      transition(':enter', [
+        style({transform: 'translateY(100%)', opacity: 0}),
+        animate('1000ms ease-out', style({transform: 'translateY(0)', opacity: 1}))
+      ])
+    ])
   ]
 })
-export class KidsComponent extends BaseServiceComponent implements OnInit {
-  override serviceId: string = 'kids';
+export class KidsComponent {
 
-  constructor() {
-    super();
-  }
-
-  override ngOnInit(): void {
-    this.service = servicesData.find(s => s.id === this.serviceId)!;
-  }
 }

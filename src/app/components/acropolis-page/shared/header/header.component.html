@@ -20,7 +20,6 @@
 				<li class="dropdown">
 					<a (mouseenter)="isServicesDropdownOpen = true"
 					   (mouseleave)="isServicesDropdownOpen = false"
-					   routerLink="/acropolis/services"
 					   routerLinkActive="active">
 						services
 						<span nz-icon
@@ -35,7 +34,17 @@
 					     (mouseleave)="isServicesDropdownOpen = false">
 						<a *ngFor="let service of services"
 						   [routerLink]="service.route"
-						   routerLinkActive="active">{{ service.name.toLowerCase() }}</a>
+						   routerLinkActive="active">
+							<nz-ribbon nzText="soon"
+							           *ngIf="notReadyServices.includes(service.name); else name"
+							           nzColor="blue">
+								{{ service.name }}
+							</nz-ribbon>
+
+							<ng-template #name>
+								{{ service.name }}
+							</ng-template>
+						</a>
 					</div>
 				</li>
 				<li><a routerLink="/acropolis/contact"
@@ -70,14 +79,24 @@
 						      [nzType]="isServicesDropdownOpen ? 'up' :'down'"
 						      class="dropdown-icon"
 						      nzTheme="outline"></span>
-<!--						<span class="dropdown-icon">{{ isServicesDropdownOpen ? '▲' : '▼' }}</span>-->
+						<!--						<span class="dropdown-icon">{{ isServicesDropdownOpen ? '▲' : '▼' }}</span>-->
 					</div>
 					<div class="mobile-dropdown-content"
 					     [ngClass]="{'open': isServicesDropdownOpen}">
 						<a *ngFor="let service of services"
 						   [routerLink]="service.route"
 						   routerLinkActive="active"
-						   (click)="closeMenus()">{{ service.name.toLowerCase() }}</a>
+						   (click)="closeMenus()">
+							<nz-ribbon nzText="soon"
+							           *ngIf="notReadyServices.includes(service.name); else name"
+							           nzColor="blue">
+								{{ service.name }}
+							</nz-ribbon>
+
+							<ng-template #name>
+								{{ service.name }}
+							</ng-template>
+						</a>
 					</div>
 				</li>
 				<li><a routerLink="/acropolis/contact"
@@ -85,8 +104,8 @@
 				       (click)="closeMenus()">contact us</a></li>
 				<li>
 					<div class="social-media-wrapper">
-						<app-social-links 
-							displayMode="icons" 
+						<app-social-links
+							displayMode="icons"
 							size="large"
 							direction="horizontal"
 							color="var(--color-light)"

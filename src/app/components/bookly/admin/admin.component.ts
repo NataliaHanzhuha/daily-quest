@@ -21,7 +21,6 @@ import { CategoryManagementComponent } from './category-management/category-mana
 import { VenueManagementComponent } from './venue-management/venue-management.component';
 import { AdminCalendarComponent } from './admin-calendar/admin-calendar.component';
 import { WorkScheduleComponent } from './work-schedule/work-schedule.component';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from '../../../services/auth.service';
 import { BookingTableComponent } from './booking-table/booking-table.component';
 import { UserManagementComponent } from './user-management/user-management.component';
@@ -64,16 +63,15 @@ export class AdminComponent implements OnInit {
   title: any;
 
   constructor(
-    private angularFireAuth: AngularFireAuth,
     private router: Router,
     private authService: AuthService
   ) {
-    this.angularFireAuth.user.subscribe((u) => {
+    this.authService.userSubject.subscribe((u) => {
       this.user = u;
       if (!this.user) {
-        this.router.navigate(['/categories']);
+        this.router.navigate(['/']);
       }
-      console.log(this.user);
+
       if (!this.router.url || this.router.url === '/') {
         this.router.navigate([!!u?.displayName ? '/admin' : '/login']);
       }
@@ -90,7 +88,7 @@ export class AdminComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout().then(() => {
+    this.authService.logout().subscribe(() => {
       this.router.navigate(['/login']);
     });
   }

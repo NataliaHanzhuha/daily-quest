@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -15,7 +14,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
   standalone: true,
   imports: [CommonModule, FormsModule, NzFormModule, NzInputModule, ReactiveFormsModule, NzCheckboxModule, NzButtonModule, NzTypographyModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [AuthService]
 })
 export class LoginComponent {
   validateForm: FormGroup<{
@@ -25,23 +25,19 @@ export class LoginComponent {
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
-  private angularFireAuth = inject(AngularFireAuth);
 
-  constructor(private authService: AuthService, private router: Router,
-              private fb: NonNullableFormBuilder) {
-    this.angularFireAuth.user.subscribe((u) => {
-      if (!this.router.url || this.router.url === '/') {
-        this.router.navigate([u?.displayName ? '/admin' : '/login']);
-      }
-    });
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: NonNullableFormBuilder) {
   }
 
-  async submitForm() {
+  submitForm() {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
-      await this.authService.login(this.validateForm.get('email')!.value, this.validateForm.get('password')!.value).then(() => {
-        this.router.navigate(['/admin']);
-      });
+      this.authService.login(this.validateForm.get('email')!.value, this.validateForm.get('password')!.value)
+        .subscribe(() => {
+          this.router.navigate(['/admin']);
+        });
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {

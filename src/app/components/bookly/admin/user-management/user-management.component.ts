@@ -24,21 +24,21 @@ import { Observable } from 'rxjs';
 })
 export class UserManagementComponent implements OnInit {
   users: User[] = [];
-  isAdmin$: Observable<boolean>;
+  // isAdmin$: Observable<boolean>;
 
   constructor(private userService: UserService, private message: NzMessageService) {
-    this.isAdmin$ = this.userService.hasRole('admin');
+    // this.isAdmin$ = this.userService.hasRole('admin');
   }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe(users => {
-      this.users = users;
-    });
+    // this.userService.getUsers().subscribe(users => {
+    //   this.users = users;
+    // });
   }
 
   deleteUser(uid: string): void {
-    this.userService.deleteUser(uid).then(() => {
-      this.message.success('User deleted successfully!');
-    });
+    // this.userService.deleteUser(uid).then(() => {
+    //   this.message.success('User deleted successfully!');
+    // });
   }
 }

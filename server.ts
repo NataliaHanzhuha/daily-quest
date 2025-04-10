@@ -8,7 +8,6 @@ import * as express from 'express';
 import { join } from 'path';
 
 import { AppServerModule } from './src/main.server';
-import { APP_BASE_HREF } from '@angular/common';
 import { existsSync, readFileSync } from 'fs';
 import * as domino from 'domino';
 
@@ -40,15 +39,17 @@ export function app(): express.Express {
   }));
 
   /** Universal route */
+  // server.get('*', (req, res) => {
+  //   res.render(indexHtml, {
+  //     req,
+  //     providers: [
+  //       { provide: APP_BASE_HREF, useValue: req.baseUrl }
+  //     ]
+  //   });
+  // });
   server.get('*', (req, res) => {
-    res.render(indexHtml, {
-      req,
-      providers: [
-        { provide: APP_BASE_HREF, useValue: req.baseUrl }
-      ]
-    });
+    res.render('index', { req });
   });
-
   return server;
 }
 

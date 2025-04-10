@@ -22,7 +22,11 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "esm": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

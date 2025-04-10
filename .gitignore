@@ -10292,3 +10292,6 @@ node_modules/@angular-devkit/schematics/tools/schema-option-transform.js
 node_modules/@angular-devkit/schematics/tools/workflow/node-workflow.d.ts
 node_modules/@angular-devkit/schematics/tools/workflow/node-workflow.js
 src/assets/.gitkeep
+
+# Local Netlify folder
+.netlify

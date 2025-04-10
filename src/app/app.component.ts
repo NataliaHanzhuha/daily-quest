@@ -31,8 +31,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private loadingService: LoadingService,
     private cd: ChangeDetectorRef,
-    // private angularFireAuth: AngularFireAuth,
-    // private authService: AuthService
   ) {
   }
 

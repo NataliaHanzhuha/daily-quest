@@ -12,7 +12,11 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "heroku-postbuild": "npm run build:prod:ssr",
-    "prerender": "ng run daily-quest:prerender"
+    "prerender": "ng run daily-quest:prerender",
+    "heroku-start": "node dist/your-app/server/main.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "private": true,
   "dependencies": {

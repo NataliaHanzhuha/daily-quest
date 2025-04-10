@@ -118,4 +118,9 @@
       grid-template-columns: 1fr;
     }
   }
+
+  .logo-section, .footer-social, .footer-links {
+    align-items: center !important;
+    text-align: center;
+  }
 }

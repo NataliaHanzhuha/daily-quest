@@ -155,25 +155,13 @@
     cursor: pointer;
     z-index: 1001;
 
-    span {
-      display: block;
-      height: 2px;
-      width: 100%;
-      background-color: var(--color-text);
-      transition: all var(--transition-medium);
+    .menu-button {
+      color: black;
+      font-size: 24px;
+      transition: all var(--transition-slow);
 
-      &:nth-child(1).open {
-        transform: rotate(45deg) translate(5px, 5px);
-        background-color: var(--color-accent);
-      }
-
-      &:nth-child(2).open {
-        opacity: 0;
-      }
-
-      &:nth-child(3).open {
-        transform: rotate(-45deg) translate(7px, -6px);
-        background-color: var(--color-accent);
+      &.open {
+        color: white;
       }
     }
   }

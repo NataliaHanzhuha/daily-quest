@@ -146,5 +146,14 @@
     flex-direction: column;
     padding: 0 10px;
   }
+
+  .info-grid {
+    grid-template-columns: minmax(200px, 1fr) !important;
+  }
 }
 
+@media screen and (max-width: 450px) {
+  .hero-content p{
+    display: none;
+  }
+}

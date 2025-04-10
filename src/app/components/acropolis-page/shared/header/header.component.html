@@ -1,8 +1,9 @@
 <header class="acropolis-header"
         [ngClass]="isScrolled ? 'scrolled' : ''">
 	<div class="header-container">
+		<span [hidden]="!isMobileMenuOpen"></span>
 		<div class="logo"
-		     [ngClass]="isMobileMenuOpen ? 'isMobileMenuOpen': ''">
+		     [hidden]="isMobileMenuOpen">
 			<a routerLink="/">
 				<img src="/assets/images/logo.ico">
 				<h1>acropolis park</h1>
@@ -55,9 +56,10 @@
 		<!-- Mobile Menu Toggle -->
 		<div class="mobile-toggle"
 		     (click)="toggleMobileMenu()">
-			<span [ngClass]="{'open': isMobileMenuOpen}"></span>
-			<span [ngClass]="{'open': isMobileMenuOpen}"></span>
-			<span [ngClass]="{'open': isMobileMenuOpen}"></span>
+			<span [ngClass]="{'open': isMobileMenuOpen}"
+			      class="menu-button"
+			      nz-icon
+			      [nzType]="isMobileMenuOpen ?'close':'menu'"></span>
 		</div>
 
 		<!-- Mobile Navigation -->

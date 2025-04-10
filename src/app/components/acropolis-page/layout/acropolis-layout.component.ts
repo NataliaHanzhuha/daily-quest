@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AcropolisHeaderComponent } from '../shared/header/header.component';
 import { AcropolisFooterComponent } from '../shared/footer/footer.component';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 import { filter, mergeMap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -18,6 +18,7 @@ export class AcropolisLayoutComponent {
   constructor(
     private router: Router,
     private titleService: Title,
+    private meta: Meta,
     private activatedRoute: ActivatedRoute
   ) {
     this.router.events.pipe(
@@ -31,6 +32,10 @@ export class AcropolisLayoutComponent {
     ).subscribe(data => {
       const title = data['title'] || 'Acropolis Park';
       this.titleService.setTitle(title);
+      this.meta.updateTag({
+        name: 'description',
+        content: 'A Modern Revival of Greek Grandeur — Your One-Stop Destination for Events, Recreation, and Community Living'
+      })
     });
   }
 }

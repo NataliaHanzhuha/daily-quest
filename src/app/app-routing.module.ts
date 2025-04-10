@@ -14,20 +14,16 @@ const routes: Routes = [
     // canActivate: [authGuard]
   },
   {
-    path: 'acropolis',
+    path: '',
     loadChildren: () => import('./components/acropolis-page/acropolis-routing.module').then(m => m.AcropolisRoutingModule),
     data: { animation: 'HomePage' }
   },
-  {
-    path: '',
-    redirectTo: 'acropolis',
-    pathMatch: 'full'
-  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
+    // initialNavigation: 'enabledBlocking',
+    scrollPositionRestoration: 'top',
 })],
 })
 export class AppRoutingModule {

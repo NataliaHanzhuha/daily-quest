@@ -103,6 +103,6 @@ export class HomeComponent {
 
   bookNow(): void {
     // Navigate to contact page for booking
-    this.router.navigate(['/acropolis/contact']);
+    this.router.navigate(['/contact']);
   }
 }

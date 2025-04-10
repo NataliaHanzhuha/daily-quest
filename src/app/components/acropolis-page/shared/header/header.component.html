@@ -3,7 +3,7 @@
 	<div class="header-container">
 		<div class="logo"
 		     [ngClass]="isMobileMenuOpen ? 'isMobileMenuOpen': ''">
-			<a routerLink="/acropolis">
+			<a routerLink="/">
 				<img src="/assets/images/logo.ico">
 				<h1>acropolis park</h1>
 			</a>
@@ -12,10 +12,10 @@
 		<!-- Desktop Navigation -->
 		<nav class="desktop-nav">
 			<ul>
-				<li><a routerLink="/acropolis"
+				<li><a routerLink="/"
 				       routerLinkActive="active"
 				       [routerLinkActiveOptions]="{exact: true}">home</a></li>
-				<li><a routerLink="/acropolis/about"
+				<li><a routerLink="/about"
 				       routerLinkActive="active">about us</a></li>
 				<li class="dropdown">
 					<a (mouseenter)="isServicesDropdownOpen = true"
@@ -47,7 +47,7 @@
 						</a>
 					</div>
 				</li>
-				<li><a routerLink="/acropolis/contact"
+				<li><a routerLink="/contact"
 				       routerLinkActive="active">contact us</a></li>
 			</ul>
 		</nav>
@@ -64,11 +64,11 @@
 		<nav class="mobile-nav"
 		     [ngClass]="{'open': isMobileMenuOpen}">
 			<ul>
-				<li><a routerLink="/acropolis"
+				<li><a routerLink="/"
 				       routerLinkActive="active"
 				       [routerLinkActiveOptions]="{exact: true}"
 				       (click)="closeMenus()">home</a></li>
-				<li><a routerLink="/acropolis/about"
+				<li><a routerLink="/about"
 				       routerLinkActive="active"
 				       (click)="closeMenus()">about us</a></li>
 				<li>
@@ -99,7 +99,7 @@
 						</a>
 					</div>
 				</li>
-				<li><a routerLink="/acropolis/contact"
+				<li><a routerLink="/contact"
 				       routerLinkActive="active"
 				       (click)="closeMenus()">contact us</a></li>
 				<li>

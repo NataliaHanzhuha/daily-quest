@@ -33,8 +33,8 @@
           </div>
 
           <div class="action-buttons">
-            <a routerLink="/acropolis/contact" class="primary-btn">Inquire Now</a>
-            <a routerLink="/acropolis/services" class="secondary-btn">Back to Services</a>
+            <a routerLink="/contact" class="primary-btn">Inquire Now</a>
+            <a routerLink="/services" class="secondary-btn">Back to Services</a>
           </div>
         </div>
         
@@ -61,7 +61,7 @@
           <div class="service-image" [style.background-image]="'url(' + relatedService.images[0] + ')'"></div>
           <div class="service-info">
             <h3>{{ relatedService.name }}</h3>
-            <a [routerLink]="['/acropolis/services', relatedService.id]" class="service-link">
+            <a [routerLink]="['/services', relatedService.id]" class="service-link">
               Learn More <span class="arrow">→</span>
             </a>
           </div>
@@ -77,8 +77,8 @@
         <h2>Ready to Experience Our {{ service.name }} Service?</h2>
         <p>Contact us today to make a reservation or inquire about availability.</p>
         <div class="cta-buttons">
-          <a routerLink="/acropolis/contact" class="cta-primary">Contact Us</a>
-          <a routerLink="/acropolis" class="cta-secondary">Explore Acropolis Park</a>
+          <a routerLink="/contact" class="cta-primary">Contact Us</a>
+          <a routerLink="/" class="cta-secondary">Explore Acropolis Park</a>
         </div>
       </div>
     </div>
@@ -89,6 +89,5 @@
   <div class="container">
     <h2>Service Not Found</h2>
     <p>The service you are looking for is not available.</p>
-    <a routerLink="/acropolis/services" class="back-btn">Return to Services</a>
   </div>
 </div>

@@ -177,6 +177,6 @@ export class ServiceDetailComponent implements OnInit {
   }
 
   navigateToContact(): void {
-    this.router.navigate(['/acropolis/contact']);
+    this.router.navigate(['/contact']);
   }
 }

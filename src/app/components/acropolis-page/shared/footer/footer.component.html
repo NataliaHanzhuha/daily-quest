@@ -1,7 +1,7 @@
 <footer class="acropolis-footer">
 	<div class="footer-content">
 		<div class="logo-section">
-			<a routerLink="/acropolis">
+			<a routerLink="/">
 				<img src="/assets/images/logo.ico"
 				     alt="">
 				<h3>acropolis park</h3>
@@ -31,15 +31,15 @@
 		<div class="footer-links">
 			<h4>Pages</h4>
 			<ul>
-				<li><a routerLink="/acropolis">Home</a></li>
-				<li><a routerLink="/acropolis/about">About Us</a></li>
+				<li><a routerLink="/">Home</a></li>
+				<li><a routerLink="/about">About Us</a></li>
 				<li><a nz-dropdown
-				       nzTrigger="click"
+				       nzTrigger="hover"
 				       [nzDropdownMenu]="menu">Services
 					<span nz-icon
 					      nzType="down"></span></a></li>
-				<li><a routerLink="/acropolis/contact">Contact</a></li>
-				<li><a routerLink="/acropolis/privacy-policy">Privacy Policy</a></li>
+				<li><a routerLink="/contact">Contact</a></li>
+				<li><a routerLink="/privacy-policy">Privacy Policy</a></li>
 			</ul>
 
 			<nz-dropdown-menu #menu="nzDropdownMenu">

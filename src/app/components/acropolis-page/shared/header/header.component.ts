@@ -20,13 +20,13 @@ export class AcropolisHeaderComponent {
 
   // Services submenu items
   services = [
-    { name: 'Space Rental', route: '/acropolis/services/space-rental' },
-    { name: 'Grill', route: '/acropolis/services/grill' },
-    { name: 'Foods', route: '/acropolis/services/cafe' },
-    { name: 'Kids', route: '/acropolis/services/kids' },
-    { name: 'Shopping', route: '/acropolis/services/shopping' },
-    { name: 'Connect', route: '/acropolis/services/connect' },
-    { name: 'Gym', route: '/acropolis/services/gym' },
+    { name: 'Space Rental', route: '/services/space-rental' },
+    { name: 'Grill', route: '/services/grill' },
+    { name: 'Foods', route: '/services/cafe' },
+    { name: 'Kids', route: '/services/kids' },
+    { name: 'Shopping', route: '/services/shopping' },
+    { name: 'Connect', route: '/services/connect' },
+    { name: 'Gym', route: '/services/gym' },
   ];
 
   notReadyServices = ['Gym', 'Connect'];

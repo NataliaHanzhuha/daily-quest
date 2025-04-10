@@ -14,7 +14,7 @@ import { filter, Observable, takeUntil, tap } from 'rxjs';
 import { BaseSDKHook } from '../../../base.hook';
 import { WorkScheduleModalComponent } from './work-schedule-modal/work-schedule-modal.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { WorkScheduleService } from '../../../../services/work-schedule.service';
+import { WorkScheduleService } from '../../../../services/work-shedule.service';
 
 @Component({
   selector: 'app-work-schedule',
@@ -32,6 +32,7 @@ import { WorkScheduleService } from '../../../../services/work-schedule.service'
     NzButtonModule,
     NzIconModule,
   ],
+  providers: [WorkScheduleService]
 })
 export class WorkScheduleComponent extends BaseSDKHook implements OnInit {
   schedules: WorkSchedule[] = [];
@@ -74,8 +75,8 @@ export class WorkScheduleComponent extends BaseSDKHook implements OnInit {
   protected getData = (): Observable<WorkSchedule[]> => {
     return this.scheduleService.getSchedules()
       .pipe(takeUntil(this.unsubscribe$),
-        tap((data) => {
-          this.schedules = data.sort((a, b) => a.date - b.date);
+        tap((data: any[]) => {
+          this.schedules = data.sort((a: any, b: any) => a.date - b.date);
           this.loadStop();
         })
       );

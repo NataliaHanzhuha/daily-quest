@@ -6,19 +6,17 @@ import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzTransitionPatchModule } from 'ng-zorro-antd/core/transition-patch/transition-patch.module';
 import { NzWaveModule } from 'ng-zorro-antd/core/wave';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { differenceInCalendarDays } from 'date-fns';
 import { TimeService } from '../../../../../services/time.service';
 import { EventBooking, Venue, WorkSchedule } from '../../../../../models/task';
-import { takeUntil } from 'rxjs/operators';
-import { tap } from 'rxjs';
-import { FirebaseService } from '../../../../../services/firebase.service';
-import { UnsubscribeHook } from '../../../../unsubscribe.hook';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { Observable, of, tap } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { WorkScheduleService } from '../../../../../services/work-schedule.service';
 import { EventBookingService } from '../../../../../services/event-booking.service';
+import { WorkScheduleService } from '../../../../../services/work-shedule.service';
+import { BaseSDKHook } from '../../../../base.hook';
 
 @Component({
   selector: 'app-date-and-time',
@@ -37,17 +35,29 @@ import { EventBookingService } from '../../../../../services/event-booking.servi
   templateUrl: './date-and-time.component.html',
   styleUrls: ['./date-and-time.component.scss']
 })
-export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
+export class DateAndTimeComponent extends BaseSDKHook implements OnInit {
   @Input() venue!: Venue;
   @Output() change = new EventEmitter();
 
   readonly today = new Date();
   bookingForm!: FormGroup;
-  private schedules: { [key: number]: WorkSchedule } = {};
   startHour = new FormControl<number | null>(null);
   availableTimeSlots: number[][] = [];
   isLoading = false;
+  private schedules: { [key: number]: WorkSchedule } = {};
   private existingBookings: EventBooking[] = [];
+
+  constructor(
+    private timeService: TimeService,
+    private fb: FormBuilder,
+    protected override cd: ChangeDetectorRef,
+    private message: NzMessageService,
+    private workScheduleService: WorkScheduleService,
+    private eventBookingService: EventBookingService
+  ) {
+    super();
+    this.createForm();
+  }
 
   get selectedDate(): Date | undefined {
     return this.bookingForm.get('date')?.value as Date;
@@ -81,21 +91,10 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
     return this.startHour.value ?? null;
   }
 
-  constructor(
-    private timeService: TimeService,
-    private fb: FormBuilder,
-    private cd: ChangeDetectorRef,
-    private message: NzMessageService,
-    private workScheduleService: WorkScheduleService,
-    private eventBookingService: EventBookingService
-  ) {
-    super();
-    this.createForm();
-  }
-
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.getWorkingSchedule();
     this.setRulesForForm();
+    this.initRefresh();
     // Calculate total cost when duration changes
     this.bookingForm.get('duration')?.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
@@ -104,8 +103,7 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
           startTime: null,
           endTime: null,
         });
-        this.checkAvailability();
-        this.cd.detectChanges();
+        this.refresh();
       });
 
     this.bookingForm.get('date')?.valueChanges
@@ -115,16 +113,12 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
           startTime: null,
           endTime: null,
         });
-        this.checkAvailability();
-        this.cd.detectChanges();
+        this.refresh();
       });
 
     this.startHour?.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
-        this.checkAvailability();
-        this.cd.detectChanges();
-      });
+      .subscribe(this.refresh);
 
     this.bookingForm.valueChanges.subscribe((value: any) => {
       this.change.emit(value);
@@ -133,43 +127,41 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
     this.bookingForm.get('duration')?.setValue(this.venue.minHours ?? 2);
   }
 
-  private checkAvailability(): void {
-    if (!this.venue?.id || !this.selectedDate) {
-      return;
-    }
-
-    this.isLoading = true;
+  getData = (): Observable<number[][]> => {
     const workStartHour = this.selectedStartTime
       ? this.selectedStartTime
       : this.startWorkingDayTime;
-    const dateString = this.selectedDate.toISOString();
+
+    if (!this.venue?.id || !this.selectedDate || !workStartHour) {
+      return of([]);
+    }
+
+    this.isLoading = true;
+    const dateString = this.selectedDate?.toISOString();
     const {paddingBeforeMinutes, paddingAfterMinutes} = this.venue;
 
-    this.eventBookingService.checkVenueAvailability(
+    return this.eventBookingService.getAvailableSlots(
       this.venue?.id, dateString.slice(0, dateString.indexOf('T')), workStartHour,
       this.endWorkingDayTime, this.selectedDuration * 60,
       paddingBeforeMinutes, paddingAfterMinutes)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (slots: number[][]) => {
-          this.isLoading = false;
-          this.availableTimeSlots = slots;
-        },
-        error: (err) => {
+      .pipe(
+        catchError((err: any) => {
           console.error('Error checking availability:', err);
           this.message.error('Failed to check availability. Please try again.');
           this.isLoading = false;
-        }
-      });
-  }
 
-  disabledDate = (current: Date): boolean =>
-    // Can not select days before today and today
-    differenceInCalendarDays(current, this.today) <= 0;
+          return of([]);
+        }),
+        tap((slots: number[][]) => {
+          this.isLoading = false;
+          this.availableTimeSlots = slots;
+        }));
+  };
+
+  disabledDate = (current: Date): boolean => differenceInCalendarDays(current, this.today) <= 0;
 
   onValueChange(value: Date): void {
     this.bookingForm.get('date')?.setValue(this.timeService.resetToMidnight(value));
-    console.log(`Current value: ${value}`);
   }
 
   setHours(hours: number[]): void {
@@ -189,12 +181,14 @@ export class DateAndTimeComponent extends UnsubscribeHook implements OnInit {
   private getWorkingSchedule(): void {
     this.workScheduleService.getSchedules()
       .pipe(takeUntil(this.unsubscribe$),
-        tap((data) => {
-          data.forEach((item) => {
+        tap((data: WorkSchedule[]) => {
+          data.forEach((item: WorkSchedule) => {
             this.schedules[item.date] = item;
           });
 
           this.startHour.setValue(this.startWorkingDayTime);
+          this.startHour.updateValueAndValidity();
+          this.refresh();
         })
       ).subscribe();
   }

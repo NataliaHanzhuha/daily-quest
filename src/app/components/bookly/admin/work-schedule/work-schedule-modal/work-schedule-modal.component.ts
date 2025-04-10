@@ -12,9 +12,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { dropdownOptionsFromEnum } from '../../../../enum-to-dropdown';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { WorkScheduleService } from '../../../../../services/work-schedule.service';
 import { UnsubscribeHook } from '../../../../unsubscribe.hook';
 import { takeUntil } from 'rxjs/operators';
+import { WorkScheduleService } from '../../../../../services/work-shedule.service';
 
 @Component({
   selector: 'app-work-schedule-modal',

@@ -18,7 +18,6 @@ const routes: Routes = [
       },
       {
         path: 'services',
-        // loadComponent: () => import('./pages/services/services.component').then(m => m.ServicesComponent),
         children: [
           {
             path: 'space-rental',
@@ -27,7 +26,7 @@ const routes: Routes = [
           },
           {
             path: 'cancel-appointment/:id',
-            loadComponent: () => import('./pages/services/space-rental/components/cancel-appointment/cancel-appointment.component')
+            loadComponent: () => import('./pages/services/space-rental/cancel-appointment/cancel-appointment.component')
               .then(c => c.CancelAppointmentComponent),
             data: { title: 'Cancel Appointment | Acropolis' }
           },

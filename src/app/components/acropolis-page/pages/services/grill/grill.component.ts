@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { CarouselComponent } from '../../../../../components/shared/carousel/carousel.component';
-import { CarouselItemDirective } from '../../../../../components/shared/carousel/carousel-item.directive';
 import { MenuItem } from '../../../../../models/task';
-import { MenuItemsComponent } from '../../../shared/menu-items/menu-items.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.component';
 
 @Component({
   selector: 'app-grill',

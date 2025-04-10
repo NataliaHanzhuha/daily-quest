@@ -1,7 +1,7 @@
 export const environment = {
     production: true,
     // backendUrl: "http://localhost:4242/api/",
-    backendUrl: "https://acropolispark-server-7355351ddd0f.herokuapp.com/api/",
+    backendUrl: "https://acropolispark-server2-17c50abe1a55.herokuapp.com/api/",
 
     // Keeping Stripe keys for reference or fallback
     stripe: {

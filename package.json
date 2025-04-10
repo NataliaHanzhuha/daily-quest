@@ -4,13 +4,15 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:server": "tsc server.ts && node dist/server/server.js",
+    "dev:ssr": "ng run daily-quest:serve-ssr:development",
+    "serve:ssr": "node dist/daily-quest/server/main.js",
     "build": "ng build",
+    "build:ssr": "ng build && ng run daily-quest:server",
+    "build:prod:ssr": "ng build --configuration production && ng run daily-quest:server:production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "heroku-postbuild": "ng build --configuration production && tsc server.ts",
-    "serve": "node dist/server/server.js",
-    "build:server": "tsc server.ts"
+    "heroku-postbuild": "npm run build:prod:ssr",
+    "prerender": "ng run daily-quest:prerender"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +26,7 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/platform-server": "^16.2.12",
     "@angular/router": "^16.2.0",
+    "@anthropic-ai/claude-code": "^0.2.66",
     "@auth0/angular-jwt": "^5.2.0",
     "@ctrl/tinycolor": "^4.1.0",
     "@fullcalendar/angular": "^6.1.10",

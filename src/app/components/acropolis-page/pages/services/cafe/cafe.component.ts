@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MenuItem } from '../../../../../models/task';
-import { MenuItemsComponent } from '../../../shared/menu-items/menu-items.component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.component';
 
 @Component({
   selector: 'app-cafe',
@@ -166,7 +166,7 @@ export class CafeComponent {
     '/assets/images/cafe-menu-rice.png',
     '/assets/images/cafe-menu-salad.png',
     '/assets/images/cafe-menu-sandwich.png',
-    '/assets/images/cafe-menu-jellof-rice.png',
+    // '/assets/images/cafe-menu-jellof-rice.png',
   ];
 }
 

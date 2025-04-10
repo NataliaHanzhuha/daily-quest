@@ -166,8 +166,6 @@ export class BookingComponent extends UnsubscribeHook implements OnInit {
         valid = true;
     }
 
-    console.log(this.bookingForm.value);
-
     return valid;
   }
 

@@ -103,7 +103,6 @@ export abstract class BaseSDKHook extends UnsubscribeHook implements OnDestroy {
         takeUntil(this.unsubscribe$),
       ).subscribe();
 
-    this.refresh();
   }
 
   // @ts-ignore

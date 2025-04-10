@@ -1,6 +1,8 @@
 <div class="categories-container">
 	<h3>Venue Types</h3>
 
+	<nz-spin nzSimple *ngIf="loading"></nz-spin>
+
 	<div class="categories-grid">
 		<div class="category-card"
 		     *ngFor="let category of categories">

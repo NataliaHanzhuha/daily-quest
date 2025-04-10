@@ -23,7 +23,7 @@ import { countries, CountryInterface } from 'country-codes-flags-phone-codes';
 import { EmailService } from '../../../../../services/email.service';
 import { EventBookingService } from '../../../../../services/event-booking.service';
 import { VenueService } from '../../../../../services/venue.service';
-import { WorkScheduleService } from '../../../../../services/work-schedule.service';
+import { WorkScheduleService } from '../../../../../services/work-shedule.service';
 
 @Component({
   selector: 'app-booking-details-modal',
@@ -247,10 +247,12 @@ export class BookingDetailsModalComponent implements OnInit {
     const dateString = this.selectedDate.toISOString();
     const {paddingBeforeMinutes, paddingAfterMinutes} = this.venues.get(this.booking.venueId) as Venue;
 
-    this.eventBookingService.checkVenueAvailability(
-      this.booking.venueId, dateString.slice(0, dateString.indexOf('T')), workStartHour,
-      this.endWorkingDayTime, this.selectedDuration * 60,
-      paddingBeforeMinutes, paddingAfterMinutes)
+    this.eventBookingService.getAvailableSlots(
+      this.booking.venueId,
+      dateString.slice(0, dateString.indexOf('T')),
+      this.selectedDuration * 60,
+      paddingAfterMinutes ?? 0,
+      paddingBeforeMinutes ?? 0)
       // .pipe(takeUntil(this.unsubscribe$))
       .subscribe((isAvailable: number[][]) => {
           this.isLoading = false;

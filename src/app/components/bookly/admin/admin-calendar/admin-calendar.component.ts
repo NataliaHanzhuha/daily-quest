@@ -34,7 +34,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { TimeService } from '../../../../services/time.service';
 import { EventBookingService } from '../../../../services/event-booking.service';
 import { VenueService } from '../../../../services/venue.service';
-import { WorkScheduleService } from '../../../../services/work-schedule.service';
+import { WorkScheduleService } from '../../../../services/work-shedule.service';
 
 @Component({
   selector: 'app-admin-calendar',

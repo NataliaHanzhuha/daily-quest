@@ -24,30 +24,14 @@
 	   ancient soul with modern flavor — one cup at a time.</p>
 </section>
 
-
-
-
 <section class="gallery-section">
 			<ng-container *ngFor="let image of images">
 				<div class="gallery-image"
 				     [style.background-image]="'url(' + image + ')'"></div>
 			</ng-container>
-<!--	<app-carousel-->
-<!--		[perView]="3"-->
-<!--		[showIndicators]="true"-->
-<!--		[showControls]="false"-->
-<!--		[autoplay]="true"-->
-<!--		[autoplayDelay]="5000">-->
-
-<!--		<div *ngFor="let image of images"-->
-<!--		     class="carousel-item"-->
-<!--		     carouselItem>-->
-<!--			<div class="gallery-image"-->
-<!--			     [style.background-image]="'url(' + image + ')'"></div>-->
-<!--		</div>-->
-
-<!--	</app-carousel>-->
 </section>
+
+<h2>Menu</h2>
 
 <app-menu-items [list]="appetizers"
                 headerTitle="Pasta">

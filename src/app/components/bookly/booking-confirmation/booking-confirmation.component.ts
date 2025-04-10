@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { finalize, Subject } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
+import { finalize } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 // Ng-Zorro Modules
@@ -15,8 +15,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 
 // Services and Models
-import { EventBooking, Venue } from '../../../models/task';
-import { FirebaseService } from '../../../services/firebase.service';
+import { Venue } from '../../../models/task';
 import { UnsubscribeHook } from '../../unsubscribe.hook';
 import { EventBookingService } from '../../../services/event-booking.service';
 
@@ -57,7 +56,11 @@ export class BookingConfirmationComponent extends UnsubscribeHook implements OnI
     this.loadBooking();
   }
 
- private loadBooking(): void {
+  browseVenues(): void {
+    this.router.navigate(['/acropolis']);
+  }
+
+  private loadBooking(): void {
     if (!this.bookingId) {
       this.error = true;
       this.isLoading = false;
@@ -65,32 +68,20 @@ export class BookingConfirmationComponent extends UnsubscribeHook implements OnI
     }
 
     this.isLoading = true;
-    this.eventBookingService.checkBookingById(this.bookingId)
+    this.eventBookingService.bookingExists(this.bookingId)
       .pipe(
         takeUntil(this.unsubscribe$),
         finalize(() => {
-        this.isLoading = false;
-      }))
-      .subscribe({
-        next: (booking) => {
-          this.booking = booking;
-
-          if (!booking) {
-            this.error = true;
-          }
-
           this.isLoading = false;
-        },
-        error: (err) => {
-          console.error('Error loading booking:', err);
-          this.message.error('Failed to load booking details');
+        }))
+      .subscribe((booking: boolean) => {
+        this.booking = booking;
+
+        if (!booking) {
           this.error = true;
-          this.isLoading = false;
         }
-      });
-  }
 
-  browseVenues(): void {
-    this.router.navigate(['/acropolis']);
+        this.isLoading = false;
+      });
   }
 }

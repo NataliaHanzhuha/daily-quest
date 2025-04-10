@@ -6,7 +6,7 @@
 		   class="back-btn">← Back to Venue Type</a>
 	</div>
 
-	<h2 *ngIf="!category">All Venues</h2>
+	<nz-spin nzSimple *ngIf="loading"></nz-spin>
 
 	<div class="services-grid">
 		<div class="service-card"

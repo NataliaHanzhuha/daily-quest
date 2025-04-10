@@ -22,7 +22,7 @@ import { TermsComponent } from './pages/terms/terms.component';
     FormsModule,
     ReactiveFormsModule,
     AcropolisRoutingModule,
-    
+
     // Standalone Components
     AcropolisLayoutComponent,
     AcropolisHeaderComponent,
@@ -36,4 +36,5 @@ import { TermsComponent } from './pages/terms/terms.component';
     TermsComponent
   ]
 })
-export class AcropolisModule { }
+export class AcropolisModule {
+}

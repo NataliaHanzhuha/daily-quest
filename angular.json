@@ -114,13 +114,9 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/daily-quest/server",
-            "main": "src/main.server.ts",
+            "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
-            "inlineStyleLanguage": "scss",
-            "externalDependencies": [
-              "ngx-stripe",
-              "@stripe/stripe-js"
-            ]
+            "inlineStyleLanguage": "scss"
           },
           "configurations": {
             "production": {

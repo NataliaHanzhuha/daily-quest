@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SocialLinksComponent } from '../../../shared/social-links/social-links.component';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { PlatformService } from '../../../../services/platform.service';
 
 @Component({
   selector: 'app-acropolis-header',
@@ -29,10 +30,11 @@ export class AcropolisHeaderComponent {
   ];
 
   notReadyServices = ['Gym', 'Connect'];
-
+constructor(private platformService: PlatformService) {
+}
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.isScrolled = window.scrollY > 50;
+    this.isScrolled = (this.platformService.windowRef as Window)?.scrollY > 50;
   }
 
   toggleMobileMenu() {

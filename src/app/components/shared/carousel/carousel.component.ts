@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CarouselItemDirective } from './carousel-item.directive';
 import { BehaviorSubject, fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { PlatformService } from '../../../services/platform.service';
 
 @Component({
   selector: 'app-carousel',
@@ -43,7 +44,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     return this.numSlides + (this.loop ? 2 : 0);
   }
 
-  constructor(private cd: ChangeDetectorRef, private el: ElementRef) {}
+  constructor(private cd: ChangeDetectorRef, private el: ElementRef, private platform: PlatformService) {}
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -64,7 +65,12 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   }
 
   setupResizeListener() {
-    this.resizeSubscription = fromEvent(window, 'resize')
+    const win = this.platform.windowRef as Window;
+    if (!win) {
+      return;
+    }
+
+    this.resizeSubscription = fromEvent(win, 'resize')
       .pipe(debounceTime(200))
       .subscribe(() => {
         this.calculateDimensions();
@@ -210,7 +216,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     const track = this.el.nativeElement.querySelector('.carousel-track');
     if (track) {
       // Get current translateX value
-      const style = window.getComputedStyle(track);
+      const style = (this.platform.windowRef as Window)?.getComputedStyle(track);
       const matrix = new WebKitCSSMatrix(style.transform);
       this.translateX = matrix.m41;
       

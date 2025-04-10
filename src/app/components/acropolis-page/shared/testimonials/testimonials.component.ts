@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { CarouselComponent } from '../../../shared';
 import { CarouselItemDirective } from '../../../shared';
 import { ReviewCardComponent, ReviewData } from '../../../shared';
-
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { PlatformService } from '../../../../services/platform.service';
 @Component({
   selector: 'app-testimonials',
   templateUrl: './testimonials.component.html',
@@ -12,6 +14,8 @@ import { ReviewCardComponent, ReviewData } from '../../../shared';
   imports: [CommonModule, CarouselComponent, CarouselItemDirective, ReviewCardComponent]
 })
 export class TestimonialsComponent {
+  constructor(private platform: PlatformService) {
+  }
   reviews: ReviewData[] = [
     {
       id: '1',
@@ -61,14 +65,14 @@ export class TestimonialsComponent {
   ];
   
   // Responsive settings
-  carouselItemsPerView(a: any, b: any, c: any): number {
-    const width = window.innerWidth;
-    if (width < 768) {
-      return a;
-    } else if (width < 1200) {
-      return b;
-    } else {
-      return c;
-    }
+  carouselItemsPerView(a: any, b: any, c: any): any {
+      const width = (this.platform.windowRef as Window)?.innerWidth;
+      if (width < 768) {
+        return a;
+      } else if (width < 1200) {
+        return b;
+      } else {
+        return c;
+      }
   }
 }

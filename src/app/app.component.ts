@@ -35,14 +35,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Subscribe to router events to track navigation
-    this.routerSubscription = this.router.events.subscribe((event: RouterEvent) => {
-      this.navigationInterceptor(event);
-    });
-
-    // Subscribe to loading service
-    this.loadingSubscription = this.loadingService.loading$.subscribe(isLoading => {
-    });
+    // // Subscribe to router events to track navigation
+    // this.routerSubscription = this.router.events.subscribe((event: RouterEvent) => {
+    //   this.navigationInterceptor(event);
+    // });
+    //
+    // // Subscribe to loading service
+    // this.loadingSubscription = this.loadingService.loading$.subscribe(isLoading => {
+    // });
   }
 
   ngOnDestroy(): void {

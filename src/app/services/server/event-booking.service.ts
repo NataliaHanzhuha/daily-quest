@@ -20,6 +20,7 @@ export class EventBookingService {
         ...event,
         date: this.timeService.getDate(event.date),
         dateString: this.timeService.getDate(event.dateString),
+        createdAt: this.timeService.getDate(event.createdAt, true),
       };
     })));
   }
@@ -37,9 +38,8 @@ export class EventBookingService {
   }
 
   updateBookingStatus(id: string, status: 'pending' | 'confirmed' | 'cancelled'): Observable<any> {
-    return this.http.put(`${this.url}update/status/${id}`, status);
+    return this.http.put(`${this.url}update/status/${id}`, {status});
   }
-
 
   deleteBooking(id: string): Observable<any> {
     return this.http.delete(`${this.url}delete/${id}`);
@@ -55,13 +55,14 @@ export class EventBookingService {
   }
 
   /** 📅 Get bookings filtered for calendar view */
-  filteredBookingForCalendar(from: string, to: string, venueId: string | null = null, status: string | null = null): Observable<EventBooking[]> {
-    return this.http.post<EventBooking[]>(`${this.url}filter`, {from, to, venueId, status})
+  filteredBookingForCalendar(from: string, to: string, venueId: string | null = null,  statuses: string[] = []): Observable<EventBooking[]> {
+    return this.http.post<EventBooking[]>(`${this.url}filter`, {from, to, venueId, statuses})
       .pipe(map((events: EventBooking[]) => events.map((event: EventBooking) => {
         return {
           ...event,
           date: this.timeService.getDate(event.date),
           dateString: this.timeService.getDate(event.dateString),
+          createdAt: this.timeService.getDate(event.createdAt, true),
         };
       })));
   }

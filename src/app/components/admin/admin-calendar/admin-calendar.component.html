@@ -1,6 +1,9 @@
 <nz-spin [nzSpinning]="isLoading">
 	<app-calendar-filter (filterChanged)="applyFilters($event)"
+	                     (openModal)="showBookingDetails()"
+	                     (refresh)="loadBookings()"
 	                     (venues)="setVenues($event)"></app-calendar-filter>
+
 
 	<full-calendar [options]="calendarOptions">
 		<ng-template #eventContent
@@ -11,11 +14,11 @@
 			     [nzTooltipTitle]="tooltip">
 				<div class="content"
 				     [ngStyle]="{
-			     'border-left': '2px solid ' + venues.get(arg.event.extendedProps?.venueId)?.color ?? '#000',
-			     'background': venues.get(arg.event.extendedProps?.venueId)?.color + '33' ?? '#fff',
+			     'border-left': '2px solid ' + (arg.event.extendedProps?.venueId | venueName: venues :'color') ?? '#000',
+			     'background': venues[arg.event.extendedProps?.venueId]?.color + '33' ?? '#fff',
 			     }">
 					<b>{{ arg.timeText }}</b>
-					<b>{{ arg.event.title }}</b>
+					<b>{{ arg.event.title | venueName : venues }}</b>
 					<nz-tag [nzColor]="arg.event.extendedProps?.paymentDetails?.paymentStatus | statusColor">{{ arg.event.extendedProps?.paymentDetails?.paymentStatus }}</nz-tag>
 
 				</div>
@@ -23,8 +26,8 @@
 				<ng-template #tooltip>
 					<div class="tooltip-content">
 						<b [ngStyle]="{
-						'border-left': '20px solid ' + venues.get(arg.event.extendedProps?.venueId)?.color, 'padding-left': '10px'
-						 }">{{ arg.event.title }}</b>
+						'border-left': '20px solid ' + venues[arg.event.extendedProps?.venueId]?.color, 'padding-left': '10px'
+						 }">{{ arg.event.title| venueName : venues }}</b>
 						<b nz-typography
 						   nzType="secondary">{{ arg.event.extendedProps?.eventType }}</b>
 						<span>{{ arg.timeText }}

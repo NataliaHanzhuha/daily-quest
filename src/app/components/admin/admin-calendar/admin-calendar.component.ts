@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { filter, finalize, Subject, take, tap } from 'rxjs';
@@ -36,6 +36,8 @@ import { EventBookingService } from '../../../services/server/event-booking.serv
 import { WorkScheduleService } from '../../../services/server/work-shedule.service';
 import { CalendarFilterComponent } from './calendar-filter/calendar-filter.component';
 import { StatusColorPipe } from './status-color.pipe';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { VenueNamePipe } from './venue-name.pipe';
 
 @Component({
   selector: 'app-admin-calendar',
@@ -59,14 +61,16 @@ import { StatusColorPipe } from './status-color.pipe';
     FullCalendarModule,
     NzTypographyModule,
     CalendarFilterComponent,
-    StatusColorPipe
+    StatusColorPipe,
+    NzTableModule,
+    VenueNamePipe
   ],
   templateUrl: './admin-calendar.component.html',
   styleUrls: ['./admin-calendar.component.scss']
 })
 export class AdminCalendarComponent implements OnInit, OnDestroy {
   bookings: EventBooking[] = [];
-  venues: Map<string, Venue> = new Map();
+  venues: {[id: string]: Venue} = {};
   isLoading = false;
   calendarOptions!: CalendarOptions;
   statuses = [
@@ -77,6 +81,11 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
     {label: 'Cancelled', value: 'cancelled'}
   ];
   currentEvents = signal<EventApi[]>([]);
+  private filter: any = {
+    ...this.timeService.getCurrentWeekRange(),
+    statuses: [],
+    venueId: null,
+  };
   private destroy$ = new Subject<void>();
   private schedules: { [key: number]: WorkSchedule } = {};
 
@@ -85,15 +94,20 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
     private modalService: NzModalService,
     private timeService: TimeService,
     private eventBookingService: EventBookingService,
-    private workScheduleService: WorkScheduleService
+    private workScheduleService: WorkScheduleService,
+    private cd: ChangeDetectorRef
   ) {
     this.initCalendarOptions();
   }
 
   ngOnInit(): void {
     this.getWorkingSchedule();
-    let {from, to} = this.timeService.getCurrentWeekRange();
-    this.loadBookings(from, to);
+
+    this.filter = {
+      ...this.filter,
+      ...this.timeService.getCurrentWeekRange()
+    }
+    this.loadBookings();
   }
 
   ngOnDestroy(): void {
@@ -103,8 +117,10 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
 
   setVenues(venues: Venue[]): void {
     venues.forEach((venue: Venue) => {
-      this.venues.set(venue.id!, venue);
+      this.venues[venue.id!] = venue;
     });
+
+    this.cd.detectChanges();
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
@@ -130,23 +146,8 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
       paymentDetails: null
     } as unknown;
     this.showBookingDetails(booking as EventBooking);
-    // const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
-    console.log(selectInfo, calendarApi);
-    // calendarApi.unselect(); // clear date selection
-    //
-    // if (title) {
-    //   calendarApi.addEvent({
-    //     id: Date.now().toString(),
-    //     title,
-    //     start: selectInfo.startStr,
-    //     end: selectInfo.endStr,
-    //     allDay: selectInfo.allDay
-    //   });
-    // }
   }
-
-  // Make Array available in the template
 
   handleEventClick(clickInfo: EventClickArg) {
     console.log(clickInfo);
@@ -185,30 +186,36 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
 
   applyFilters(data: {
     venueId: string | null,
-    status: string | null,
+    statuses: string[]
   }): void {
-    let {from, to} = this.timeService.getCurrentWeekRange();
-    this.loadBookings(from, to, data.venueId, data.status);
+    this.filter = {
+      ...this.filter,
+      ...this.timeService.getCurrentWeekRange(),
+      ...data
+    };
+    this.loadBookings();
   }
 
   // Methods for confirming and cancelling bookings moved to BookingDetailsModalComponent
 
-  private showBookingDetails(booking: EventBooking): void {
-    const venueName = booking?.id ? this.venues.get(booking!.venueId)?.title : 'Unknown Venue';
+   showBookingDetails(booking?: EventBooking): void {
+    const venueName = booking?.id ? this.venues[booking!.venueId]?.title : 'Unknown Venue';
 
     const modalRef = this.modalService.create({
       nzTitle: 'Booking Details',
       nzContent: BookingDetailsModalComponent,
       nzWidth: 750,
-      nzData: {booking, venueName, color: this.venues.get(booking!.venueId)?.color ?? '#000'},
+      nzData: {booking, venueName, color: this.venues[booking!.venueId]?.color ?? '#000'},
       nzFooter: null
     });
 
     modalRef.afterClose.pipe(take(1), filter(Boolean))
       .subscribe(result => {
-        let {from, to} = this.timeService.getCurrentWeekRange();
-
-        this.loadBookings(from, to);
+        this.filter = {
+          ...this.filter,
+          ...this.timeService.getCurrentWeekRange()
+        };
+        this.loadBookings();
       });
   }
 
@@ -258,17 +265,19 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
       slotMaxTime: '22:00:00',
       slotDuration: '00:60:01',
       allDaySlot: false,
+      eventStartEditable: false, // disable drag&drop if false
       datesSet: (arg) => {
-        console.log('Calendar navigated to new view');
-        console.log('Start:', arg.startStr, 'End:', arg.endStr);
-        this.loadBookings(this.timeService.getDate(arg.startStr), this.timeService.getDate(arg.endStr),);
+        // console.log('Calendar navigated to new view');
+        // console.log('Start:', arg.startStr, 'End:', arg.endStr);
+        // this.loadBookings(this.timeService.getDate(arg.startStr), this.timeService.getDate(arg.endStr),);
       }
     };
   }
 
-  private loadBookings(from: any, to: any, venueId: string | null = null, status: string | null = null): void {
+   loadBookings(): void {
     this.isLoading = true;
-    this.eventBookingService.filteredBookingForCalendar(from, to, venueId, status)
+    const {from, to, venueId, statuses} = this.filter;
+    this.eventBookingService.filteredBookingForCalendar(from, to, venueId, statuses)
       .pipe(takeUntil(this.destroy$), finalize(() => this.isLoading = false))
       .subscribe((bookings) => {
         this.bookings = bookings.filter((booking: EventBooking) => {
@@ -281,13 +290,13 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
 
   private setBookingToCalendar(bookings: EventBooking[]): void {
     this.calendarOptions.events = bookings.map((booking) => {
-      const date = booking.dateString ?? this.timeService.getDate(booking.date);
+      const date = this.timeService.getDate(booking.date);
       const start: any = date + 'T' + booking.startTime + ':00:00';
       const end: any = date + 'T' + booking.endTime + ':00:00';
 
       return {
         id: booking.id,
-        title: this.venues.get(booking.venueId)?.title ?? booking?.venueId,
+        title: booking?.venueId,
         start, end,
         color: '#fefefe',
         textColor: '#222',

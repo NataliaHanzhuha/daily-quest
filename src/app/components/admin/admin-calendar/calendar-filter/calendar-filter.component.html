@@ -1,5 +1,6 @@
-<form class="filters" [formGroup]="filter">
-	<div class="filter-group" >
+<form class="filters"
+      [formGroup]="filter">
+	<div class="filter-group">
 		<label>Filter by Venue:</label>
 		<nz-select formControlName="venueId"
 		           nzPlaceHolder="All Venues"
@@ -11,11 +12,25 @@
 
 	<div class="filter-group">
 		<label>Filter by Status:</label>
-		<nz-select formControlName="status"
+		<nz-select formControlName="statuses"
 		           nzPlaceHolder="All Statuses"
+		           nzMode="multiple"
 		           [nzAllowClear]="true"
 		           [nzOptions]="statuses"
 		           class="filter-select">
 		</nz-select>
 	</div>
+
+	<button nz-button
+	        nzSize="default"
+	        (click)="openModal.emit(null)">Add Booking
+	</button>
+
+	<button nz-button
+	        nzType="primary"
+	        (click)="refresh.emit()">
+		<span nz-icon
+		      nzType="redo"
+		      nzTheme="outline"></span>
+	</button>
 </form>

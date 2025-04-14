@@ -57,7 +57,7 @@ export class AdminComponent implements OnInit {
   bookings: EventBooking[] = [];
   venues: Map<string, Venue> = new Map();
   isLoading = false;
-  activeTabIndex = 3;
+  activeTabIndex = 2;
   loading = true;
   user: any = null;
   title: any;

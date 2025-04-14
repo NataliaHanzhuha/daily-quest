@@ -14,6 +14,9 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-payment',
@@ -58,6 +61,7 @@ export class PaymentComponent implements OnInit {
     private stripeService: StripeService,
     private fb: FormBuilder,
     private factoryService: StripeFactoryService,
+    private message: NzMessageService
   ) {
     this.localPaymentForm = this.fb.group({
       localPaymentType: ['cash', Validators.required],
@@ -107,10 +111,17 @@ export class PaymentComponent implements OnInit {
         },
       },
       redirect: 'if_required',
-    }).subscribe({
-      next: (result: any) => {
+    }).pipe(catchError((err) => {
+      console.error(err);
+      this.message.error(err.message);
+
+      return of(null);
+    }))
+      .subscribe((result: any) => {
         if (result.error) {
-          console.error(result.error.message);
+          this.message.error(result.error.message, {nzDuration: 10000});
+
+          return;
 
         } else if (result.paymentIntent.status === 'succeeded') {
           console.log('Payment processed successfully', result);
@@ -122,11 +133,7 @@ export class PaymentComponent implements OnInit {
             paymentType: this.selectedPaymentMethod.value!
           });
         }
-      },
-      error: (err) => {
-        console.error(err);
-      },
-    });
+      });
   }
 
 }

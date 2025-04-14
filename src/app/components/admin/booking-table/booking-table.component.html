@@ -1,10 +1,12 @@
 <app-calendar-filter (filterChanged)="applyFilters($event)"
+                     (openModal)="showBookingDetails()"
+                     (refresh)="loadBookings()"
                      (venues)="setVenues($event)"></app-calendar-filter>
 
-<button nz-button nzSize="default" (click)="showBookingDetails()">Add Booking</button>
 <nz-table #bookingsTable
           [nzData]="filteredBooking"
           [nzLoading]="loading"
+          [nzScroll]="{x: '10px'}"
           [nzShowPagination]="bookings.length > 10"
           [nzPageSize]="10">
 	<thead>
@@ -19,7 +21,8 @@
 	</tr>
 	</thead>
 	<tbody>
-	<tr *ngFor="let booking of bookingsTable.data">
+	<tr *ngFor="let booking of bookingsTable.data"
+	    (click)="showBookingDetails(booking)">
 		<td>
 			<nz-badge [nzColor]="venues.get(booking.venueId)?.color"></nz-badge>
 			{{ getVenueName(booking.venueId) }}
@@ -47,26 +50,6 @@
 			          [nzText]="booking.status"></nz-badge>
 		</td>
 		<td>
-			<button *ngIf="booking.status === 'pending'"
-			        nz-button
-			        nzType="primary"
-			        nzSize="small"
-			        (click)="confirmBooking(booking)">
-								<span nz-icon
-								      nzType="check"></span> Confirm
-			</button>
-			<button *ngIf="booking.status !== 'cancelled'"
-			        nz-button
-			        nzType="default"
-			        nzDanger
-			        nzSize="small"
-			        nz-popconfirm
-			        nzPopconfirmTitle="Are you sure you want to cancel this booking?"
-			        nzPopconfirmPlacement="left"
-			        (nzOnConfirm)="cancelBooking(booking)">
-								<span nz-icon
-								      nzType="close"></span> Cancel
-			</button>
 		</td>
 	</tr>
 	</tbody>

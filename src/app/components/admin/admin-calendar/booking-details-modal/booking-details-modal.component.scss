@@ -38,6 +38,14 @@
   }
 }
 
+nz-select {
+  width: 140px;
+
+  &.small {
+    width: 80px;
+  }
+}
+
 .customer-info {
   display: flex;
   justify-content: flex-start;

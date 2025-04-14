@@ -2,7 +2,7 @@
 	<nz-spin [nzSpinning]="isLoading"
 	         class="parent">
 		<div class="detail-section div1">
-			<h3>Event Information</h3>
+			<h4>Event Information</h4>
 			<div class="detail-row">
 				<span class="label">Venue:</span>
 				<nz-select [(ngModel)]="booking.venueId"
@@ -21,7 +21,8 @@
 
 			<div class="detail-row">
 				<span class="label">
-					Duration ({{venues.get(booking.venueId)?.minHours || 1}} - {{venues.get(booking.venueId)?.maxHours || 24}} hours):
+					Duration ({{ venues.get(booking.venueId)?.minHours || 1 }} - {{ venues.get(booking.venueId)?.maxHours || 24 }}
+					hours):
 				</span>
 				<nz-input-number [(ngModel)]="booking.duration"
 				                 (ngModelChange)="refresh()"
@@ -34,6 +35,8 @@
 
 			<div class="detail-row">
 				<span class="label">Time:</span>
+<!--				{{selectedTime | json}}-->
+<!--				{{availableTimeSlots | json}}-->
 				<nz-select nzShowSearch
 				           nzAllowClear
 				           [nzLoading]="isLoading"
@@ -58,29 +61,13 @@
 					</nz-input-number>
 
 				</ng-template>
-				<!--			</div>-->
-				<!--				<span class="value">-->
-				<!--						{{ formatTime(booking.startTime) }} - {{ formatTime(booking.endTime) }} ({{ booking.duration }} hours)-->
-				<!--					</span>-->
 			</div>
 			<div class="detail-row">
 				<span class="label">Event Type:</span>
 				<nz-select [(ngModel)]="booking.eventType"
+				           [nzOptions]="eventType"
 				           nzPlaceHolder="Select an event type">
-					<nz-option nzValue="Wedding"
-					           nzLabel="Wedding"></nz-option>
-					<nz-option nzValue="Birthday"
-					           nzLabel="Birthday"></nz-option>
-					<nz-option nzValue="Corporate"
-					           nzLabel="Corporate"></nz-option>
-					<nz-option nzValue="Conference"
-					           nzLabel="Conference"></nz-option>
-					<nz-option nzValue="Party"
-					           nzLabel="Party"></nz-option>
-					<nz-option nzValue="Other"
-					           nzLabel="Other"></nz-option>
 				</nz-select>
-				<!--				<span class="value">{{ booking.eventType }}</span>-->
 			</div>
 			<div class="detail-row">
 				<span class="label">Attendees (max: {{ venues.get(booking.venueId)?.capacity }}):</span>
@@ -88,21 +75,25 @@
 				                 [nzMin]="1"
 				                 [nzMax]="venues.get(booking.venueId)?.capacity || 1000"
 				                 [nzStep]="1"></nz-input-number>
-				<!--				<span class="value">{{ booking.attendees }} people</span>-->
+			</div>
+
+			<div class="detail-row">
+				<span class="label">Status</span>
+				<nz-select [(ngModel)]="booking.status"
+				           (ngModelChange)="updateStatus($event)"
+				           [nzDisabled]="!booking.id"
+				           [nzOptions]="statusOptions"></nz-select>
 			</div>
 		</div>
 
-		<!--		<nz-divider></nz-divider>-->
-		<!--		<div class="customer-info ">-->
 		<div class="detail-section div2">
-			<h3>Customer Information</h3>
+			<h4>Customer Information</h4>
 			<div class="detail-row">
 				<span class="label">Name:</span>
 				<input nz-input
 				       name="name"
 				       [(ngModel)]="booking.customerName"
 				       placeholder="Your full name"/>
-				<!--					<span class="value">{{ booking.customerName }}</span>-->
 			</div>
 			<div class="detail-row">
 				<span class="label">Email:</span>
@@ -110,7 +101,6 @@
 				       type="email"
 				       [(ngModel)]="booking.customerEmail"
 				       placeholder="Your email address"/>
-				<!--					<span class="value">{{ booking.customerEmail }}</span>-->
 			</div>
 			<div class="detail-row">
 				<span class="label">Phone:</span>
@@ -118,7 +108,7 @@
 					<ng-template #addOnBeforeTemplate>
 						<nz-select nzShowSearch
 						           [(ngModel)]="booking.customerPhoneNumberPrefix"
-						           class="code"
+						           class="small"
 						           name="code"
 						           autocomplete="off"
 						           [nzCustomTemplate]="defaultTemplate">
@@ -144,21 +134,19 @@
 					       autocomplete="tel"
 					       placeholder="Your phone number"/>
 				</nz-input-group>
-				<!--					<span class="value">{{ booking.customerPhone }}</span>-->
 			</div>
 		</div>
 
-		<!--			<nz-divider [nzType]="'vertical'"></nz-divider>-->
-
 		<div class="detail-section div3">
-			<h3>Payment Information</h3>
+			<h4>Payment Information</h4>
 			<div class="detail-row"
 			     *ngIf="!!booking?.paymentDetails?.paymentStatus">
 				<span class="label">Payment Status:</span>
 				<span class="value">{{ booking.paymentDetails?.paymentStatus | titlecase }}</span>
 			</div>
 			<div class="detail-row">
-				<span class="label">Total Amount ({{ currencySymbol }}{{venues.get(booking.venueId)?.hourlyRate}}/hour):</span>
+				<span class="label">Total Amount ({{ currencySymbol }}{{ venues.get(booking.venueId)?.hourlyRate }}
+				                    /hour):</span>
 				<span class="value">{{ currencySymbol }}{{ booking.totalAmount }}</span>
 			</div>
 
@@ -167,30 +155,20 @@
 				<span class="label">Payment ID:</span>
 				<span class="value">{{ booking.paymentDetails?.paymentId ?? 'None' }}</span>
 			</div>
-
-			<button (click)="sendConfirmEmail()">send email</button>
-			<button (click)="sendPaymentEmail()">sendPaymentEmail</button>
+			<a nz-dropdown [nzDropdownMenu]="menu">
+				Send email
+				<span nz-icon nzType="down"></span>
+			</a>
+			<nz-dropdown-menu #menu="nzDropdownMenu">
+				<ul nz-menu nzSelectable>
+					<li nz-menu-item (click)="sendConfirmEmail()">Send greating email</li>
+					<li nz-menu-item (click)="sendPaymentEmail()">Send payment request email</li>
+				</ul>
+			</nz-dropdown-menu>
 		</div>
-		<!--		</div>-->
 	</nz-spin>
 
 	<div *nzModalFooter>
-		<button
-			*ngIf="booking && booking.status === 'pending'"
-			nz-button
-			nzType="primary"
-			[nzLoading]="isLoading"
-			(click)="confirmBooking(booking)">
-			Confirm Booking
-		</button>
-		<button
-			*ngIf="booking && booking.status !== 'cancelled'"
-			nz-button
-			nzDanger
-			[nzLoading]="isLoading"
-			(click)="cancelBooking(booking)">
-			Cancel Booking
-		</button>
 		<button nz-button
 		        (click)="save()">Save
 		</button>
@@ -201,8 +179,7 @@
 </div>
 
 <div *nzModalTitle>
-	<h3 [ngStyle]="{'border-left': '20px solid ' + venueColor, 'padding-left': '10px' }">
+	<h4 [ngStyle]="{'border-left': '20px solid ' + venueColor, 'padding-left': '10px' }">
 		{{ booking?.id ? 'Edit' : 'Create' }} Appointment
-		                                      <!--		Booking Info for: <b>{{ venueName }}</b>-->
-	</h3>
+	</h4>
 </div>

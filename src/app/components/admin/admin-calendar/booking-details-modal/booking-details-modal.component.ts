@@ -28,6 +28,7 @@ import { TimeService } from '../../../../services/time.service';
 import { AuthService } from '../../../../services/server/auth.service';
 import { BaseSDKHook } from '../../../base.hook';
 import { takeUntil } from 'rxjs/operators';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'app-booking-details-modal',
@@ -48,13 +49,13 @@ import { takeUntil } from 'rxjs/operators';
     NzGridModule,
     NzInputNumberModule,
     ReactiveFormsModule,
-    NzInputModule
+    NzInputModule,
+    NzDropDownModule
   ],
   templateUrl: './booking-details-modal.component.html',
   styleUrls: ['./booking-details-modal.component.scss']
 })
 export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit {
-  // protected override getData: () => Observable<any>;
   booking!: EventBooking;
   isLoading = false;
   venues: Map<string, Venue> = new Map();
@@ -65,6 +66,15 @@ export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit 
   readonly today = new Date();
   countries: CountryInterface[] = [];
   venueOptions: Dropdown[] = [];
+  statusOptions: Dropdown[] = ['pending', 'paid', 'confirmed', 'cancelled']
+    .map((status: string) => {
+      return {label: status, value: status};
+    });
+  eventType: Dropdown[] = ['Wedding', 'Birthday', 'Corporate', 'Conference', 'Party', 'Other']
+    .map((status: string) => {
+      return {label: status, value: status};
+    });
+
   private schedules: { [key: number]: WorkSchedule } = {};
 
   constructor(
@@ -119,6 +129,7 @@ export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit 
     this.initRefresh();
     if (!this.booking?.id) {
       this.booking.customerPhoneNumberPrefix = getCountryDialCodeFromCountryCodeOrNameOrFlagEmoji('Nigeria') ?? '';
+      this.booking.status = 'pending';
     } else {
       this.refresh();
     }
@@ -129,6 +140,16 @@ export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit 
   sendConfirmEmail(): void {
     this.emailService.sendEmailAfterAppointmentCreated(this.booking, this.venues.get(this.booking.venueId)!.title)
       .subscribe();
+  }
+
+  updateStatus(status: any): void {
+    if (status === 'confirmed' && this.booking.paymentDetails?.paymentStatus !== 'paid') {
+      this.sendPaymentEmail();
+      this.message.warning('Payment request Email was sent to the customer');
+      return;
+    }
+    this.eventBookingService.updateBookingStatus(this.booking.id, status)
+      .pipe(take(1)).subscribe();
   }
 
   sendPaymentEmail(): void {
@@ -149,20 +170,19 @@ export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit 
 
   save(): void {
     this.isLoading = true;
-    console.log(this.auth.user.user_id);
     this.booking.paymentDetails = {
       paymentStatus: PaymentStatus.unpaid,
       paymentType: 'online',
       requestDate: new Date().toISOString(),
       collectedBy: this.auth.user.user_id,
     };
+    this.booking.userId = this.auth.user.user_id;
+
     const request = this.booking.id
       ? this.eventBookingService.updateBooking(this.booking)
       : this.eventBookingService.createBooking(this.booking)
         .pipe(switchMap(
-          () => this.emailService.sendEmailForPaymentAfterAdminCreatedEvent(this.booking, this.venues.get(this.booking.venueId)!.title)));
-
-    // TODO: add email send
+          (booking: EventBooking) => this.emailService.sendEmailForPaymentAfterAdminCreatedEvent(booking, this.venues.get(booking.venueId)!.title)));
     request.subscribe({
       next: success => {
         this.isLoading = false;
@@ -181,49 +201,7 @@ export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit 
     });
   }
 
-  confirmBooking(booking: EventBooking): void {
-    this.isLoading = true;
-    this.eventBookingService.updateBooking({...booking, status: 'confirmed'}).subscribe({
-      next: success => {
-        this.isLoading = false;
-        if (success) {
-          this.message.success('Booking confirmed successfully');
-          this.modalRef.close(true); // Pass true to indicate refresh is needed
-        } else {
-          this.message.error('Failed to confirm booking');
-        }
-      },
-      error: err => {
-        console.error('Error confirming booking:', err);
-        this.message.error('Failed to confirm booking');
-        this.isLoading = false;
-      }
-    });
-  }
-
-  cancelBooking(booking: EventBooking): void {
-    this.isLoading = true;
-    this.eventBookingService.updateBooking({...booking, status: 'cancelled'}).subscribe({
-      next: success => {
-        this.isLoading = false;
-        if (success) {
-          this.message.success('Booking cancelled successfully');
-          this.modalRef.close(true); // Pass true to indicate refresh is needed
-        } else {
-          this.message.error('Failed to cancel booking');
-        }
-      },
-      error: err => {
-        console.error('Error cancelling booking:', err);
-        this.message.error('Failed to cancel booking');
-        this.isLoading = false;
-      }
-    });
-  }
-
-  disabledDate = (current: Date | string): boolean =>
-    // Can not select days before today and today
-    differenceInCalendarDays(new Date(current), this.today) <= 0;
+  disabledDate = (current: Date | string): boolean => differenceInCalendarDays(new Date(current), this.today) <= 0;
 
   onVenueChanged(): void {
     if (this.booking.id) {
@@ -273,24 +251,26 @@ export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit 
     const dateString = this.selectedDate?.toISOString();
     const venue = this.venues.get(this.booking.venueId) as Venue;
     const {paddingBeforeMinutes = 0, paddingAfterMinutes = 0} = venue ?? {};
-    // console.log(this.selectedDuration, this.booking, workStartHour, this.endWorkingDayTime);
+
     return this.eventBookingService.getAvailableSlots(
       this.booking.venueId,
       dateString.slice(0, dateString.indexOf('T')),
       workStartHour,
       this.endWorkingDayTime,
       this.selectedDuration * 60,
-      paddingAfterMinutes ?? 0,
-      paddingBeforeMinutes ?? 0)
-      // .pipe(takeUntil(this.unsubscribe$))
-      .pipe(tap((isAvailable: number[][]) => {
-          this.isLoading = false;
-          this.availableTimeSlots = isAvailable;
+      paddingAfterMinutes,
+      paddingBeforeMinutes)
+      .pipe(tap((slots: number[][]) => {
+          this.availableTimeSlots = slots;
 
-          if (this.booking.startTime && this.booking.endTime) {
-            this.selectedTime = [+this.booking.startTime, +this.booking.endTime];
-            this.cd.detectChanges();
+          if ((this.booking.date || this.timeService.checkIfItSameDay(dateString, this.booking.date)) && !slots.length) {
+            const range = [+this.booking.startTime, +this.booking.endTime];
+            this.availableTimeSlots = [range];
+            this.selectedTime = range;
           }
+
+          // console.log(this.availableTimeSlots, this.selectedTime);
+          this.loadStop();
         })
       );
   };

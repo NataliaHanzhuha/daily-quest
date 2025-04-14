@@ -112,7 +112,7 @@ export class TimeService {
     };
   }
 
-  getDate(datetime: Date | string | any): string {
+  getDate(datetime: Date | string | any, full: boolean = false): string {
     if (!datetime) {
       return datetime;
     }
@@ -131,7 +131,9 @@ export class TimeService {
 
     const {seconds, nanoseconds} = datetime;
     const milliseconds = seconds * 1000 + nanoseconds / 1e6; // Convert to ms
-    return new Date(milliseconds)?.toISOString()?.split('T')[0]; // Convert to ISO format
+    return full
+      ? new Date(milliseconds)?.toISOString()
+      : new Date(milliseconds)?.toISOString()?.split('T')[0]; // Convert to ISO format
   }
 
   getHour(datetime: Date | string): number {
@@ -148,6 +150,10 @@ export class TimeService {
     return selectedDate.getDate() === today.getDate() &&
       selectedDate.getMonth() === today.getMonth() &&
       selectedDate.getFullYear() === today.getFullYear();
+  }
+
+  checkIfItSameDay(date1: any, date2: any): boolean {
+    return this.getDate(date1) === this.getDate(date2);
   }
 
 }

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ServiceCategoriesComponent } from '../../../../bookly/service-categories/service-categories.component';
-import { ServicesComponent } from '../../../../bookly/services/services.component';
-import { BookingComponent } from '../../../../bookly/booking/booking.component';
-import { BookingConfirmationComponent } from '../../../../bookly/booking-confirmation/booking-confirmation.component';
+import { ServiceCategoriesComponent } from './service-categories/service-categories.component';
+import { ServicesComponent } from './services/services.component';
+import { BookingComponent } from './booking/booking.component';
+import { BookingConfirmationComponent } from './booking-confirmation/booking-confirmation.component';
 
 @Component({
   selector: 'app-space-rental',

@@ -42,7 +42,7 @@ export interface EventBooking {
   customerPhoneNumberPrefix: string;
   eventType: string; // e.g., "Wedding", "Corporate", "Birthday"
   attendees: number; // number of expected guests
-  status: 'pending' | 'confirmed' | 'paid' | 'cancelled';
+  status: 'pending' | 'confirmed' | 'cancelled';
   totalAmount: number;
   paymentDetails?: PaymentDetails;
   addToGoogleCalendar: boolean;

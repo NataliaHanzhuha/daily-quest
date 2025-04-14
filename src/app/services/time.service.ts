@@ -113,6 +113,10 @@ export class TimeService {
   }
 
   getDate(datetime: Date | string | any): string {
+    if (!datetime) {
+      return datetime;
+    }
+
     if (typeof datetime === 'string') {
       return datetime?.split('T')[0];
     }
@@ -123,9 +127,7 @@ export class TimeService {
       const year = (datetime as unknown as Date).getFullYear();
 
       return `${year}-${month}-${day}`;
-
     }
-
 
     const {seconds, nanoseconds} = datetime;
     const milliseconds = seconds * 1000 + nanoseconds / 1e6; // Convert to ms

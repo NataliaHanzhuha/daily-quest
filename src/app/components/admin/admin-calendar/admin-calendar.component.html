@@ -1,0 +1,42 @@
+<nz-spin [nzSpinning]="isLoading">
+	<app-calendar-filter (filterChanged)="applyFilters($event)"
+	                     (venues)="setVenues($event)"></app-calendar-filter>
+
+	<full-calendar [options]="calendarOptions">
+		<ng-template #eventContent
+		             let-arg>
+			<div class="calendar-cell"
+			     nz-tooltip
+			     nzTooltipColor="white"
+			     [nzTooltipTitle]="tooltip">
+				<div class="content"
+				     [ngStyle]="{
+			     'border-left': '2px solid ' + venues.get(arg.event.extendedProps?.venueId)?.color ?? '#000',
+			     'background': venues.get(arg.event.extendedProps?.venueId)?.color + '33' ?? '#fff',
+			     }">
+					<b>{{ arg.timeText }}</b>
+					<b>{{ arg.event.title }}</b>
+					<nz-tag [nzColor]="arg.event.extendedProps?.paymentDetails?.paymentStatus | statusColor">{{ arg.event.extendedProps?.paymentDetails?.paymentStatus }}</nz-tag>
+
+				</div>
+
+				<ng-template #tooltip>
+					<div class="tooltip-content">
+						<b [ngStyle]="{
+						'border-left': '20px solid ' + venues.get(arg.event.extendedProps?.venueId)?.color, 'padding-left': '10px'
+						 }">{{ arg.event.title }}</b>
+						<b nz-typography
+						   nzType="secondary">{{ arg.event.extendedProps?.eventType }}</b>
+						<span>{{ arg.timeText }}
+							<nz-tag [nzColor]="arg.event.extendedProps?.paymentDetails?.paymentStatus | statusColor">{{ arg.event.extendedProps?.paymentDetails?.paymentStatus }}</nz-tag>
+							</span>
+						<span>{{ arg.event.extendedProps?.customerName }}</span>
+						<span>{{ arg.event.extendedProps?.customerPhoneNumberPrefix }}{{ arg.event.extendedProps?.customerPhone }}</span>
+						<span>{{ arg.event.extendedProps?.customerEmail }}</span>
+					</div>
+				</ng-template>
+			</div>
+		</ng-template>
+	</full-calendar>
+
+</nz-spin>

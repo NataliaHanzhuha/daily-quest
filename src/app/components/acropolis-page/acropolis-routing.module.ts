@@ -31,6 +31,12 @@ const routes: Routes = [
             data: { title: 'Cancel Appointment | Acropolis' }
           },
           {
+            path: 'request-payment/:id',
+            loadComponent: () => import('./pages/services/space-rental/payment-request/payment-request.component')
+              .then(c => c.PaymentRequestComponent),
+            data: { title: 'Request Payment | Acropolis' }
+          },
+          {
             path: 'grill',
             loadComponent: () => import('./pages/services/grill/grill.component').then(m => m.GrillComponent),
             data: { title: 'Grill | Acropolis' }

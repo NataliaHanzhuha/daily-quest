@@ -288,3 +288,9 @@ label {
 .ant-menu-title-content a {
   color: var(--color-primary);
 }
+
+.ant-modal-title {
+  h3 {
+    margin: 0;
+  }
+}

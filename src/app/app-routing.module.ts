@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadComponent: () => import('./components/bookly/admin/admin.component').then((c) => c.AdminComponent),
+    loadComponent: () => import('./components/admin/admin.component').then((c) => c.AdminComponent),
     // canActivate: [authGuard]
   },
   {

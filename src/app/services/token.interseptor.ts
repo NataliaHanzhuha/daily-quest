@@ -2,7 +2,7 @@ import { HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest, } from '@angu
 import { inject } from '@angular/core';
 import { from, lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AuthService } from './auth.service';
+import { AuthService } from './server/auth.service';
 
 // needs to add this function because getting the token is async
 const addBearerToken = async (
@@ -13,7 +13,7 @@ const addBearerToken = async (
   const authService = inject(AuthService);
   const token = authService.token;
   // console.log(token, firebaseUser);
-  if (token) {
+  if (!!token) {
     req = req.clone({
       setHeaders: {Authorization: `Bearer ${token}`},
     });

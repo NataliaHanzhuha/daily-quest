@@ -6,5 +6,6 @@ export const environment = {
     // Keeping Stripe keys for reference or fallback
     stripe: {
         publicKey: "pk_test_51R1EjhHlVCzYp0CQTMYwjC6orFITDmVbsw4XD3Y3tmonRFYbs6JypsqY4qAq1TiYxB1JGW5fyTcMEBvDc7DdxUW200WlOg9SMo"
-    }
+    },
+    frontendUrl: "https://acropolispark-website.netlify.app/"
   };

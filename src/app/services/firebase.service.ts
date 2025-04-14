@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { EmailService } from './email.service';
+import { EmailService } from './server/email.service';
 
 @Injectable({
   providedIn: 'root'

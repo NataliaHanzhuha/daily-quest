@@ -1,0 +1,212 @@
+<div class="venue-form-modal">
+	<form nz-form
+	      [formGroup]="venueForm"
+	      [nzLayout]="'vertical'">
+		<!-- Title -->
+		<nz-form-item>
+			<nz-form-label nzRequired>Title</nz-form-label>
+			<nz-form-control nzErrorTip="Please enter a venue title (min 3 characters)">
+				<input nz-input
+				       formControlName="title"
+				       placeholder="Venue title"/>
+			</nz-form-control>
+		</nz-form-item>
+
+		<!-- Category -->
+		<nz-form-item>
+			<nz-form-label nzRequired>Category</nz-form-label>
+			<nz-form-control nzErrorTip="Please select a category">
+				<nz-select formControlName="categoryId"
+				           [nzOptions]="categories"
+				           nzPlaceHolder="Select a category">
+				</nz-select>
+			</nz-form-control>
+		</nz-form-item>
+
+		<!-- Description -->
+		<nz-form-item>
+			<nz-form-label nzRequired>Description</nz-form-label>
+			<nz-form-control nzErrorTip="Please enter a description (min 10 characters)">
+        <textarea
+	        nz-input
+	        formControlName="description"
+	        placeholder="Venue description"
+	        [nzAutosize]="{ minRows: 3, maxRows: 6 }">
+        </textarea>
+			</nz-form-control>
+		</nz-form-item>
+
+		<!-- Capacity -->
+		<nz-form-item>
+			<nz-form-label nzRequired>Capacity</nz-form-label>
+			<nz-form-control nzErrorTip="Please enter venue capacity">
+				<nz-input-number
+					formControlName="capacity"
+					[nzMin]="1"
+					[nzMax]="1000"
+					[nzStep]="1"
+					[nzPlaceHolder]="'Max number of people'">
+				</nz-input-number>
+				<span class="capacity-label">people</span>
+			</nz-form-control>
+		</nz-form-item>
+
+		<!-- Hourly Rate -->
+		<nz-form-item>
+			<nz-form-label nzRequired>Hourly Rate</nz-form-label>
+			<nz-form-control nzErrorTip="Please enter hourly rate">
+				<nz-input-number
+					formControlName="hourlyRate"
+					[nzMin]="1"
+					[nzStep]="5"
+					[nzFormatter]="hourlyRateFormatter"
+					[nzParser]="hourlyRateParser">
+				</nz-input-number>
+				<span class="rate-label">per hour</span>
+			</nz-form-control>
+		</nz-form-item>
+
+		<!-- Min/Max Hours -->
+		<nz-form-item>
+			<nz-form-label nzRequired>Booking Duration</nz-form-label>
+			<nz-form-control>
+				<div class="duration-container">
+					<div class="min-hours">
+						<label>Minimum Hours</label>
+						<nz-input-number
+							formControlName="minHours"
+							[nzMin]="1"
+							[nzMax]="12"
+							[nzStep]="1">
+						</nz-input-number>
+					</div>
+					<div class="max-hours">
+						<label>Maximum Hours</label>
+						<nz-input-number
+							formControlName="maxHours"
+							[nzMin]="1"
+							[nzMax]="24"
+							[nzStep]="1">
+						</nz-input-number>
+					</div>
+				</div>
+			</nz-form-control>
+		</nz-form-item>
+
+		<!-- Before/After Padding Minutes -->
+		<nz-form-item>
+			<nz-form-label>Event Padding</nz-form-label>
+			<nz-form-control>
+				<div class="duration-container">
+					<div class="min-hours">
+						<label>Before Padding Minutes</label>
+						<nz-input-number
+							formControlName="paddingBeforeMinutes"
+							[nzMin]="0"
+							[nzMax]="600"
+							[nzStep]="60">
+						</nz-input-number>
+					</div>
+					<div class="max-hours">
+						<label>Padding After Minutes</label>
+						<nz-input-number
+							formControlName="paddingAfterMinutes"
+							[nzMin]="0"
+							[nzMax]="600"
+							[nzStep]="60">
+						</nz-input-number>
+					</div>
+				</div>
+			</nz-form-control>
+		</nz-form-item>
+
+		<!-- Amenities -->
+		<nz-form-item>
+			<nz-form-label>Amenities</nz-form-label>
+			<nz-form-control>
+				<div class="amenities-container">
+					<div class="amenities-input-group">
+						<input
+							nz-input
+							[(ngModel)]="amenitiesInput"
+							[ngModelOptions]="{standalone: true}"
+							placeholder="Add amenity (e.g. WiFi, Projector)"/>
+						<button nz-button
+						        nzType="default"
+						        (click)="addAmenity()">Add
+						</button>
+					</div>
+					<div class="amenities-tags">
+						<nz-tag
+							*ngFor="let amenity of amenitiesList"
+							nzMode="closeable"
+							(nzOnClose)="removeAmenity(amenity)">
+							{{ amenity }}
+						</nz-tag>
+					</div>
+				</div>
+			</nz-form-control>
+		</nz-form-item>
+
+		<!-- Color -->
+		<nz-form-item>
+			<nz-form-label>Color</nz-form-label>
+			<nz-form-control nzErrorTip="Please select a color">
+				<input type="color"
+				       formControlName="color"
+				       [value]="venueForm.get('color')">
+			</nz-form-control>
+		</nz-form-item>
+
+		<!-- Image Upload -->
+		<nz-form-item>
+			<nz-form-label nzRequired>Venue Image</nz-form-label>
+			<nz-form-control nzErrorTip="Please upload an image">
+				<div class="image-upload-container">
+					<div class="upload-button-container"
+					     *ngIf="!imageUrl">
+						<nz-upload
+							[nzBeforeUpload]="beforeUpload"
+							[nzShowUploadList]="false">
+							<button nz-button
+							        [nzLoading]="isUploading">
+								<span nz-icon
+								      nzType="upload"></span> Upload Image
+							</button>
+						</nz-upload>
+						<div *ngIf="isUploading"
+						     class="upload-progress">
+							Uploading: {{ uploadProgress }}%
+						</div>
+					</div>
+					<div class="image-preview-container"
+					     *ngIf="imageUrl">
+						<img [src]="imageUrl"
+						     alt="Venue image preview"
+						     class="image-preview"/>
+						<button
+							nz-button
+							nzType="default"
+							(click)="imageUrl = ''; venueForm.get('imageUrl')?.setValue('')">
+							<span nz-icon
+							      nzType="delete"></span> Remove
+						</button>
+					</div>
+				</div>
+			</nz-form-control>
+		</nz-form-item>
+	</form>
+
+	<div *nzModalFooter>
+		<button nz-button
+		        nzType="default"
+		        (click)="handleCancel()">Cancel
+		</button>
+		<button nz-button
+		        nzType="primary"
+		        [nzLoading]="isLoading"
+		        (click)="handleOk()">
+			Save
+		</button>
+	</div>
+</div>

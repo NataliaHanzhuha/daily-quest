@@ -19,46 +19,46 @@ export class TestimonialsComponent {
   reviews: ReviewData[] = [
     {
       id: '1',
-      name: 'Maria Thompson',
+      name: 'Kemy Crown',
       rating: 5,
       date: 'June 15, 2024',
-      content: 'The Acropolis Park is a beautiful place to relax and enjoy the day. The staff is friendly and helpful. The food is delicious and the atmosphere is wonderful. I would highly recommend this place to anyone visiting the area.',
+      content: 'Beautiful park, you can also have a view of the different angles of Apo neighbourhood. It has various spot for meetings and other events. Clean toilet, I hope they have more than one tho.',
       service: 'Customer',
       avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
     },
     {
       id: '2',
-      name: 'John Davis',
+      name: 'Njoku Viola',
       rating: 4,
       date: 'May 20, 2024',
-      content: 'Great place for family gatherings! We celebrated my daughter\'s birthday here and everything was perfect. The only small issue was the parking, which can get crowded on weekends.',
+      content: 'The park is nice and the environment is very calm and peaceful. My friend actually used this place for her birthday picnic, and I loved the entire environment, plus it\'s also neat.',
       service: 'Customer',
       avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
     },
     {
       id: '3',
-      name: 'Sarah Wilson',
+      name: 'Fatshionista',
       rating: 5,
       date: 'April 12, 2024',
-      content: 'The architecture and design of this park is simply stunning. I spent hours just walking around and enjoying the beautiful surroundings. The integration of nature and modern design elements is masterful.',
+      content: 'I love this place . It\'s so calm and co . Beautiful aesthetic. Reminds me of greece . The stone walls and beautiful green fields . Totally recommend for a picnic , party and even a wedding ceremony.',
       service: 'Customer',
       avatar: 'https://randomuser.me/api/portraits/women/68.jpg'
     },
     {
       id: '4',
-      name: 'Robert Johnson',
+      name: 'Grand View Photography',
       rating: 5,
       date: 'March 5, 2024',
-      content: 'As a fitness enthusiast, I love the gym facilities at Acropolis Park. The equipment is top-notch and always well-maintained. The trainers are knowledgeable and supportive.',
+      content: 'Love the architecture of the place, what’s the policy of doing a photoshoot here with camera, I am thinking of creating something amazing in the space this month.',
       service: 'Customer',
       avatar: 'https://randomuser.me/api/portraits/men/45.jpg'
     },
     {
       id: '5',
-      name: 'Emily Brown',
+      name: 'Great Gweke',
       rating: 4,
       date: 'February 18, 2024',
-      content: 'My kids absolutely love the children\'s area. It\'s safe, clean, and has so many fun activities. We visit at least once a week and they never get bored!',
+      content: 'Going up to Acropolis park you can already feel you’re ascending up a hill as and see things from a higher elevation which is beautiful with the sunset also has an event hall food spots well kept green grass..Acropolis is amazing!',
       service: 'Customer',
       avatar: 'https://randomuser.me/api/portraits/women/22.jpg'
     }

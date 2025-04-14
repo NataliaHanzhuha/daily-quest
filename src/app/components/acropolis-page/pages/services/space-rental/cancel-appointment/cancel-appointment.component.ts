@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { EventBookingService } from '../../../../../../services/server/event-booking.service';
 
 @Component({
   selector: 'app-cancel-appointment',

@@ -151,7 +151,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     }
 
     // Calculate the translation
-    const translateX = -(targetIndex * (this.itemWidth + this.spacing));
+    const translateX = -(targetIndex * (this.itemWidth + (this.spacing*2)));
     
     // Apply transform
     const track = this.el.nativeElement.querySelector('.carousel-track');

@@ -1,0 +1,21 @@
+<form class="filters" [formGroup]="filter">
+	<div class="filter-group" >
+		<label>Filter by Venue:</label>
+		<nz-select formControlName="venueId"
+		           nzPlaceHolder="All Venues"
+		           [nzAllowClear]="true"
+		           [nzOptions]="venueOptions"
+		           class="filter-select">
+		</nz-select>
+	</div>
+
+	<div class="filter-group">
+		<label>Filter by Status:</label>
+		<nz-select formControlName="status"
+		           nzPlaceHolder="All Statuses"
+		           [nzAllowClear]="true"
+		           [nzOptions]="statuses"
+		           class="filter-select">
+		</nz-select>
+	</div>
+</form>

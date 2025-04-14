@@ -1,0 +1,22 @@
+
+
+.filters {
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+  width: 100%;
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    label {
+      white-space: nowrap;
+    }
+
+    .filter-select {
+      width: 180px;
+    }
+  }
+}

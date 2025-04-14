@@ -1,0 +1,143 @@
+<nz-collapse *ngIf="!!booking && !error">
+	<nz-collapse-panel nzHeader="Booking Details"
+	                   nzActive="true">
+		<div class="booking-details">
+			<nz-card [nzTitle]="venueCardTitle">
+				<ng-template #venueCardTitle>
+					<div class="card-title">
+							<span nz-icon
+							      nzType="home"
+							      nzTheme="outline"></span>
+						Venue Information
+					</div>
+				</ng-template>
+				<!--				<ng-template #venueCardExtra>-->
+				<!--					<span class="booking-id">Booking #{{ booking?.id }}</span>-->
+				<!--				</ng-template>-->
+
+				<div class="venue-info"
+				     *ngIf="venue">
+					<div class="venue-image">
+						<img [src]="venue.imageUrl"
+						     [alt]="venue.title"/>
+					</div>
+					<div class="venue-content">
+						<h3>{{ venue.title }}</h3>
+						<p>{{ venue.description }}</p>
+
+						<div class="venue-details">
+							<div class="detail-item">
+								<span class="label">Capacity:</span>
+								<span class="value">{{ venue.capacity }} people</span>
+							</div>
+							<div class="detail-item">
+								<span class="label">Rate:</span>
+								<span class="value">${{ venue.hourlyRate }}/hour</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</nz-card>
+
+			<div class="details-row">
+				<nz-card class="payment-details"
+				         [nzTitle]="paymentCardTitle">
+					<ng-template #paymentCardTitle>
+						<div class="card-title">
+							<span nz-icon
+							      nzType="credit-card"
+							      nzTheme="outline"></span>
+							Payment Details
+						</div>
+					</ng-template>
+
+					<div class="detail-item">
+						<span class="label">Payment Status:</span>
+						<span class="value status-{{ booking.paymentDetails?.paymentStatus }}">{{ booking.paymentDetails?.paymentStatus }}</span>
+					</div>
+
+					<!--					<div class="detail-item"-->
+					<!--					     *ngIf="booking.paymentDetails?.paymentId">-->
+					<!--						<span class="label">Square Payment ID:</span>-->
+					<!--						<span class="value">{{ booking.paymentDetails?.paymentId }}</span>-->
+					<!--					</div>-->
+
+					<div class="detail-item">
+						<span class="label">Payment Method:</span>
+						<span class="value">{{ booking.paymentDetails?.paymentType }}</span>
+					</div>
+
+					<div class="detail-item total">
+						<span class="label">Total Amount:</span>
+						<span class="value">{{ currencySymbol }}{{ booking.totalAmount }}</span>
+					</div>
+				</nz-card>
+				<ng-content></ng-content>
+			</div>
+
+			<div class="details-row">
+				<nz-card class="event-details"
+				         [nzTitle]="eventCardTitle">
+					<ng-template #eventCardTitle>
+						<div class="card-title">
+								<span nz-icon
+								      nzType="calendar"
+								      nzTheme="outline"></span>
+							Event Details
+						</div>
+					</ng-template>
+
+					<div class="detail-item">
+						<span class="label">Date:</span>
+						<span class="value">{{ booking?.date | date }}</span>
+					</div>
+
+					<div class="detail-item">
+						<span class="label">Time:</span>
+						<span class="value">{{ booking.startTime }}:00 - {{ booking.endTime }}:00 ({{ booking.duration }} hours)</span>
+					</div>
+
+					<div class="detail-item">
+						<span class="label">Event Type:</span>
+						<span class="value">{{ booking.eventType }}</span>
+					</div>
+
+					<div class="detail-item">
+						<span class="label">Attendees:</span>
+						<span class="value">{{ booking.attendees }} people</span>
+					</div>
+				</nz-card>
+
+				<nz-card class="customer-details"
+				         [nzTitle]="customerCardTitle">
+					<ng-template #customerCardTitle>
+						<div class="card-title">
+								<span nz-icon
+								      nzType="user"
+								      nzTheme="outline"></span>
+							Customer Information
+						</div>
+					</ng-template>
+
+					<div class="detail-item">
+						<span class="label">Name:</span>
+						<span class="value">{{ booking.customerName }}</span>
+					</div>
+
+					<div class="detail-item">
+						<span class="label">Email:</span>
+						<span class="value">{{ booking.customerEmail }}</span>
+					</div>
+
+					<div class="detail-item">
+						<span class="label">Phone:</span>
+						<span class="value">{{booking.customerPhoneNumberPrefix}}{{ booking.customerPhone }}</span>
+					</div>
+				</nz-card>
+			</div>
+		</div>
+	</nz-collapse-panel>
+</nz-collapse>
+
+<app-no-booking-found *ngIf="error"></app-no-booking-found>
+

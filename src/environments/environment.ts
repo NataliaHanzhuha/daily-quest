@@ -6,5 +6,5 @@ export const environment = {
     stripe: {
         publicKey: "pk_test_51R1EjhHlVCzYp0CQTMYwjC6orFITDmVbsw4XD3Y3tmonRFYbs6JypsqY4qAq1TiYxB1JGW5fyTcMEBvDc7DdxUW200WlOg9SMo"
     },
-    frontendUrl: "https://acropolispark.com"
+    frontendUrl: "https://acropolispark.com/"
   };

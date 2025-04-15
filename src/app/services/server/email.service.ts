@@ -12,7 +12,7 @@ export class EmailService {
   private readonly url: string = environment.backendUrl + 'send-email';
   private readonly address: string = 'Plot No. 3872, E27, Apo District, Abuja, FCT 900110, Federal Capital Territory, Nigeria';
   private companyName: string = 'Acropolis Park';
-  private companyWebsite: string = 'https://acropolispark.ltd';
+  private companyWebsite: string = 'https://acropolispark.com';
 
   constructor(private http: HttpClient, private timeService: TimeService) {
   }
@@ -29,7 +29,7 @@ export class EmailService {
     <p>Thank you for choosing our company.</p>
     <br />
     <p><b>${this.companyName}</b></p>
-    <a href="${this.companyWebsite}">acropolispark.ltd</a>
+    <a href="${this.companyWebsite}">acropolispark.com</a>
     </div>`;
 
     return this.sendEmailRequest({to, subject, html});
@@ -48,7 +48,7 @@ export class EmailService {
     <p>Thank you for choosing our company.</p>
     <br />
     <p><b>${this.companyName}</b></p>
-    <a href="${this.companyWebsite}">acropolispark.ltd</a>
+    <a href="${this.companyWebsite}">acropolispark.com</a>
     </div>`;
 
     return this.sendEmailRequest({to, subject, html});

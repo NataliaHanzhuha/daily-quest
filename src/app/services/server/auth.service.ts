@@ -22,7 +22,10 @@ export class AuthService {
     const data = this.helper.decodeToken(token);
     const isValid = !!token && !this.helper.isTokenExpired(token, 30);
     if (token && isValid) {
-      this.userSubject.next(data);
+      this.userSubject.next({
+        user_id: data.user_id,
+        email: data.email,
+      });
     }
   }
 
@@ -41,7 +44,7 @@ export class AuthService {
   }
 
   get token(): string | null {
-    return this.user?.token ?? this.cookieService.get('token') ?? null;
+    return this.cookieService.get('token') ?? null;
   }
 
   login(email: string, password: string): Observable<any> {
@@ -51,7 +54,7 @@ export class AuthService {
         return of(null);
       }), tap((user: any) => {
         if (user) {
-          this.userSubject.next(user);
+          this.userSubject.next(user.user);
           this.cookieService.set('token', user.token);
         }
       }));
@@ -66,7 +69,6 @@ export class AuthService {
 
   checkIfUserLogined(): boolean {
     const token = this.token || this.cookieService.get('token');
-    const data = this.helper.decodeToken(token);
     const isValid = !!token && !this.helper.isTokenExpired(token, 30);
 
     return isValid;

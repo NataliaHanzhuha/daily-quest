@@ -13,7 +13,8 @@
 	</div>
 </header>
 
-<main class="app-content" *ngIf="isLoggedIn()">
+<main class="app-content"
+      *ngIf="isLoggedIn()">
 	<nz-tabset [nzSelectedIndex]="activeTabIndex"
 	           (nzSelectedIndexChange)="onTabChange($event)">
 		<nz-tab nzTitle="Categories">

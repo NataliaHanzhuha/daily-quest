@@ -176,7 +176,7 @@ export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit 
       requestDate: new Date().toISOString(),
       collectedBy: this.auth.user.user_id,
     };
-    this.booking.userId = this.auth.user.user_id;
+    this.booking.userId = this.auth.user?.user_id;
 
     const request = this.booking.id
       ? this.eventBookingService.updateBooking(this.booking)

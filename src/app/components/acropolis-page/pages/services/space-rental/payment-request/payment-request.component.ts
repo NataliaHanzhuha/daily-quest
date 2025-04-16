@@ -64,9 +64,4 @@ export class PaymentRequestComponent {
       ).subscribe(this.bookingDetailsComponent.refresh);
   }
 
-  // testPayment(): void {
-  //   this.emailService.sendEmailForPaymentAfterAdminCreatedEvent(this.booking!, this.bookingDetailsComponent.venue!.title)
-  //     .subscribe(this.bookingDetailsComponent.refresh);
-  // }
-
 }

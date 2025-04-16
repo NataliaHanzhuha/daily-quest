@@ -32,7 +32,7 @@
 							</div>
 							<div class="detail-item">
 								<span class="label">Rate:</span>
-								<span class="value">${{ venue.hourlyRate }}/hour</span>
+								<span class="value">{{currencySymbol}}{{ venue.hourlyRate }}/hour</span>
 							</div>
 						</div>
 					</div>
@@ -71,11 +71,12 @@
 						<span class="label">Total Amount:</span>
 						<span class="value">{{ currencySymbol }}{{ booking.totalAmount }}</span>
 					</div>
-				</nz-card>
-				<ng-content></ng-content>
-			</div>
+					<ng-content></ng-content>
 
-			<div class="details-row">
+				</nz-card>
+<!--			</div>-->
+
+<!--			<div class="details-row">-->
 				<nz-card class="event-details"
 				         [nzTitle]="eventCardTitle">
 					<ng-template #eventCardTitle>
@@ -94,7 +95,7 @@
 
 					<div class="detail-item">
 						<span class="label">Time:</span>
-						<span class="value">{{ booking.startTime }}:00 - {{ booking.endTime }}:00 ({{ booking.duration }} hours)</span>
+						<span class="value">{{ booking.startTime }}:00 - {{ booking.endTime }}:00</span>
 					</div>
 
 					<div class="detail-item">

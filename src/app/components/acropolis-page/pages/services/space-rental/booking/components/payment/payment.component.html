@@ -1,118 +1,16 @@
-<!--<div nz-col-->
-<!--     nzFlex="1 1 350px">-->
-<!--<div class="payment-selection">-->
-<!--<div class="payment-wrapper">-->
-<!--	<div class="payment-option"-->
-<!--	     [ngClass]="isLocal ? 'selected' : ''"-->
-<!--	     (click)="selectPaymentType('local')">-->
-<!--		<span nz-icon-->
-<!--		      nzType="wallet"-->
-<!--		      nzTheme="outline"></span>-->
-<!--		<nz-divider nzType="horizontal"></nz-divider>-->
-<!--		<span class="description">I will pay locally</span>-->
-<!--	</div>-->
+<button angular4-paystack
+        [key]="key"
+        [email]="customer.email"
+        [amount]="customer.price * 100"
+        [ref]="reference"
+        [class]="'btn btn-primary'"
+        *ngIf="!paymentId"
+        (onClose)="paymentCancel()"
+        (callback)="paymentDone($event)">
+	Pay with Paystack
+	<img src="assets/images/icons/paystack_logo.svg" alt="paystack logo" width="24">
+</button>
 
-<!--	<div class="payment-option"-->
-<!--	     [ngClass]="isOnline ? 'selected' : ''"-->
-<!--	     (click)="selectPaymentType('online')">-->
-<!--		<img src="/assets/images/stripe.png"-->
-<!--		     alt="stripe logo">-->
-<!--		<nz-divider nzType="horizontal"></nz-divider>-->
-<!--		<span class="description">I will pay now with Stripe</span>-->
-<!--	</div>-->
-<!--</div>-->
-
-<div class="payment-method-container">
-	<ng-container *ngIf="isOnline && !!elementsOptions.clientSecret && !paymentId">
-		<ngx-stripe-elements [stripe]="stripe"
-		                     [elementsOptions]="elementsOptions">
-			<ngx-stripe-payment/>
-		</ngx-stripe-elements>
-		<button nz-button
-		        nzBlock
-		        class="submit-button"
-		        nzType="primary"
-		        (click)="pay()">PAY
-		</button>
-
-	</ng-container>
-
-	<nz-alert nzType="success"
-	          nzMessage="Success Payment"
-	          *ngIf="paymentId"></nz-alert>
-
-
-<!--	<ng-template *ngIf="isLocal"-->
-<!--	             [ngTemplateOutlet]="localPayment"></ng-template>-->
-</div>
-<!--</div>-->
-
-
-<!--	<nz-radio-group [formControl]="selectedPaymentMethod">-->
-<!--		<label nz-radio-->
-<!--		       nzValue="online">Online Payment (Credit/Debit Card)</label>-->
-<!--		<label nz-radio-->
-<!--		       nzValue="local">Local Payment (Cash/Check/Bank Transfer)</label>-->
-<!--	</nz-radio-group>-->
-
-
-<!--</div>-->
-
-<ng-template #localPayment>
-	<form [formGroup]="localPaymentForm">
-		<div class="local-payment-details">
-			<!--			<h4>Local Payment Details</h4>-->
-			<!--			<p>-->
-			<!--				Please complete your payment in person or through direct bank transfer.-->
-			<!--				Once payment is collected, we'll update your booking status.-->
-			<!--			</p>-->
-
-			<nz-form-item>
-				<nz-form-label>Will pay by</nz-form-label>
-				<nz-form-control>
-					<nz-select formControlName="localPaymentType">
-						<nz-option nzValue="cash"
-						           nzLabel="Cash"></nz-option>
-						<nz-option nzValue="check"
-						           nzLabel="Check"></nz-option>
-						<nz-option nzValue="bankTransfer"
-						           nzLabel="Bank Transfer"></nz-option>
-					</nz-select>
-				</nz-form-control>
-			</nz-form-item>
-
-			<nz-form-item>
-				<nz-form-label>Additional Notes</nz-form-label>
-				<nz-form-control>
-													<textarea nz-input
-													          formControlName="notes"
-													          rows="3"></textarea>
-				</nz-form-control>
-			</nz-form-item>
-
-			<!--			<button nz-button-->
-			<!--			        nzType="primary"-->
-			<!--			        [disabled]="!localPaymentForm.valid">-->
-			<!--				Request Local Payment-->
-			<!--			</button>-->
-		</div>
-	</form>
-
-	<!-- Square Payment Element -->
-	<!--						<div class="payment-section">-->
-	<!--							<app-square-payment-->
-	<!--								[amount]="totalCost"-->
-	<!--								[isLoading]="isLoading"-->
-	<!--								(paymentComplete)="onPaymentComplete($event)">-->
-	<!--							</app-square-payment>-->
-	<!--						</div>-->
-
-	<!--						<nz-form-item>-->
-	<!--							<nz-form-control [nzSpan]="24">-->
-	<!--								<label nz-checkbox-->
-	<!--								       formControlName="addToGoogleCalendar">-->
-	<!--									Add this event to my Google Calendar-->
-	<!--								</label>-->
-	<!--							</nz-form-control>-->
-	<!--						</nz-form-item>-->
-</ng-template>
+<nz-alert nzType="success"
+          nzMessage="Success Payment"
+          *ngIf="paymentId"></nz-alert>

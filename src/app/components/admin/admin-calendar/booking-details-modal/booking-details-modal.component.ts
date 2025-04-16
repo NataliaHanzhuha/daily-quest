@@ -143,7 +143,7 @@ export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit 
   }
 
   updateStatus(status: any): void {
-    if (status === 'confirmed' && this.booking.paymentDetails?.paymentStatus !== 'paid') {
+    if ((status === 'confirmed' || status === 'paid') && this.booking.paymentDetails?.paymentStatus !== 'paid') {
       this.sendPaymentEmail();
       this.message.warning('Payment request Email was sent to the customer');
       return;

@@ -19,6 +19,7 @@ import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { NgxStripeModule } from 'ngx-stripe';
+import { Angular4PaystackModule } from 'angular4-paystack';
 registerLocaleData(en);
 
 @NgModule({
@@ -31,6 +32,7 @@ registerLocaleData(en);
     LoadingIndicatorComponent,
     HttpClientModule,
     NgxStripeModule.forRoot(environment.stripe.publicKey),
+    Angular4PaystackModule.forRoot(environment.paystackPublickKey),
   ],
   providers: [
     provideClientHydration(),

@@ -36,4 +36,8 @@ export class StripeService {
       // });
   }
 
+  sendInvoice() {
+    return this.http.post(this.url + 'send-invoice', {items: []});
+  }
+
 }

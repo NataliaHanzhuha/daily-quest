@@ -1,11 +1,9 @@
 <app-booking-details [bookingId]="eventId"
                      (bookingChanged)="booking = $event">
-	<nz-card *ngIf="!!customer && booking?.paymentDetails?.paymentStatus === 'unpaid'">
 		<app-payment [customer]="customer"
+		             *ngIf="!!customer && booking?.paymentDetails?.paymentStatus === 'unpaid'"
 		             (payment)="savePayment($event)"
 		             [description]="description"></app-payment>
-	</nz-card>
 
-<!--	<button (click)="testPayment()">test payment</button>-->
 </app-booking-details>
 

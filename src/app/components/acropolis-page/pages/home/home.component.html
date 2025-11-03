@@ -149,7 +149,7 @@
 				</div>
 				<div class="faq-answer"
 				     [style.display]="faq.isOpen ? 'block' : 'none'">
-					<p>{{ faq.answer }}</p>
+					<p [innerHTML]="faq.answer"></p>
 				</div>
 			</div>
 		</div>

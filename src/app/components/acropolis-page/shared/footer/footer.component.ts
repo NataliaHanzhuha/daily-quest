@@ -27,5 +27,4 @@ export class AcropolisFooterComponent {
     { name: 'Gym', route: '/services/gym' },
   ];
   notReadyServices = ['Gym', 'Connect'];
-
 }

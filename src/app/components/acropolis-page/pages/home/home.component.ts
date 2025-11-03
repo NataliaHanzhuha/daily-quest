@@ -72,7 +72,14 @@ export class HomeComponent {
     },
     {
       question: 'What are your operating hours?',
-      answer: 'Our venue is open from 9:00 AM to 9:00 PM daily. Event hours can be extended upon request with additional charges.',
+      answer: `<div>Our venue is open from 6:00 AM to 10:00 PM daily.</div>
+        <b>Office Hours:</b>
+        <div>Sunday: 2:00 PM - 6:00 PM.</div>
+        <div>Monday - Saturday: 9:00 AM - 6:00 PM.</div>
+        <b>Restaurant and Pharmacy:</b>
+        <div>Both facilities close at 10:00 PM</div>
+        <br/>
+        <small><i>Any approved nighttime activities would have to comply with the park's official night and safety regulations.</i></small>`,
       isOpen: false
     }
   ];

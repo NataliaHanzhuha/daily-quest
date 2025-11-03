@@ -2,7 +2,7 @@
 export * from './service.model';
 
 // Base Service Component
-export * from './base-service/base-service.component';
+// export * from './base-service/base-service.component';
 
 // Service-Specific Components
 export * from './space-rental/space-rental.component';

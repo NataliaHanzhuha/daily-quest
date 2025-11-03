@@ -17,13 +17,11 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 // Components
-import { CategoryManagementComponent } from './category-management/category-management.component';
-import { VenueManagementComponent } from './venue-management/venue-management.component';
 import { AdminCalendarComponent } from './admin-calendar/admin-calendar.component';
-import { WorkScheduleComponent } from './work-schedule/work-schedule.component';
 import { AuthService } from '../../services/server/auth.service';
 import { BookingTableComponent } from './booking-table/booking-table.component';
-import { UserManagementComponent } from './user-management/user-management.component';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { SettingsComponent } from './settings/settings.component';
 
 @Component({
   selector: 'app-admin',
@@ -43,12 +41,8 @@ import { UserManagementComponent } from './user-management/user-management.compo
     NzMessageModule,
     NzSpinModule,
     NzEmptyModule,
-    CategoryManagementComponent,
-    VenueManagementComponent,
     AdminCalendarComponent,
-    WorkScheduleComponent,
-    BookingTableComponent,
-    UserManagementComponent
+    BookingTableComponent
   ],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
@@ -57,20 +51,33 @@ export class AdminComponent implements OnInit {
   bookings: EventBooking[] = [];
   venues: Map<string, Venue> = new Map();
   isLoading = false;
-  activeTabIndex = 2;
+  activeTabIndex = 0;
   loading = true;
   user: any = null;
   title: any;
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private modal: NzModalService
   ) {
     this.router.navigate([this.authService.checkIfUserLogined() ? '/admin' : '/login']);
   }
 
   ngOnInit(): void {
 
+  }
+
+  openSettings(): void {
+    if (!this.isLoggedIn()) {
+      return;
+    }
+
+    this.modal.create({
+      nzContent: SettingsComponent,
+      nzTitle: 'Settings',
+      nzWidth: '95%'
+    });
   }
 
   isLoggedIn(): boolean {

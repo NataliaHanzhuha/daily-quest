@@ -80,6 +80,7 @@ export class VenueManagementComponent extends BaseSDKHook implements OnInit, OnD
       nzContent: VenueFormModalComponent,
       nzTitle: venue?.id ? 'Edit venue' : 'Add venue',
       nzData: {venue, categories: this.categories},
+      nzWidth: '100%'
     });
 
     ref.afterClose

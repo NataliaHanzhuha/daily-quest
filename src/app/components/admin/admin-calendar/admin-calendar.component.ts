@@ -247,9 +247,10 @@ export class AdminCalendarComponent implements OnInit, OnDestroy {
         listPlugin,
       ],
       headerToolbar: {
-        left: 'prev,next today',
+        left: 'prev, next today',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        right: 'timeGridWeek'
+        // right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
       },
       initialView: 'timeGridWeek',
       weekends: true,

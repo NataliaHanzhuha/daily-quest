@@ -44,7 +44,7 @@
 				           [(ngModel)]="selectedTime"
 				           [nzDisabled]="booking.venueId === 'null'"
 				           (ngModelChange)="setSelectedTime($event)"
-				           [nzPlaceHolder]="availableTimeSlots?.length ? 'Select time slot' : 'No slots available'">
+				           [nzPlaceHolder]="availableTimeSlots.length ? 'Select time slot' : 'No slots available'">
 					<nz-option *ngFor="let item of availableTimeSlots"
 					           [nzLabel]="item[0] + ':00 - ' + item[1] + ':00'"
 					           [nzValue]="item"></nz-option>
@@ -180,6 +180,6 @@
 
 <div *nzModalTitle>
 	<h4 [ngStyle]="{'border-left': '20px solid ' + venueColor, 'padding-left': '10px' }">
-		{{ booking?.id ? 'Edit' : 'Create' }} Appointment
+		{{ booking.id ? 'Edit' : 'Create' }} Appointment
 	</h4>
 </div>

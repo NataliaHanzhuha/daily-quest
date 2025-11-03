@@ -21,8 +21,9 @@
 				<div class="story-image">
 					<img ngSrc="/assets/images/ENTRANCE.png"
 					     alt="Acropolis Park Story"
-					     height="932"
-					     width="1649">
+					     loading="lazy"
+					     [height]="932"
+					     [width]="1649">
 				</div>
 				<div class="story-text">
 					<p>Our Acropolis is a recreational destination located in the heart of Nigeria’s capital city, and a re-
@@ -61,14 +62,16 @@
 
 				<div class="service-content">
 					<ul>
-						<li>Acropolis Grills</li>
-						<li>Acropolis Shopping</li>
+						<li><a href="/services/grill">Acropolis Grills</a></li>
+						<li><a href="/services/shopping">Acropolis Shopping</a></li>
 						<li nz-tooltip
-						    [nzTooltipTitle]="food">Acropolis Foods
+						    [nzTooltipTitle]="food">
+							<a href="/services/cafe">Acropolis Foods</a>
 						</li>
-						<li>Acropolis Pastries</li>
+						<li><a href="/services/cafe">Acropolis Pastries</a></li>
 						<li nz-tooltip
-						    [nzTooltipTitle]="space">Acropolis Space Rental
+						    [nzTooltipTitle]="space">
+							<a href="/services/space-rental">Acropolis Space Rental</a>
 						</li>
 						<li>Acropolis Gym</li>
 

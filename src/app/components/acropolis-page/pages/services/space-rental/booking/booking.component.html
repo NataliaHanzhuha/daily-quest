@@ -1,13 +1,13 @@
 <div class="modal-title">
 	<a (click)="venueIdChanged.emit(null)"
 	   class="back-btn">← Back to Venues </a>
-	<h3>{{ venue?.categoryName }}: {{ venue?.title }}</h3>
+	<h3>{{ venue.categoryName }}: {{ venue.title }}</h3>
 	<div class="venue-details">
 		<div class="detail-item">
 			<span class="label"
 			      [ngClass]="{'selected': !!currentStep}">{{ !!currentStep ? 'Date and Time' : 'Duration' }}</span>
 			<span class="value"
-			      *ngIf="!currentStep; else selectedSlot">{{ venue?.minHours }}-{{ venue?.maxHours }} hours</span>
+			      *ngIf="!currentStep; else selectedSlot">{{ venue.minHours }}-{{ venue.maxHours }} hours</span>
 			<ng-template #selectedSlot>
 				<b class="selected">{{ selectedDateFormatting }}</b>
 				<b class="selected">{{ startTime }}:00 - {{ endTime }}:00</b>
@@ -17,7 +17,7 @@
 			<span class="label"
 			      [ngClass]="{'selected': !!currentStep}">Price</span>
 			<span class="value"
-			      *ngIf="!currentStep; else price">{{ currencySymbol }}{{ venue?.hourlyRate }}/hour</span>
+			      *ngIf="!currentStep; else price">{{ currencySymbol }}{{ venue.hourlyRate }}/hour</span>
 			<ng-template #price>
 				<b class="selected">{{ currencySymbol }}{{ totalCost }}</b>
 			</ng-template>
@@ -26,7 +26,7 @@
 			<span class="label"
 			      [ngClass]="{'selected': currentStep === 2}">Capacity</span>
 			<span class="value"
-			      *ngIf="currentStep !== 2; else attendees">{{ venue?.capacity || 100}} people</span>
+			      *ngIf="currentStep !== 2; else attendees">{{ venue.capacity || 100}} people</span>
 			<ng-template #attendees>
 				<b class="selected">{{ bookingForm.get('attendees')?.value }} guests</b>
 			</ng-template>

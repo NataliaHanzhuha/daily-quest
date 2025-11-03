@@ -174,7 +174,7 @@ export class BookingDetailsModalComponent extends BaseSDKHook implements OnInit 
       paymentStatus: PaymentStatus.unpaid,
       paymentType: 'online',
       requestDate: new Date().toISOString(),
-      collectedBy: this.auth.user.user_id,
+      collectedBy: this.auth?.user?.user_id ?? null,
     };
     this.booking.userId = this.auth.user?.user_id;
 

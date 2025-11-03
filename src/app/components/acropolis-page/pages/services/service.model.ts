@@ -74,7 +74,6 @@ export const servicesData: ServiceDetail[] = [
       'Freshly baked pastries and desserts',
       'Light breakfast and lunch options',
       'Comfortable seating and workspaces',
-      'Free Wi-Fi for customers',
       'Outdoor patio seating',
       'Loyalty program for regular customers'
     ],

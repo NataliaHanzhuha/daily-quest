@@ -30,19 +30,19 @@ export class SocialLinksComponent {
   defaultSocialLinks: SocialLink[] = [
     {
       platform: 'instagram',
-      url: 'https://instagram.com',
+      url: 'https://www.instagram.com/theacropolispark/',
       icon: 'instagram',
       label: 'Instagram'
     },
     {
       platform: 'facebook',
-      url: 'https://facebook.com',
+      url: 'https://www.facebook.com/theacropolisapo/',
       icon: 'facebook',
       label: 'Facebook'
     },
     {
       platform: 'twitter',
-      url: 'https://twitter.com',
+      url: 'https://x.com/acropolisabuja/',
       icon: 'twitter',
       label: 'Twitter'
     }

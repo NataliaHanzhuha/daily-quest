@@ -72,7 +72,7 @@ export class HomeComponent {
     },
     {
       question: 'What are your operating hours?',
-      answer: 'Our venue is open from 9:00 AM to 10:00 PM daily. Event hours can be extended upon request with additional charges.',
+      answer: 'Our venue is open from 9:00 AM to 9:00 PM daily. Event hours can be extended upon request with additional charges.',
       isOpen: false
     }
   ];

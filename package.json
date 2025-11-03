@@ -14,10 +14,9 @@
     "heroku-prebuild": "npm install --legacy-peer-deps",
     "heroku-postbuild": "ng build",
     "prerender": "ng run daily-quest:prerender",
-    "heroku-start": "node dist/your-app/server/main.js"
-  },
-  "engines": {
-    "node": "18.x"
+    "heroku-start": "node dist/your-app/server/main.js",
+    "gzip": "gzipper compress --verbose ./dist/",
+    "prod": "ng build --configuration production && npm run gzip"
   },
   "private": true,
   "dependencies": {
@@ -31,7 +30,6 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/platform-server": "^16.2.12",
     "@angular/router": "^16.2.0",
-    "@anthropic-ai/claude-code": "^0.2.66",
     "@auth0/angular-jwt": "^5.2.0",
     "@ctrl/tinycolor": "^4.1.0",
     "@fullcalendar/angular": "^6.1.10",
@@ -61,6 +59,7 @@
     "@types/jasmine": "~4.3.0",
     "@types/node": "^16.11.7",
     "@types/uuid": "^9.0.8",
+    "gzipper": "^4.3.0",
     "concurrently": "^9.1.2",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",

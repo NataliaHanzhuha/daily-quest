@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, take } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { catchError, tap } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-   userSubject = new BehaviorSubject<any>(null);
+  userSubject = new BehaviorSubject<any>(null);
   private readonly url: string = environment.backendUrl + 'auth/';
   protected helper = new JwtHelperService();
 
@@ -17,7 +17,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private cookieService: CookieService
-    ) {
+  ) {
     const token = this.cookieService.get('token');
     const data = this.helper.decodeToken(token);
     const isValid = !!token && !this.helper.isTokenExpired(token, 30);
@@ -60,34 +60,32 @@ export class AuthService {
       }));
   }
 
-   logout(): Observable<any> {
-    return this.http.post(this.url + 'logout',{}).pipe(tap(() => {
+  logout(): Observable<any> {
+    return this.http.post(this.url + 'logout', {}).pipe(tap(() => {
       this.userSubject.next(null);
       this.cookieService.delete('token');
-    }))
+    }));
   }
 
   checkIfUserLogined(): boolean {
     const token = this.token || this.cookieService.get('token');
-    const isValid = !!token && !this.helper.isTokenExpired(token, 30);
-
-    return isValid;
+    return !!token && !this.helper.isTokenExpired(token, 30);
   }
 
   checkUser(): Observable<any> {
-    const header = new Headers();
+    // const header = new Headers();
     return this.http.get(this.url + 'current-user');
   }
 
-  getCurrentUser(withRedirect = true): Promise<any> {
+  getCurrentUser(): Promise<any> {
     return new Promise<any>((resolve) => {
 
       // this.angularFireAuth.user.pipe(take(1)).subscribe((user) => {
       //   this.userSubject.next(this.user);
-        if (this.checkIfUserLogined()) {
-          this.router.navigate([!!this.user ? '/admin' : '/']);
-        }
-        resolve(true);
+      if (this.checkIfUserLogined()) {
+        this.router.navigate([!!this.user ? '/admin' : '/']);
+      }
+      resolve(true);
       // });
     });
   }

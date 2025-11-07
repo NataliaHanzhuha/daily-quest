@@ -1,0 +1,9 @@
+<app-booking-details [bookingId]="eventId"
+                     (bookingChanged)="booking = $event">
+	<app-payment [customer]="customer"
+	             *ngIf="!!customer && booking?.paymentDetails?.paymentStatus === 'unpaid'"
+	             (payment)="savePayment($event)"
+	             [description]="description"></app-payment>
+
+</app-booking-details>
+

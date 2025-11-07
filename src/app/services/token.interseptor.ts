@@ -1,32 +1,18 @@
-import { HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest, } from '@angular/common/http';
+import { HttpInterceptorFn, } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { from, lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from './server/auth.service';
 
-// needs to add this function because getting the token is async
-const addBearerToken = async (
-  req: HttpRequest<any>,
-  next: HttpHandlerFn,
-): Promise<HttpEvent<any>> => {
-  // const angularFireAuth = inject(AngularFireAuth);
+export const bearerTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.token;
-  // console.log(token, firebaseUser);
-  if (!!token) {
-    req = req.clone({
+
+  if (req.url.startsWith(environment.backendUrl) && token) {
+    const authReq = req.clone({
       setHeaders: {Authorization: `Bearer ${token}`},
     });
+    return next(authReq);
   }
-  return lastValueFrom(next(req));
-};
 
-export const bearerTokenInterceptor: HttpInterceptorFn = (req, next) => {
-  // only add the bearer token to requests to the backend
-  // Note that you can customize it to only add the bearer token to certain requests
-  if (req.url.startsWith(environment.backendUrl)) {
-    return from(addBearerToken(req, next));
-  } else {
-    return next(req);
-  }
+  return next(req);
 };

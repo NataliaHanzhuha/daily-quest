@@ -1,0 +1,18 @@
+<button angular4-paystack
+        [key]="key"
+        [email]="customer.email"
+        [amount]="customer.price * 100"
+        [ref]="reference"
+        [class]="'btn btn-primary'"
+        *ngIf="!paymentId"
+        (onClose)="paymentCancel()"
+        (callback)="paymentDone($event)">
+	Pay with Paystack
+	<img src="assets/images/icons/paystack_logo.svg"
+	     alt="paystack logo"
+	     width="24">
+</button>
+
+<nz-alert nzType="success"
+          nzMessage="Success Payment"
+          *ngIf="paymentId"></nz-alert>

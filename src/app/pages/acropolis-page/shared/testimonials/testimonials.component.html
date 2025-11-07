@@ -1,0 +1,31 @@
+<section class="testimonials-section">
+	<div class="container">
+		<div class="section-header">
+			<h2 class="section-title">What Our Visitors Say</h2>
+			<p class="section-subtitle">Read testimonials from people who have experienced Acropolis Park</p>
+		</div>
+
+		<app-carousel
+			[perView]="carouselItemsPerView(1,2,3)"
+			[spacing]="20"
+			[showIndicators]="true"
+			[showControls]="false"
+			[autoplay]="false"
+			[autoplayDelay]="5000"
+			[loop]="true">
+
+			<div *ngFor="let review of reviews"
+			     class="carousel-item"
+			     carouselItem>
+				<app-review-card
+					[ngStyle]="{'max-width': carouselItemsPerView('85vw', '45vw', '400px')}"
+					[review]="review"
+					cardStyle="default"
+					[showAvatar]="false"
+					[showQuotes]="false">
+				</app-review-card>
+			</div>
+
+		</app-carousel>
+	</div>
+</section>

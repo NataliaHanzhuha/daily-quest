@@ -4,11 +4,12 @@ import { Observable } from 'rxjs';
 import { Venue } from '../../models/task';
 import { environment } from '../../../environments/environment';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class VenueService {
   private readonly url = environment.backendUrl + 'venue/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getVenues(): Observable<Venue[]> {
     return this.http.get<Venue[]>(this.url);

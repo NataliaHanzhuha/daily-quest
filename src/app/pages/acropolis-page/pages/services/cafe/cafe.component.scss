@@ -1,0 +1,34 @@
+@import "src/app/mixins";
+
+@include aboutSection();
+@include heroSection('/assets/images/cafe-hero.png');
+@include contacts();
+
+:host ::ng-deep .about-hero {
+  background-position: center top -350px;
+}
+
+.gallery-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 100px;
+
+  //.carousel-item {
+  .gallery-image {
+    width: 300px;
+    height: 350px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+  }
+
+  //}
+}
+
+h2 {
+  text-align: center;
+}

@@ -28,12 +28,12 @@ export class StripeService {
   }
 
   openStripeCheckout() {
-   return this.http.post<{ id: string }>(this.url + "create-checkout-session", {})
-      // .subscribe(async response => {
-      //   this.stripe.redirectToCheckout({sessionId: response.id});
-      // }, error => {
-      //   console.error("Error creating Stripe session:", error);
-      // });
+    return this.http.post<{ id: string }>(this.url + 'create-checkout-session', {});
+    // .subscribe(async response => {
+    //   this.stripe.redirectToCheckout({sessionId: response.id});
+    // }, error => {
+    //   console.error("Error creating Stripe session:", error);
+    // });
   }
 
   sendInvoice() {

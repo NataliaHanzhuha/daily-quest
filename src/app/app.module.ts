@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -10,16 +10,24 @@ import { bearerTokenInterceptor } from './services/token.interseptor';
 import { RouterModule } from '@angular/router';
 
 // Custom Components & Services
-import { LoadingIndicatorComponent } from './components/shared/loading-indicator/loading-indicator.component';
+import { LoadingIndicatorComponent } from './shared';
 
 // Ng-Zorro
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
-
+import { IconDefinition } from '@ant-design/icons-angular';
+import * as AllIcons from '@ant-design/icons-angular/icons';
+import { NZ_ICONS } from 'ng-zorro-antd/icon';
 // Services
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { NgxStripeModule } from 'ngx-stripe';
 import { Angular4PaystackModule } from 'angular4-paystack';
+
+const antDesignIcons = AllIcons as {
+  [key: string]: IconDefinition;
+};
+const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key]);
+
 registerLocaleData(en);
 
 @NgModule({
@@ -35,8 +43,8 @@ registerLocaleData(en);
     Angular4PaystackModule.forRoot(environment.paystackPublickKey),
   ],
   providers: [
-    provideClientHydration(),
     {provide: NZ_I18N, useValue: en_US},
+    {provide: NZ_ICONS, useValue: icons},
     // {
     //   provide: APP_INITIALIZER,
     //   useFactory: initAuth,

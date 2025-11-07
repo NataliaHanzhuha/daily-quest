@@ -1,5 +1,5 @@
 [build]
-command = "npm run prod"
+command = "pnpm run prod"
 publish = "dist/daily-quest/browser"
 base = "/"
 

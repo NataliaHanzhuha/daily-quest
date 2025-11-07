@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
-import { User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private collectionName = 'users';
+  // private collectionName = 'users';
+
   // currentUser$: Observable<User | null | undefined>;
 
   constructor(

@@ -16,13 +16,13 @@ export class EventBookingService {
   getBookings(): Observable<EventBooking[]> {
     return this.http.get<EventBooking[]>(this.url)
       .pipe(map((events: EventBooking[]) => events.map((event: EventBooking) => {
-      return {
-        ...event,
-        date: this.timeService.getDate(event.date),
-        dateString: this.timeService.getDate(event.dateString),
-        createdAt: this.timeService.getDate(event.createdAt, true),
-      };
-    })));
+        return {
+          ...event,
+          date: this.timeService.getDate(event.date),
+          dateString: this.timeService.getDate(event.dateString),
+          createdAt: this.timeService.getDate(event.createdAt, true),
+        };
+      })));
   }
 
   getBookingById(id: string): Observable<EventBooking> {
@@ -46,7 +46,7 @@ export class EventBookingService {
   }
 
   updatePayment(paymentId: string, bookingId: string): Observable<any> {
-    return this.http.put(`${this.url}payment-update/`, {paymentId, bookingId})
+    return this.http.put(`${this.url}payment-update/`, {paymentId, bookingId});
   }
 
   /** 🔍 Check if a booking exists */
@@ -55,7 +55,7 @@ export class EventBookingService {
   }
 
   /** 📅 Get bookings filtered for calendar view */
-  filteredBookingForCalendar(from: string, to: string, venueId: string | null = null,  statuses: string[] = []): Observable<EventBooking[]> {
+  filteredBookingForCalendar(from: string, to: string, venueId: string | null = null, statuses: string[] = []): Observable<EventBooking[]> {
     return this.http.post<EventBooking[]>(`${this.url}filter`, {from, to, venueId, statuses})
       .pipe(map((events: EventBooking[]) => events.map((event: EventBooking) => {
         return {

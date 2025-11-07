@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authGuard, loginGuard } from './services/auth.guard';
+import { loginGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./components/login/login.component').then((c) => c.LoginComponent),
-    canActivate: [loginGuard]
+    loadComponent: () => import('./pages/login/login.component').then((c) => c.LoginComponent),
+    canMatch: [loginGuard]
   },
   {
     path: 'admin',
-    loadComponent: () => import('./components/admin/admin.component').then((c) => c.AdminComponent),
+    loadComponent: () => import('./pages/admin/admin.component').then((c) => c.AdminComponent),
     // canActivate: [authGuard]
   },
   {
     path: '',
-    loadChildren: () => import('./components/acropolis-page/acropolis-routing.module').then(m => m.AcropolisRoutingModule),
-    data: { animation: 'HomePage' }
+    loadChildren: () => import('./pages/acropolis-page/acropolis-routing.module').then(m => m.AcropolisRoutingModule),
+    data: {animation: 'HomePage'}
   },
 ];
 
@@ -24,7 +24,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {
     // initialNavigation: 'enabledBlocking',
     scrollPositionRestoration: 'top',
-})],
+  })],
 })
 export class AppRoutingModule {
 }

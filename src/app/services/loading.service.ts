@@ -9,7 +9,8 @@ export class LoadingService {
   public loading$: Observable<boolean> = this.loadingSubject.asObservable();
   private navigationLoading = false;
 
-  constructor() {}
+  constructor() {
+  }
 
   setLoading(loading: boolean): void {
     console.log(loading);

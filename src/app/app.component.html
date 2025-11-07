@@ -1,13 +1,14 @@
 <!-- App Container -->
 
-<div class="app-container" [@routeAnimations]="prepareRoute(outlet)">
-  <!-- Global Loading Indicator -->
-<!--  <app-loading-indicator -->
-<!--    [isLoading]="isLoading"-->
-<!--    [fullScreen]="true"-->
-<!--    [showLogo]="true">-->
-<!--  </app-loading-indicator>-->
-  
-  <!-- Main Content -->
-  <router-outlet #outlet="outlet"></router-outlet>
+<div class="app-container"
+     [@routeAnimations]="prepareRoute(outlet)">
+	<!-- Global Loading Indicator -->
+	<!--  <app-loading-indicator -->
+	<!--    [isLoading]="isLoading"-->
+	<!--    [fullScreen]="true"-->
+	<!--    [showLogo]="true">-->
+	<!--  </app-loading-indicator>-->
+
+	<!-- Main Content -->
+	<router-outlet #outlet="outlet"></router-outlet>
 </div>

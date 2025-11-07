@@ -1,0 +1,103 @@
+<div class="modal-title">
+	<a (click)="venueIdChanged.emit(null)"
+	   class="back-btn">← Back to Venues </a>
+	<h3>{{ venue.categoryName }}: {{ venue.title }}</h3>
+	<div class="venue-details">
+		<div class="detail-item">
+			<span class="label"
+			      [ngClass]="{'selected': !!currentStep}">{{ !!currentStep ? 'Date and Time' : 'Duration' }}</span>
+			<span class="value"
+			      *ngIf="!currentStep; else selectedSlot">{{ venue.minHours }}-{{ venue.maxHours }} hours</span>
+			<ng-template #selectedSlot>
+				<b class="selected">{{ selectedDateFormatting }}</b>
+				<b class="selected">{{ startTime }}:00 - {{ endTime }}:00</b>
+			</ng-template>
+		</div>
+		<div class="detail-item">
+			<span class="label"
+			      [ngClass]="{'selected': !!currentStep}">Price</span>
+			<span class="value"
+			      *ngIf="!currentStep; else price">{{ currencySymbol }}{{ venue.hourlyRate }}/hour</span>
+			<ng-template #price>
+				<b class="selected">{{ currencySymbol }}{{ totalCost }}</b>
+			</ng-template>
+		</div>
+		<div class="detail-item">
+			<span class="label"
+			      [ngClass]="{'selected': currentStep === 2}">Capacity</span>
+			<span class="value"
+			      *ngIf="currentStep !== 2; else attendees">{{ venue.capacity || 100 }} people</span>
+			<ng-template #attendees>
+				<b class="selected">{{ bookingForm.get('attendees')?.value }} guests</b>
+			</ng-template>
+		</div>
+	</div>
+</div>
+
+<div class="booking-container">
+
+	<nz-steps [nzCurrent]="currentStep"
+	          nzSize="small"
+	          [nzProgressDot]="progressTemplate"
+	          nzDirection="vertical"
+	          class="booking-steps large">
+		<nz-step nzTitle="Date & Time"></nz-step>
+		<nz-step nzTitle="Details"></nz-step>
+		<nz-step nzTitle="Payment"></nz-step>
+	</nz-steps>
+
+	<ng-template #progressTemplate
+	             let-dot
+	             let-status="status"
+	             let-index="index">
+		<ng-template [ngTemplateOutlet]="dot"></ng-template>
+	</ng-template>
+
+	<form nz-form
+	      [formGroup]="bookingForm"
+	      class="booking-form">
+
+
+		<!-- Step 1: Date and Time Selection -->
+		<div class="step-content"
+		     *ngIf="!!venue?.id">
+			<app-date-and-time [venue]="venue"
+			                   *ngIf="currentStep === 0"
+			                   (change)="bookingForm.patchValue($event)"></app-date-and-time>
+
+			<app-customer-info (change)="bookingForm.patchValue($event)"
+			                   *ngIf="currentStep === 1"
+			                   [capacity]="venue.capacity || 100"></app-customer-info>
+
+			<app-payment nz-col
+			             nzFlex="1 1 350px"
+			             (payment)="setPayment($event) "
+			             *ngIf="currentStep === 2"
+			             [description]="description"
+			             [customer]="customer!"></app-payment>
+		</div>
+	</form>
+</div>
+
+<footer>
+	<button nz-button
+	        nzType="default"
+	        (click)="prevStep()"
+	        *ngIf="!!currentStep">Previous
+	</button>
+
+	<button nz-button
+	        nzType="primary"
+	        [disabled]="!validateCurrentStep(false)"
+	        *ngIf="currentStep !== 2"
+	        (click)="nextStep()">Next
+	</button>
+
+	<!--	<button nz-button-->
+	<!--	        nzType="primary"-->
+	<!--	        [disabled]="!validateCurrentStep(false)"-->
+	<!--	        *ngIf="currentStep === 2"-->
+	<!--	        (click)="processBookingWithPayment()">-->
+	<!--		Confirm Booking-->
+	<!--	</button>-->
+</footer>

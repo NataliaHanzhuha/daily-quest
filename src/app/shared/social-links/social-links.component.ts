@@ -7,6 +7,7 @@ export interface SocialLink {
   url: string;
   icon: string;
   label: string;
+  custom: boolean;
 }
 
 @Component({
@@ -32,21 +33,25 @@ export class SocialLinksComponent {
       platform: 'instagram',
       url: 'https://www.instagram.com/theacropolispark/',
       icon: 'instagram',
-      label: 'Instagram'
+      label: 'Instagram',
+      custom: false
     },
     {
       platform: 'facebook',
-      url: 'https://www.facebook.com/theacropolisapo/',
+      url: 'https://www.facebook.com/share/1U1VorfqJP/',
       icon: 'facebook',
-      label: 'Facebook'
+      label: 'Facebook',
+      custom: true
     },
     {
-      platform: 'twitter',
-      url: 'https://x.com/acropolisabuja/',
+      platform: 'x',
+      url: 'https://x.com/acropolisabuja',
       icon: 'twitter',
-      label: 'Twitter'
+      label: 'X',
+      custom: true
     }
   ];
+  
 
   get socialLinks(): SocialLink[] {
     return this.customIcons.length > 0 ? this.customIcons : this.defaultSocialLinks;

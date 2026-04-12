@@ -359,7 +359,7 @@
           margin: 0;
           font-size: 20px;
           color: #1a3c5b;
-          font-family: "Poppins", sans-serif;
+          font-family: var(--font-heading);
           letter-spacing: 0.5px;
         }
 
@@ -553,7 +553,7 @@
         p {
           line-height: 1.8;
           font-size: 16px;
-          font-family: "Poppins", sans-serif;
+          font-family: var(--font-heading);
         }
       }
     }

@@ -83,6 +83,10 @@
       border-radius: 50%;
       background-color: transparent;
       transition: all 0.3s ease;
+
+      & .custom {
+        font-size: 24px;
+      }
     }
 
     .social-text {

@@ -7,7 +7,7 @@
   background-color: transparent;
   transition: all var(--transition-medium);
   padding: 1.5rem 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-heading);
 
   &.scrolled {
     background-color: var(--color-accent);
@@ -221,7 +221,7 @@
           text-transform: uppercase;
           letter-spacing: 0.5px;
           transition: color var(--transition-fast);
-          font-family: 'Poppins', sans-serif;
+          font-family: var(--font-heading);
 
           &:hover {
             color: var(--color-accent);

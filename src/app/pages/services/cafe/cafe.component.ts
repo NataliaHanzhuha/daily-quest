@@ -42,7 +42,7 @@ export class CafeComponent {
     },
     {
       name: 'Chicken Penne Arabiata pasta',
-      description: 'Penne pasta in tomato - basil sauce withchicken breast',
+      description: 'Penne pasta in tomato - basil sauce with chicken breast',
       price: 4000
     },
     {
@@ -63,7 +63,7 @@ export class CafeComponent {
       price: 3000
     },
     {
-      name: 'Cripy Chicken Burger',
+      name: 'Crispy Chicken Burger',
       description: '',
       price: 3500
     },
@@ -78,7 +78,7 @@ export class CafeComponent {
       price: 2250
     },
   ];
-  sandwichesDetails = 'Baguette bread with grilled beef and green bell peppers, toppled with BBQ sauce & mozzarella cheese';
+  sandwichesDetails = 'Baguette bread with grilled beef and green bell peppers, topped with BBQ sauce & mozzarella cheese';
   shawarmas: MenuItem[] = [
     {
       name: 'Beef Shawarma',
@@ -124,7 +124,7 @@ export class CafeComponent {
       price: 1500
     },
     {
-      name: 'Jellof Rice',
+      name: 'Jollof Rice',
       description: '',
       price: 1000
     },
@@ -141,7 +141,7 @@ export class CafeComponent {
   ];
   salads = [
     {
-      name: 'Chicken Ceasar Salad',
+      name: 'Chicken Caesar Salad',
       description: '',
       price: 3000
     },
@@ -157,7 +157,7 @@ export class CafeComponent {
     },
     {
       name: 'Huse\'s Cafe Salad',
-      description: 'Pchicken, vegetables, seasonal fruits in cream sauce with herbs',
+      description: 'chicken, vegetables, seasonal fruits in cream sauce with herbs',
       price: 3000
     },
   ];

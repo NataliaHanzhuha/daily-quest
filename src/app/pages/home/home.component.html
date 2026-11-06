@@ -65,16 +65,16 @@
 
 				<div class="service-content">
 					<ul>
-						<li><a href="/services/grill">Acropolis Grills</a></li>
-						<li><a href="/services/shopping">Acropolis Shopping</a></li>
+						<li><a [routerLink]="'/services/grill'">Acropolis Grills</a></li>
+						<li><a [routerLink]="'/services/shopping'">Acropolis Shopping</a></li>
 						<li nz-tooltip
 						    [nzTooltipTitle]="food">
-							<a href="/services/cafe">Acropolis Foods</a>
+							<a [routerLink]="'/services/cafe'">Acropolis Foods</a>
 						</li>
-						<li><a href="/services/cafe">Acropolis Pastries</a></li>
+						<li><a [routerLink]="'/services/cafe'">Acropolis Pastries</a></li>
 						<li nz-tooltip
 						    [nzTooltipTitle]="space">
-							<a href="/services/space-rental">Acropolis Space Rental</a>
+							<a [href]="bookingLink">Acropolis Space Rental</a>
 						</li>
 						<li>Acropolis Gym</li>
 
@@ -95,8 +95,8 @@
 					</ng-template>
 
 					<ng-template #space>
-						<p> - Indoor restaurant</p>
-						<p> - Outdoor restaurant</p>
+						<p> - Indoor event halls</p>
+						<p> - Outdoor event spaces</p>
 					</ng-template>
 
 				</div>

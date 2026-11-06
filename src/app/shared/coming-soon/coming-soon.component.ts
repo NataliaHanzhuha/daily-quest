@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { animate, style, transition, trigger } from '@angular/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     selector: 'app-coming-soon',
     templateUrl: './coming-soon.component.html',
     styleUrls: ['./coming-soon.component.scss'],
-    imports: [CommonModule, BrowserAnimationsModule],
+    imports: [BrowserAnimationsModule],
     animations: [
         trigger('slideIn', [
             transition(':enter', [

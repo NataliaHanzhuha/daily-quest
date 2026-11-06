@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { animate, style, transition, trigger } from '@angular/animations';
 
 interface TeamMember {
@@ -13,7 +13,7 @@ interface TeamMember {
     selector: 'app-about',
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.scss'],
-    imports: [CommonModule],
+    imports: [],
     animations: [
         trigger('slideIn', [
             transition(':enter', [

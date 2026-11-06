@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -9,10 +9,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
     templateUrl: './kids.component.html',
     styleUrls: ['./kids.component.scss'],
     imports: [
-        CommonModule,
-        RouterModule,
-        NzIconModule
-    ],
+    RouterModule,
+    NzIconModule
+],
     animations: [
         trigger('slideIn', [
             transition(':enter', [

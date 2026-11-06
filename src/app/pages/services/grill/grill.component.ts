@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { MenuItem } from '../../../models/task';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -11,11 +11,10 @@ import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.componen
     templateUrl: './grill.component.html',
     styleUrls: ['./grill.component.scss'],
     imports: [
-        CommonModule,
-        RouterModule,
-        MenuItemsComponent,
-        NzIconModule
-    ],
+    RouterModule,
+    MenuItemsComponent,
+    NzIconModule
+],
     animations: [
         trigger('slideIn', [
             transition(':enter', [

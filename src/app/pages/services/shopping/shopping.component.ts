@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -8,7 +8,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
     selector: 'app-shopping',
     templateUrl: './shopping.component.html',
     styleUrls: ['./shopping.component.scss'],
-    imports: [CommonModule, RouterModule, NzIconModule],
+    imports: [RouterModule, NzIconModule],
     animations: [
         trigger('slideIn', [
             transition(':enter', [

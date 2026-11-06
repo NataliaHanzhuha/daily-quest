@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MenuItem } from '../../../models/task';
@@ -10,7 +10,7 @@ import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.componen
     selector: 'app-cafe',
     templateUrl: './cafe.component.html',
     styleUrls: ['./cafe.component.scss'],
-    imports: [CommonModule, RouterModule, NzIconModule, MenuItemsComponent],
+    imports: [RouterModule, NzIconModule, MenuItemsComponent],
     animations: [
         trigger('slideIn', [
             transition(':enter', [

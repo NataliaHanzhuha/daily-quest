@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MenuItem } from '../../models/task';
 
 @Component({
     selector: 'app-menu-items',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './menu-item.component.html',
     styleUrls: ['./menu-item.component.scss']
 })

@@ -1,5 +1,5 @@
 import { Component, Inject, DOCUMENT } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AcropolisHeaderComponent } from '../shared/header/header.component';
 import { AcropolisFooterComponent } from '../shared/footer/footer.component';
@@ -15,7 +15,7 @@ const DEFAULT_DESCRIPTION = 'A Modern Revival of Greek Grandeur — Your One-Sto
     selector: 'app-acropolis-layout',
     templateUrl: './acropolis-layout.component.html',
     styleUrls: ['./acropolis-layout.component.scss'],
-    imports: [CommonModule, RouterModule, AcropolisHeaderComponent, AcropolisFooterComponent]
+    imports: [RouterModule, AcropolisHeaderComponent, AcropolisFooterComponent]
 })
 export class AcropolisLayoutComponent {
   constructor(

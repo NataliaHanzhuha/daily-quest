@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
@@ -33,17 +33,16 @@ interface Venue {
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule,
-        NzCarouselModule,
-        ImagePlaceholderComponent,
-        NzIconModule,
-        NgOptimizedImage,
-        NzTooltipModule,
-        TestimonialsComponent
-    ],
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    NzCarouselModule,
+    ImagePlaceholderComponent,
+    NzIconModule,
+    NgOptimizedImage,
+    NzTooltipModule,
+    TestimonialsComponent
+],
     animations: [
         trigger('slideIn', [
             transition(':enter', [

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { SocialLinksComponent } from '../index';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -12,7 +12,7 @@ import { acropolisAddress, acropolisEmail, acropolisPhone, bookingLink, notReady
     selector: 'app-acropolis-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
-    imports: [CommonModule, RouterModule, SocialLinksComponent, NzIconModule, NzBadgeModule, NzDropDownModule, NzTypographyModule]
+    imports: [RouterModule, SocialLinksComponent, NzIconModule, NzBadgeModule, NzDropDownModule, NzTypographyModule]
 })
 export class AcropolisFooterComponent {
   currentYear = new Date().getFullYear();

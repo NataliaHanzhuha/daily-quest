@@ -12,7 +12,7 @@ import {
   QueryList,
   ViewChild
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { CarouselItemDirective } from './carousel-item.directive';
 import { BehaviorSubject, fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -22,7 +22,7 @@ import { PlatformService } from '../../services/platform.service';
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
-    imports: [CommonModule]
+    imports: []
 })
 export class CarouselComponent implements AfterViewInit, OnDestroy {
   @Input() showIndicators = true;

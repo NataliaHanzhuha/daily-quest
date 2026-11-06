@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -9,7 +9,7 @@ import { acropolisAddress, acropolisEmail, acropolisPhone } from '../../models/c
     selector: 'app-contact',
     templateUrl: './contact.component.html',
     styleUrls: ['./contact.component.scss'],
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, NzIconModule],
+    imports: [FormsModule, ReactiveFormsModule, NzIconModule],
     animations: [
         trigger('slideIn', [
             transition(':enter', [

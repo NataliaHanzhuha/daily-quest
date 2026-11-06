@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { fadeAnimation } from './animation';
 
@@ -11,6 +11,7 @@ import { fadeAnimation } from './animation';
 	  </div>
   `,
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [fadeAnimation]
 })
 export class AppComponent {

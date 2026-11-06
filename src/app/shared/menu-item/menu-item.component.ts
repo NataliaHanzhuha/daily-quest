@@ -1,13 +1,13 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
 import { MenuItem } from '../../models/task';
 
 @Component({
-  selector: 'app-menu-items',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './menu-item.component.html',
-  styleUrls: ['./menu-item.component.scss']
+    selector: 'app-menu-items',
+    imports: [],
+    templateUrl: './menu-item.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./menu-item.component.scss']
 })
 export class MenuItemsComponent {
   @Input() list: MenuItem[] = [];

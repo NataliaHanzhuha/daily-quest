@@ -2,10 +2,28 @@
   "extends": "../tsconfig.app.json",
   "compilerOptions": {
     "outDir": "../dist/server",
-    "target": "ES2020",
-    "module": "CommonJS"
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "types": [
+      "node"
+    ]
   },
   "files": [
-    "server/server.ts"
-  ]
+    "main.server.ts"
+  ],
+  "include": [
+    "app/**/*.ts"
+  ],
+  "exclude": [
+    "app/**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

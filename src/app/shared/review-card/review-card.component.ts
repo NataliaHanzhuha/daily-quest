@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ImagePlaceholderComponent } from '../image-placeholder/image-placeholder.component';
 
@@ -13,11 +13,11 @@ export interface ReviewData {
 }
 
 @Component({
-  selector: 'app-review-card',
-  templateUrl: './review-card.component.html',
-  styleUrls: ['./review-card.component.scss'],
-  standalone: true,
-  imports: [CommonModule, ImagePlaceholderComponent]
+    selector: 'app-review-card',
+    templateUrl: './review-card.component.html',
+    styleUrls: ['./review-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [CommonModule, ImagePlaceholderComponent]
 })
 export class ReviewCardComponent {
   @Input() review!: ReviewData;

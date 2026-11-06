@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselComponent, CarouselItemDirective, ReviewCardComponent, ReviewData } from '../index';
 import { PlatformService } from '../../services/platform.service';
 
 @Component({
-  selector: 'app-testimonials',
-  templateUrl: './testimonials.component.html',
-  styleUrls: ['./testimonials.component.scss'],
-  standalone: true,
-  imports: [CommonModule, CarouselComponent, CarouselItemDirective, ReviewCardComponent]
+    selector: 'app-testimonials',
+    templateUrl: './testimonials.component.html',
+    styleUrls: ['./testimonials.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [CommonModule, CarouselComponent, CarouselItemDirective, ReviewCardComponent]
 })
 export class TestimonialsComponent {
   reviews: ReviewData[] = [

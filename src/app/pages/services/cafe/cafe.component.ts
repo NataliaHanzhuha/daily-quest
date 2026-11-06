@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MenuItem } from '../../../models/task';
@@ -7,19 +7,19 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.component';
 
 @Component({
-  selector: 'app-cafe',
-  templateUrl: './cafe.component.html',
-  styleUrls: ['./cafe.component.scss'],
-  standalone: true,
-  imports: [CommonModule, RouterModule, NzIconModule, MenuItemsComponent],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({transform: 'translateY(100%)', opacity: 0}),
-        animate('1000ms ease-out', style({transform: 'translateY(0)', opacity: 1}))
-      ])
-    ])
-  ]
+    selector: 'app-cafe',
+    templateUrl: './cafe.component.html',
+    styleUrls: ['./cafe.component.scss'],
+    imports: [RouterModule, NzIconModule, MenuItemsComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    animations: [
+        trigger('slideIn', [
+            transition(':enter', [
+                style({ transform: 'translateY(100%)', opacity: 0 }),
+                animate('1000ms ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+            ])
+        ])
+    ]
 })
 export class CafeComponent {
   schedule = 'Monday-Saturday, 12pm-9pm';
@@ -162,10 +162,10 @@ export class CafeComponent {
     },
   ];
   images: string[] = [
-    '/assets/images/cafe-menu-pasta.png',
-    '/assets/images/cafe-menu-rice.png',
-    '/assets/images/cafe-menu-salad.png',
-    '/assets/images/cafe-menu-sandwich.png',
+    '/assets/images/cafe-menu-pasta.webp',
+    '/assets/images/cafe-menu-rice.webp',
+    '/assets/images/cafe-menu-salad.webp',
+    '/assets/images/cafe-menu-sandwich.webp',
     // '/assets/images/cafe-menu-jellof-rice.png',
   ];
 }

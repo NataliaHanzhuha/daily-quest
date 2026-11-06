@@ -29,6 +29,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/_redirects",
+              "src/robots.txt",
+              "src/sitemap.xml",
               {
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
@@ -76,20 +78,19 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "daily-quest:build:production"
+              "buildTarget": "daily-quest:build:production"
             },
             "development": {
-              "browserTarget": "daily-quest:build:development"
+              "buildTarget": "daily-quest:build:development"
             }
           },
           "defaultConfiguration": "development",
-          "options": {
-          }
+          "options": {}
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "daily-quest:build"
+            "buildTarget": "daily-quest:build"
           }
         },
         "test": {
@@ -111,8 +112,80 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/daily-quest/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "discoverRoutes": false,
+            "routes": [
+              "/",
+              "/about",
+              "/services/grill",
+              "/services/cafe",
+              "/services/kids",
+              "/services/shopping",
+              "/contact",
+              "/privacy-policy",
+              "/terms"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "daily-quest:build:production",
+              "serverTarget": "daily-quest:server:production"
+            },
+            "development": {
+              "browserTarget": "daily-quest:build:development",
+              "serverTarget": "daily-quest:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
     }
   }
 }

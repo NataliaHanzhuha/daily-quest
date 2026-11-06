@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { ImagePlaceholderComponent } from '../../shared';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { TestimonialsComponent } from '../../shared/testimonials/testimonials.component';
 import { bookingLink } from '../../models/constants';
@@ -29,12 +29,10 @@ interface Venue {
 }
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    imports: [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
@@ -42,17 +40,18 @@ interface Venue {
     ImagePlaceholderComponent,
     NzIconModule,
     NgOptimizedImage,
-    NzToolTipModule,
+    NzTooltipModule,
     TestimonialsComponent
-  ],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({transform: 'translateY(100%)', opacity: 0}),
-        animate('1000ms ease-out', style({transform: 'translateY(0)', opacity: 1}))
-      ])
-    ])
-  ]
+],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    animations: [
+        trigger('slideIn', [
+            transition(':enter', [
+                style({ transform: 'translateY(100%)', opacity: 0 }),
+                animate('1000ms ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+            ])
+        ])
+    ]
 })
 export class HomeComponent {
   bookingLink = bookingLink;
@@ -89,17 +88,17 @@ export class HomeComponent {
     {
       name: 'Grand Hall',
       description: 'Our largest venue, perfect for weddings and large corporate events. Features elegant decor and state-of-the-art facilities.',
-      image: '/assets/images/acropolis-home-hero.png'
+      image: '/assets/images/acropolis-home-hero.webp'
     },
     {
       name: 'Garden Pavilion',
       description: 'An outdoor venue surrounded by lush greenery, ideal for ceremonies and cocktail receptions.',
-      image: '/assets/images/acropolis-home-hero.png'
+      image: '/assets/images/acropolis-home-hero.webp'
     },
     {
       name: 'Executive Suite',
       description: 'A sophisticated space for business meetings, training sessions, and small corporate gatherings.',
-      image: '/assets/images/acropolis-home-hero.png'
+      image: '/assets/images/acropolis-home-hero.webp'
     }
   ];
 

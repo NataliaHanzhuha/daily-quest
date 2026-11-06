@@ -1,18 +1,18 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SocialLinksComponent } from '../index';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { PlatformService } from '../../services/platform.service';
-import { bookingLink, notReadyServices, services } from 'src/app/models/constants';
+import { bookingLink, notReadyServices, services } from '../../models/constants';
 
 @Component({
-  selector: 'app-acropolis-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  standalone: true,
-  imports: [CommonModule, RouterModule, NzIconModule, SocialLinksComponent, NzBadgeModule]
+    selector: 'app-acropolis-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [CommonModule, RouterModule, NzIconModule, SocialLinksComponent, NzBadgeModule]
 })
 export class AcropolisHeaderComponent {
   isMobileMenuOpen = signal(false);

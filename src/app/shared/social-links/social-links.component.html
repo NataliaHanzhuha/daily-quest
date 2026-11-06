@@ -1,49 +1,47 @@
 <div class="social-links-container"
-     [ngClass]="[sizeClass, directionClass]"
-     [ngStyle]="containerStyle">
-	<ng-container *ngFor="let link of socialLinks">
-		<a [href]="link.url"
-		   target="_blank"
-		   class="social-link"
-		   [attr.aria-label]="link.label">
-			<!-- Icon Mode -->
-
-		   <ng-container *ngIf="displayMode === 'icons' || displayMode === 'both'">
-				<ng-container *ngIf="link.custom; else original">
-					<span nz-icon 
-					 	[ngStyle]="iconStyle" 
-					  	class="social-icon custom"
-						nzTheme="outline">
-		
-						<ng-container [ngSwitch]="link.platform">
-							<ng-container *ngSwitchCase="'x'">
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-									<path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"/>
-								</svg>
-							</ng-container>
-							<ng-container *ngSwitchCase="'facebook'">
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-									<path d="M240 363.3L240 576L356 576L356 363.3L442.5 363.3L460.5 265.5L356 265.5L356 230.9C356 179.2 376.3 159.4 428.7 159.4C445 159.4 458.1 159.8 465.7 160.6L465.7 71.9C451.4 68 416.4 64 396.2 64C289.3 64 240 114.5 240 223.4L240 265.5L174 265.5L174 363.3L240 363.3z"/>
-								</svg>
-							</ng-container>
-						</ng-container>
-					</span>
-				</ng-container>
-		   
-				<ng-template #original>
-					<span class="social-icon"
-						[ngStyle]="iconStyle"
-						nz-icon
-						[nzType]="link.icon"
-						nzTheme="outline"></span>
-				</ng-template>
-		   </ng-container>
-
-		   <!-- Text Mode -->
-			<span *ngIf="displayMode === 'text' || displayMode === 'both'"
-			      class="social-text">
-				{{ link.label }}
-			</span>
-		</a>
-	</ng-container>
+  [ngClass]="[sizeClass, directionClass]"
+  [ngStyle]="containerStyle">
+  @for (link of socialLinks; track link) {
+    <a [href]="link.url"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-link"
+      [attr.aria-label]="link.label">
+      <!-- Icon Mode -->
+      @if (displayMode === 'icons' || displayMode === 'both') {
+        @if (link.custom) {
+          <span nz-icon
+            [ngStyle]="iconStyle"
+            class="social-icon custom"
+            nzTheme="outline">
+            @switch (link.platform) {
+              @case ('x') {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                  <path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"/>
+                </svg>
+              }
+              @case ('facebook') {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                  <path d="M240 363.3L240 576L356 576L356 363.3L442.5 363.3L460.5 265.5L356 265.5L356 230.9C356 179.2 376.3 159.4 428.7 159.4C445 159.4 458.1 159.8 465.7 160.6L465.7 71.9C451.4 68 416.4 64 396.2 64C289.3 64 240 114.5 240 223.4L240 265.5L174 265.5L174 363.3L240 363.3z"/>
+                </svg>
+              }
+            }
+          </span>
+        } @else {
+          <span class="social-icon"
+            [ngStyle]="iconStyle"
+            nz-icon
+            [nzType]="link.icon"
+          nzTheme="outline"></span>
+        }
+      }
+      <!-- Text Mode -->
+      @if (displayMode === 'text' || displayMode === 'both') {
+        <span
+          class="social-text">
+          {{ link.label }}
+        </span>
+      }
+    </a>
+  }
 </div>

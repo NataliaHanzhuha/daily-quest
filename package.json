@@ -57,5 +57,10 @@
     "postinstall-postinstall": "^2.1.0",
     "ts-node": "^10.9.2",
     "typescript": "~6.0.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "gzipper>uuid": "^11.1.1"
+    }
   }
 }

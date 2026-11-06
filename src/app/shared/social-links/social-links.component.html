@@ -4,6 +4,7 @@
 	<ng-container *ngFor="let link of socialLinks">
 		<a [href]="link.url"
 		   target="_blank"
+		   rel="noopener noreferrer"
 		   class="social-link"
 		   [attr.aria-label]="link.label">
 			<!-- Icon Mode -->

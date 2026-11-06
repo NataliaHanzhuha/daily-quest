@@ -68,7 +68,7 @@ export class HomeComponent {
       isOpen: false
     },
     {
-      question: 'Do you provide catering service-card?',
+      question: 'Do you provide catering services?',
       answer: 'Yes, we offer full-service catering with a variety of menu options to suit different tastes and dietary requirements. Our culinary team can create custom menus for your event upon request.',
       isOpen: false
     },

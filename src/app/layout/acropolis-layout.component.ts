@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { Component, Inject, DOCUMENT } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AcropolisHeaderComponent } from '../shared/header/header.component';
 import { AcropolisFooterComponent } from '../shared/footer/footer.component';

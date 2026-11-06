@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MenuItem } from '../../models/task';
 
 @Component({
-  selector: 'app-menu-items',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './menu-item.component.html',
-  styleUrls: ['./menu-item.component.scss']
+    selector: 'app-menu-items',
+    imports: [CommonModule],
+    templateUrl: './menu-item.component.html',
+    styleUrls: ['./menu-item.component.scss']
 })
 export class MenuItemsComponent {
   @Input() list: MenuItem[] = [];

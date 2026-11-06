@@ -8,11 +8,10 @@ import { PlatformService } from '../../services/platform.service';
 import { bookingLink, notReadyServices, services } from 'src/app/models/constants';
 
 @Component({
-  selector: 'app-acropolis-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  standalone: true,
-  imports: [CommonModule, RouterModule, NzIconModule, SocialLinksComponent, NzBadgeModule]
+    selector: 'app-acropolis-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    imports: [CommonModule, RouterModule, NzIconModule, SocialLinksComponent, NzBadgeModule]
 })
 export class AcropolisHeaderComponent {
   isMobileMenuOpen = signal(false);

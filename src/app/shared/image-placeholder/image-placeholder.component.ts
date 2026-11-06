@@ -2,11 +2,10 @@ import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, 
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 @Component({
-  selector: 'app-image-placeholder',
-  templateUrl: './image-placeholder.component.html',
-  styleUrls: ['./image-placeholder.component.scss'],
-  standalone: true,
-  imports: [CommonModule, NgOptimizedImage]
+    selector: 'app-image-placeholder',
+    templateUrl: './image-placeholder.component.html',
+    styleUrls: ['./image-placeholder.component.scss'],
+    imports: [CommonModule, NgOptimizedImage]
 })
 export class ImagePlaceholderComponent implements AfterViewInit, OnChanges {
   @ViewChild('imageContainer') imageContainer!: ElementRef;

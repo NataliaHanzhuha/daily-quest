@@ -13,11 +13,10 @@ export interface ReviewData {
 }
 
 @Component({
-  selector: 'app-review-card',
-  templateUrl: './review-card.component.html',
-  styleUrls: ['./review-card.component.scss'],
-  standalone: true,
-  imports: [CommonModule, ImagePlaceholderComponent]
+    selector: 'app-review-card',
+    templateUrl: './review-card.component.html',
+    styleUrls: ['./review-card.component.scss'],
+    imports: [CommonModule, ImagePlaceholderComponent]
 })
 export class ReviewCardComponent {
   @Input() review!: ReviewData;

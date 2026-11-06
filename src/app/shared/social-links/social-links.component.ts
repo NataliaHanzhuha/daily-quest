@@ -11,11 +11,10 @@ export interface SocialLink {
 }
 
 @Component({
-  selector: 'app-social-links',
-  templateUrl: './social-links.component.html',
-  styleUrls: ['./social-links.component.scss'],
-  standalone: true,
-  imports: [CommonModule, NzIconModule]
+    selector: 'app-social-links',
+    templateUrl: './social-links.component.html',
+    styleUrls: ['./social-links.component.scss'],
+    imports: [CommonModule, NzIconModule]
 })
 export class SocialLinksComponent {
   @Input() displayMode: 'icons' | 'text' | 'both' = 'icons';

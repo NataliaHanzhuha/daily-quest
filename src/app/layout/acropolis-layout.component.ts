@@ -12,11 +12,10 @@ const DEFAULT_TITLE = 'Acropolis Park | Events, Dining & Recreation in Abuja';
 const DEFAULT_DESCRIPTION = 'A Modern Revival of Greek Grandeur — Your One-Stop Destination for Events, Recreation, and Community Living';
 
 @Component({
-  selector: 'app-acropolis-layout',
-  templateUrl: './acropolis-layout.component.html',
-  styleUrls: ['./acropolis-layout.component.scss'],
-  standalone: true,
-  imports: [CommonModule, RouterModule, AcropolisHeaderComponent, AcropolisFooterComponent]
+    selector: 'app-acropolis-layout',
+    templateUrl: './acropolis-layout.component.html',
+    styleUrls: ['./acropolis-layout.component.scss'],
+    imports: [CommonModule, RouterModule, AcropolisHeaderComponent, AcropolisFooterComponent]
 })
 export class AcropolisLayoutComponent {
   constructor(

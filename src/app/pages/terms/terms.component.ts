@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { acropolisAddress, acropolisEmail, acropolisPhone } from '../../models/constants';
 
 @Component({
-  selector: 'app-terms',
-  templateUrl: './terms.component.html',
-  styleUrls: ['./terms.component.scss'],
-  standalone: true,
-  imports: [CommonModule]
+    selector: 'app-terms',
+    templateUrl: './terms.component.html',
+    styleUrls: ['./terms.component.scss'],
+    imports: [CommonModule]
 })
 export class TermsComponent {
   lastUpdated = 'March 15, 2025';

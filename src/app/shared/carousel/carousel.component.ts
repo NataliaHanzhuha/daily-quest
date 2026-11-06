@@ -19,11 +19,10 @@ import { debounceTime } from 'rxjs/operators';
 import { PlatformService } from '../../services/platform.service';
 
 @Component({
-  selector: 'app-carousel',
-  templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.scss'],
-  standalone: true,
-  imports: [CommonModule]
+    selector: 'app-carousel',
+    templateUrl: './carousel.component.html',
+    styleUrls: ['./carousel.component.scss'],
+    imports: [CommonModule]
 })
 export class CarouselComponent implements AfterViewInit, OnDestroy {
   @Input() showIndicators = true;

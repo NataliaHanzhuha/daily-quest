@@ -7,19 +7,18 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.component';
 
 @Component({
-  selector: 'app-cafe',
-  templateUrl: './cafe.component.html',
-  styleUrls: ['./cafe.component.scss'],
-  standalone: true,
-  imports: [CommonModule, RouterModule, NzIconModule, MenuItemsComponent],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({transform: 'translateY(100%)', opacity: 0}),
-        animate('1000ms ease-out', style({transform: 'translateY(0)', opacity: 1}))
-      ])
-    ])
-  ]
+    selector: 'app-cafe',
+    templateUrl: './cafe.component.html',
+    styleUrls: ['./cafe.component.scss'],
+    imports: [CommonModule, RouterModule, NzIconModule, MenuItemsComponent],
+    animations: [
+        trigger('slideIn', [
+            transition(':enter', [
+                style({ transform: 'translateY(100%)', opacity: 0 }),
+                animate('1000ms ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+            ])
+        ])
+    ]
 })
 export class CafeComponent {
   schedule = 'Monday-Saturday, 12pm-9pm';

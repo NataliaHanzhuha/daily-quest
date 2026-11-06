@@ -29,30 +29,29 @@ interface Venue {
 }
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    NzCarouselModule,
-    ImagePlaceholderComponent,
-    NzIconModule,
-    NgOptimizedImage,
-    NzToolTipModule,
-    TestimonialsComponent
-  ],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({transform: 'translateY(100%)', opacity: 0}),
-        animate('1000ms ease-out', style({transform: 'translateY(0)', opacity: 1}))
-      ])
-    ])
-  ]
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        NzCarouselModule,
+        ImagePlaceholderComponent,
+        NzIconModule,
+        NgOptimizedImage,
+        NzToolTipModule,
+        TestimonialsComponent
+    ],
+    animations: [
+        trigger('slideIn', [
+            transition(':enter', [
+                style({ transform: 'translateY(100%)', opacity: 0 }),
+                animate('1000ms ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+            ])
+        ])
+    ]
 })
 export class HomeComponent {
   bookingLink = bookingLink;

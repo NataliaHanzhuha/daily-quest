@@ -9,11 +9,10 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { acropolisAddress, acropolisEmail, acropolisPhone, bookingLink, notReadyServices, services } from '../../models/constants';
 
 @Component({
-  selector: 'app-acropolis-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss'],
-  standalone: true,
-  imports: [CommonModule, RouterModule, SocialLinksComponent, NzIconModule, NzBadgeModule, NzDropDownModule, NzTypographyModule]
+    selector: 'app-acropolis-footer',
+    templateUrl: './footer.component.html',
+    styleUrls: ['./footer.component.scss'],
+    imports: [CommonModule, RouterModule, SocialLinksComponent, NzIconModule, NzBadgeModule, NzDropDownModule, NzTypographyModule]
 })
 export class AcropolisFooterComponent {
   currentYear = new Date().getFullYear();

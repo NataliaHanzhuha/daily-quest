@@ -7,24 +7,23 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.component';
 
 @Component({
-  selector: 'app-grill',
-  templateUrl: './grill.component.html',
-  styleUrls: ['./grill.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MenuItemsComponent,
-    NzIconModule
-  ],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({transform: 'translateY(100%)', opacity: 0}),
-        animate('1000ms ease-out', style({transform: 'translateY(0)', opacity: 1}))
-      ])
-    ])
-  ]
+    selector: 'app-grill',
+    templateUrl: './grill.component.html',
+    styleUrls: ['./grill.component.scss'],
+    imports: [
+        CommonModule,
+        RouterModule,
+        MenuItemsComponent,
+        NzIconModule
+    ],
+    animations: [
+        trigger('slideIn', [
+            transition(':enter', [
+                style({ transform: 'translateY(100%)', opacity: 0 }),
+                animate('1000ms ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+            ])
+        ])
+    ]
 })
 export class GrillComponent {
   schedule = '1pm-10pm, delivery till 6pm';

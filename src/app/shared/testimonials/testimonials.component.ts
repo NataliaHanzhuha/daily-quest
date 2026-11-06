@@ -4,11 +4,10 @@ import { CarouselComponent, CarouselItemDirective, ReviewCardComponent, ReviewDa
 import { PlatformService } from '../../services/platform.service';
 
 @Component({
-  selector: 'app-testimonials',
-  templateUrl: './testimonials.component.html',
-  styleUrls: ['./testimonials.component.scss'],
-  standalone: true,
-  imports: [CommonModule, CarouselComponent, CarouselItemDirective, ReviewCardComponent]
+    selector: 'app-testimonials',
+    templateUrl: './testimonials.component.html',
+    styleUrls: ['./testimonials.component.scss'],
+    imports: [CommonModule, CarouselComponent, CarouselItemDirective, ReviewCardComponent]
 })
 export class TestimonialsComponent {
   reviews: ReviewData[] = [

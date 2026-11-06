@@ -5,7 +5,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SocialLinksComponent } from '../index';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { PlatformService } from '../../services/platform.service';
-import { bookingLink, notReadyServices, services } from 'src/app/models/constants';
+import { bookingLink, notReadyServices, services } from '../../models/constants';
 
 @Component({
     selector: 'app-acropolis-header',

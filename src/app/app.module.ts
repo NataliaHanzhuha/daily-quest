@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import en from '@angular/common/locales/en';
 import { registerLocaleData } from '@angular/common';
 import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
+import { provideNzDateFnsAdapter } from 'ng-zorro-antd/core/time';
+
 
 registerLocaleData(en);
 
@@ -15,6 +17,6 @@ registerLocaleData(en);
     bootstrap: [AppComponent], imports: [BrowserModule,
         RouterModule,
         BrowserAnimationsModule,
-        AppRoutingModule], providers: [provideNzI18n(en_US), provideHttpClient(withXhr(), withInterceptorsFromDi())] })
+        AppRoutingModule], providers: [provideNzI18n(en_US), provideHttpClient(withXhr(), withInterceptorsFromDi()), provideNzDateFnsAdapter()] })
 export class AppModule {
 }

@@ -1,7 +1,7 @@
 @import "../../../mixins";
 
 @include aboutSection();
-@include heroSection('/assets/images/cafe-hero.png');
+@include heroSection('/assets/images/cafe-hero.webp');
 @include contacts();
 
 :host ::ng-deep .about-hero {

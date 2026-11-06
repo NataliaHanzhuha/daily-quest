@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { ImagePlaceholderComponent } from '../../shared';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { TestimonialsComponent } from '../../shared/testimonials/testimonials.component';
 import { bookingLink } from '../../models/constants';
@@ -41,7 +41,7 @@ interface Venue {
         ImagePlaceholderComponent,
         NzIconModule,
         NgOptimizedImage,
-        NzToolTipModule,
+        NzTooltipModule,
         TestimonialsComponent
     ],
     animations: [

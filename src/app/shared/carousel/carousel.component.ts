@@ -10,7 +10,8 @@ import {
   OnDestroy,
   Output,
   QueryList,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { CarouselItemDirective } from './carousel-item.directive';
@@ -22,6 +23,7 @@ import { PlatformService } from '../../services/platform.service';
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: []
 })
 export class CarouselComponent implements AfterViewInit, OnDestroy {

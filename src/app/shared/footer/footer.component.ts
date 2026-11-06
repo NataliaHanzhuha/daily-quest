@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 import { SocialLinksComponent } from '../index';
@@ -12,6 +12,7 @@ import { acropolisAddress, acropolisEmail, acropolisPhone, bookingLink, notReady
     selector: 'app-acropolis-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterModule, SocialLinksComponent, NzIconModule, NzBadgeModule, NzDropdownModule, NzTypographyModule]
 })
 export class AcropolisFooterComponent {

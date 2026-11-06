@@ -1,4 +1,4 @@
-import { Component, Inject, DOCUMENT } from '@angular/core';
+import { Component, Inject, DOCUMENT, ChangeDetectionStrategy } from '@angular/core';
 
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AcropolisHeaderComponent } from '../shared/header/header.component';
@@ -15,6 +15,7 @@ const DEFAULT_DESCRIPTION = 'A Modern Revival of Greek Grandeur — Your One-Sto
     selector: 'app-acropolis-layout',
     templateUrl: './acropolis-layout.component.html',
     styleUrls: ['./acropolis-layout.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterModule, AcropolisHeaderComponent, AcropolisFooterComponent]
 })
 export class AcropolisLayoutComponent {

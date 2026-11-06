@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { MenuItem } from '../../models/task';
 
@@ -6,6 +6,7 @@ import { MenuItem } from '../../models/task';
     selector: 'app-menu-items',
     imports: [],
     templateUrl: './menu-item.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./menu-item.component.scss']
 })
 export class MenuItemsComponent {

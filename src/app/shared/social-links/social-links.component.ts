@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
@@ -14,6 +14,7 @@ export interface SocialLink {
     selector: 'app-social-links',
     templateUrl: './social-links.component.html',
     styleUrls: ['./social-links.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, NzIconModule]
 })
 export class SocialLinksComponent {

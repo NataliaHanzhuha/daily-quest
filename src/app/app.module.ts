@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import en from '@angular/common/locales/en';
 import { registerLocaleData } from '@angular/common';
@@ -15,6 +15,6 @@ registerLocaleData(en);
     bootstrap: [AppComponent], imports: [BrowserModule,
         RouterModule,
         BrowserAnimationsModule,
-        AppRoutingModule], providers: [provideNzI18n(en_US), provideHttpClient(withInterceptorsFromDi())] })
+        AppRoutingModule], providers: [provideNzI18n(en_US), provideHttpClient(withXhr(), withInterceptorsFromDi())] })
 export class AppModule {
 }

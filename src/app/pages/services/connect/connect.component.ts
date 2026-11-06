@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
     selector: 'app-connect',
     templateUrl: '../../../shared/coming-soon/coming-soon.component.html',
     styleUrls: ['../../../shared/coming-soon/coming-soon.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterModule]
 })
 export class ConnectComponent {

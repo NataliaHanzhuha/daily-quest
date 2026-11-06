@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 import { MenuItem } from '../../../models/task';
@@ -15,6 +15,7 @@ import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.componen
     MenuItemsComponent,
     NzIconModule
 ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     animations: [
         trigger('slideIn', [
             transition(':enter', [

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { animate, style, transition, trigger } from '@angular/animations';
 
@@ -14,6 +14,7 @@ interface TeamMember {
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.scss'],
     imports: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
     animations: [
         trigger('slideIn', [
             transition(':enter', [

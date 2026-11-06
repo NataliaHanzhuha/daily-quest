@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -11,6 +11,7 @@ import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.componen
     templateUrl: './cafe.component.html',
     styleUrls: ['./cafe.component.scss'],
     imports: [RouterModule, NzIconModule, MenuItemsComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     animations: [
         trigger('slideIn', [
             transition(':enter', [

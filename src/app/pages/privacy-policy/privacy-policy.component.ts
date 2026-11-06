@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { acropolisAddress, acropolisEmail, acropolisPhone } from '../../models/constants';
 
@@ -6,6 +6,7 @@ import { acropolisAddress, acropolisEmail, acropolisPhone } from '../../models/c
     selector: 'app-privacy-policy',
     templateUrl: './privacy-policy.component.html',
     styleUrls: ['./privacy-policy.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: []
 })
 export class PrivacyPolicyComponent {

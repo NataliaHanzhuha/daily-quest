@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -11,6 +11,7 @@ import { bookingLink, notReadyServices, services } from 'src/app/models/constant
     selector: 'app-acropolis-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule, NzIconModule, SocialLinksComponent, NzBadgeModule]
 })
 export class AcropolisHeaderComponent {

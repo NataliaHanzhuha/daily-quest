@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -9,6 +9,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
     templateUrl: './shopping.component.html',
     styleUrls: ['./shopping.component.scss'],
     imports: [RouterModule, NzIconModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     animations: [
         trigger('slideIn', [
             transition(':enter', [

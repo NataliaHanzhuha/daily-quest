@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -10,6 +10,7 @@ import { acropolisAddress, acropolisEmail, acropolisPhone } from '../../models/c
     templateUrl: './contact.component.html',
     styleUrls: ['./contact.component.scss'],
     imports: [FormsModule, ReactiveFormsModule, NzIconModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     animations: [
         trigger('slideIn', [
             transition(':enter', [

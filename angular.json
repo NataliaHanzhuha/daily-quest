@@ -29,6 +29,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/_redirects",
+              "src/robots.txt",
+              "src/sitemap.xml",
               {
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
@@ -83,8 +85,7 @@
             }
           },
           "defaultConfiguration": "development",
-          "options": {
-          }
+          "options": {}
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -111,6 +112,51 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/daily-quest/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": [
+              "/",
+              "/about",
+              "/services/grill",
+              "/services/cafe",
+              "/services/kids",
+              "/services/shopping",
+              "/contact",
+              "/privacy-policy",
+              "/terms"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "daily-quest:build:production",
+              "serverTarget": "daily-quest:server:production"
+            },
+            "development": {
+              "browserTarget": "daily-quest:build:development",
+              "serverTarget": "daily-quest:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

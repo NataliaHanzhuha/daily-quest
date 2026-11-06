@@ -162,10 +162,10 @@ export class CafeComponent {
     },
   ];
   images: string[] = [
-    '/assets/images/cafe-menu-pasta.png',
-    '/assets/images/cafe-menu-rice.png',
-    '/assets/images/cafe-menu-salad.png',
-    '/assets/images/cafe-menu-sandwich.png',
+    '/assets/images/cafe-menu-pasta.webp',
+    '/assets/images/cafe-menu-rice.webp',
+    '/assets/images/cafe-menu-salad.webp',
+    '/assets/images/cafe-menu-sandwich.webp',
     // '/assets/images/cafe-menu-jellof-rice.png',
   ];
 }

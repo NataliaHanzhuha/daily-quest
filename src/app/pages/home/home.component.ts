@@ -89,17 +89,17 @@ export class HomeComponent {
     {
       name: 'Grand Hall',
       description: 'Our largest venue, perfect for weddings and large corporate events. Features elegant decor and state-of-the-art facilities.',
-      image: '/assets/images/acropolis-home-hero.png'
+      image: '/assets/images/acropolis-home-hero.webp'
     },
     {
       name: 'Garden Pavilion',
       description: 'An outdoor venue surrounded by lush greenery, ideal for ceremonies and cocktail receptions.',
-      image: '/assets/images/acropolis-home-hero.png'
+      image: '/assets/images/acropolis-home-hero.webp'
     },
     {
       name: 'Executive Suite',
       description: 'A sophisticated space for business meetings, training sessions, and small corporate gatherings.',
-      image: '/assets/images/acropolis-home-hero.png'
+      image: '/assets/images/acropolis-home-hero.webp'
     }
   ];
 

@@ -5,9 +5,10 @@
 		<div class="logo"
 		     [hidden]="isMobileMenuOpen()">
 			<a routerLink="/">
-				<img src="assets/images/logo.ico"
+				<img src="assets/images/logo.png"
 				     alt="Acropolis Park Logo"
-				     width="100">
+				     width="100"
+				     height="64">
 				<h1>acropolis park</h1>
 			</a>
 		</div>
@@ -21,7 +22,8 @@
 				<li><a routerLink="/about"
 				       routerLinkActive="active">about us</a></li>
 				<li class="dropdown">
-					<a (mouseenter)="isServicesDropdownOpen.set(true)"
+					<a routerLink="/services/cafe"
+					   (mouseenter)="isServicesDropdownOpen.set(true)"
 					   (mouseleave)="isServicesDropdownOpen.set(false)"
 					   routerLinkActive="active">
 						services

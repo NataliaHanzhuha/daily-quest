@@ -29,26 +29,5 @@ import { MenuItemsComponent } from '../../../shared/menu-item/menu-item.componen
 export class GrillComponent {
   schedule = '1pm-10pm, delivery till 6pm';
   tels = ['+24509014249093', '+24508033909678'];
-  appetizers: MenuItem[] = [
-    {
-      name: 'Cheesy Garlic Bread',
-      description: 'Red onion marmelade, garlic foccacia bread, grilled figs',
-      price: 2000
-    },
-    {
-      name: 'Cheesy Garlic Bread',
-      description: 'Red onion marmelade, garlic foccacia bread, grilled figs',
-      price: 2000
-    },
-    {
-      name: 'Cheesy Garlic Bread',
-      description: 'Red onion marmelade, garlic foccacia bread, grilled figs, Red onion marmelade, garlic foccacia bread, grilled figs',
-      price: 2000
-    },
-    {
-      name: 'Cheesy Garlic Bread',
-      description: 'Red onion marmelade, garlic foccacia bread, grilled figs',
-      price: 2000
-    },
-  ];
+  appetizers: MenuItem[] = [];
 }
